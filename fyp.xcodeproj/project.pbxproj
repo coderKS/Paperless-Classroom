@@ -8,11 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		CD37DEF81DA3C697009B69FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD37DEF71DA3C697009B69FC /* AppDelegate.swift */; };
-		CD37DEFA1DA3C697009B69FC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD37DEF91DA3C697009B69FC /* ViewController.swift */; };
 		CD37DEFD1DA3C697009B69FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD37DEFB1DA3C697009B69FC /* Main.storyboard */; };
 		CD37DEFF1DA3C698009B69FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD37DEFE1DA3C698009B69FC /* Assets.xcassets */; };
 		CD37DF021DA3C698009B69FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD37DF001DA3C698009B69FC /* LaunchScreen.storyboard */; };
 		CD37DF0D1DA3C698009B69FC /* fypTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD37DF0C1DA3C698009B69FC /* fypTests.swift */; };
+		CD37DF181DA3CA71009B69FC /* CourseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD37DF171DA3CA71009B69FC /* CourseTableViewController.swift */; };
+		CD37DF1A1DA3CC80009B69FC /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD37DF191DA3CC80009B69FC /* Course.swift */; };
+		CD37DF1B1DA3CC80009B69FC /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD37DF191DA3CC80009B69FC /* Course.swift */; };
+		CD37DF1D1DA4A9B4009B69FC /* CourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD37DF1C1DA4A9B4009B69FC /* CourseTableViewCell.swift */; };
+		CD49073F1DA4AFD900AE445D /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD49073E1DA4AFD900AE445D /* AssignmentTableViewCell.swift */; };
+		CD4907411DA4B0CD00AE445D /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907401DA4B0CD00AE445D /* Assignment.swift */; };
+		CD4907421DA4B0CD00AE445D /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907401DA4B0CD00AE445D /* Assignment.swift */; };
+		CD4907441DA4B16200AE445D /* AssignmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907431DA4B16200AE445D /* AssignmentTableViewController.swift */; };
+		CD4907461DA4B40400AE445D /* AssignmentRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907451DA4B40400AE445D /* AssignmentRecord.swift */; };
+		CD4907471DA4B40400AE445D /* AssignmentRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907451DA4B40400AE445D /* AssignmentRecord.swift */; };
+		CD4907491DA4B78000AE445D /* AssignmentRecordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907481DA4B78000AE445D /* AssignmentRecordTableViewController.swift */; };
+		CD49074B1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD49074A1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift */; };
+		CD49074D1DA4C8C300AE445D /* AssignmentRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD49074C1DA4C8C300AE445D /* AssignmentRecordViewController.swift */; };
+		CD49074F1DA4CD9E00AE445D /* test_2.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD49074E1DA4CD9E00AE445D /* test_2.pdf */; };
+		CD4907511DA4CDA700AE445D /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD4907501DA4CDA700AE445D /* test.pdf */; };
+		CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +43,6 @@
 /* Begin PBXFileReference section */
 		CD37DEF41DA3C697009B69FC /* fyp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fyp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD37DEF71DA3C697009B69FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CD37DEF91DA3C697009B69FC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CD37DEFC1DA3C697009B69FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CD37DEFE1DA3C698009B69FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD37DF011DA3C698009B69FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -36,6 +50,19 @@
 		CD37DF081DA3C698009B69FC /* fypTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = fypTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD37DF0C1DA3C698009B69FC /* fypTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fypTests.swift; sourceTree = "<group>"; };
 		CD37DF0E1DA3C698009B69FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD37DF171DA3CA71009B69FC /* CourseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseTableViewController.swift; sourceTree = "<group>"; };
+		CD37DF191DA3CC80009B69FC /* Course.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		CD37DF1C1DA4A9B4009B69FC /* CourseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseTableViewCell.swift; sourceTree = "<group>"; };
+		CD49073E1DA4AFD900AE445D /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
+		CD4907401DA4B0CD00AE445D /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
+		CD4907431DA4B16200AE445D /* AssignmentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewController.swift; sourceTree = "<group>"; };
+		CD4907451DA4B40400AE445D /* AssignmentRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecord.swift; sourceTree = "<group>"; };
+		CD4907481DA4B78000AE445D /* AssignmentRecordTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecordTableViewController.swift; sourceTree = "<group>"; };
+		CD49074A1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecordTableViewCell.swift; sourceTree = "<group>"; };
+		CD49074C1DA4C8C300AE445D /* AssignmentRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecordViewController.swift; sourceTree = "<group>"; };
+		CD49074E1DA4CD9E00AE445D /* test_2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test_2.pdf; path = ../../test_2.pdf; sourceTree = "<group>"; };
+		CD4907501DA4CDA700AE445D /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test.pdf; path = ../../test.pdf; sourceTree = "<group>"; };
+		CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecordCanvas.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +104,24 @@
 		CD37DEF61DA3C697009B69FC /* fyp */ = {
 			isa = PBXGroup;
 			children = (
+				CD4907501DA4CDA700AE445D /* test.pdf */,
+				CD49074E1DA4CD9E00AE445D /* test_2.pdf */,
 				CD37DEF71DA3C697009B69FC /* AppDelegate.swift */,
-				CD37DEF91DA3C697009B69FC /* ViewController.swift */,
 				CD37DEFB1DA3C697009B69FC /* Main.storyboard */,
+				CD4907401DA4B0CD00AE445D /* Assignment.swift */,
+				CD4907431DA4B16200AE445D /* AssignmentTableViewController.swift */,
+				CD4907451DA4B40400AE445D /* AssignmentRecord.swift */,
+				CD4907481DA4B78000AE445D /* AssignmentRecordTableViewController.swift */,
+				CD49074C1DA4C8C300AE445D /* AssignmentRecordViewController.swift */,
+				CD49074A1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift */,
+				CD49073E1DA4AFD900AE445D /* AssignmentTableViewCell.swift */,
 				CD37DEFE1DA3C698009B69FC /* Assets.xcassets */,
 				CD37DF001DA3C698009B69FC /* LaunchScreen.storyboard */,
 				CD37DF031DA3C698009B69FC /* Info.plist */,
+				CD37DF171DA3CA71009B69FC /* CourseTableViewController.swift */,
+				CD37DF1C1DA4A9B4009B69FC /* CourseTableViewCell.swift */,
+				CD37DF191DA3CC80009B69FC /* Course.swift */,
+				CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */,
 			);
 			path = fyp;
 			sourceTree = "<group>";
@@ -182,6 +221,8 @@
 				CD37DF021DA3C698009B69FC /* LaunchScreen.storyboard in Resources */,
 				CD37DEFF1DA3C698009B69FC /* Assets.xcassets in Resources */,
 				CD37DEFD1DA3C697009B69FC /* Main.storyboard in Resources */,
+				CD49074F1DA4CD9E00AE445D /* test_2.pdf in Resources */,
+				CD4907511DA4CDA700AE445D /* test.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,7 +240,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD37DEFA1DA3C697009B69FC /* ViewController.swift in Sources */,
+				CD49074D1DA4C8C300AE445D /* AssignmentRecordViewController.swift in Sources */,
+				CD4907491DA4B78000AE445D /* AssignmentRecordTableViewController.swift in Sources */,
+				CD4907441DA4B16200AE445D /* AssignmentTableViewController.swift in Sources */,
+				CD4907461DA4B40400AE445D /* AssignmentRecord.swift in Sources */,
+				CD49074B1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift in Sources */,
+				CD4907411DA4B0CD00AE445D /* Assignment.swift in Sources */,
+				CD37DF1D1DA4A9B4009B69FC /* CourseTableViewCell.swift in Sources */,
+				CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */,
+				CD37DF1A1DA3CC80009B69FC /* Course.swift in Sources */,
+				CD49073F1DA4AFD900AE445D /* AssignmentTableViewCell.swift in Sources */,
+				CD37DF181DA3CA71009B69FC /* CourseTableViewController.swift in Sources */,
 				CD37DEF81DA3C697009B69FC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,6 +259,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD4907421DA4B0CD00AE445D /* Assignment.swift in Sources */,
+				CD4907471DA4B40400AE445D /* AssignmentRecord.swift in Sources */,
+				CD37DF1B1DA3CC80009B69FC /* Course.swift in Sources */,
 				CD37DF0D1DA3C698009B69FC /* fypTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -406,6 +460,7 @@
 				CD37DF131DA3C698009B69FC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CD37DF141DA3C698009B69FC /* Build configuration list for PBXNativeTarget "fypTests" */ = {
 			isa = XCConfigurationList;
@@ -414,6 +469,7 @@
 				CD37DF161DA3C698009B69FC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
