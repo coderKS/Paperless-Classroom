@@ -109,7 +109,7 @@ class AssignmentRecordTableViewController: UITableViewController {
     // Get the new view controller using segue.destinationViewController.
     // Pass the selected object to the new view controller.
     if segue.identifier == "ShowAssignmentURL" {
-      let assignmentRecordViewController = segue.destination as! AssignmentRecordViewController
+      let assignmentRecordViewController = segue.destination as! PDFPageViewController
       if let selectedAssignmentRecordTableViewCell = sender as? AssignmentRecordTableViewCell {
         let indexPath = tableView.indexPath(for: selectedAssignmentRecordTableViewCell)!
         let asgRecord = assignmentRecords[indexPath.row]

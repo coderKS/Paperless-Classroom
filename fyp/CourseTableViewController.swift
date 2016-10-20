@@ -21,6 +21,23 @@ class CourseTableViewController: UITableViewController {
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     loadCourse()
+    
+    //Set navigation item title
+    self.navigationItem.title = "Course"
+    
+    //Set the bar color
+    self.tabBarController?.tabBar.backgroundColor = UIColor.init(red: CGFloat(GL_RED), green: CGFloat(GL_GREEN), blue: CGFloat(GL_BLUE), alpha: CGFloat(1.0))
+    self.tabBarController?.tabBar.barTintColor = UIColor.init(red: 34/255, green: 50/255, blue: 60/255, alpha: 1.0)
+    
+    self.navigationController?.navigationBar.backgroundColor = UIColor.init(red: CGFloat(GL_RED), green: CGFloat(GL_GREEN), blue: CGFloat(GL_BLUE), alpha: CGFloat(1.0))
+    self.navigationController?.navigationBar.barTintColor = UIColor.init(red: 0, green: 213/255, blue: 195/255, alpha: 1.0)
+    
+    //Set font color
+    self.tabBarController?.tabBar.tintColor = UIColor.white
+    self.navigationController?.navigationBar.tintColor = UIColor.white
+    
+    //Set title color
+    self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
   }
   
   func loadCourse(){

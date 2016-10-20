@@ -18,57 +18,120 @@ class AssignmentRecordCanvas: UIImageView {
    }
    */
   
-  var penMode: String = "pen"
-  var penSize: Int = 4
-  var penColor: UIColor = UIColor.black
-  //var drawStack = [(CGPoint, CGPoint)]()
-  //var previousImage: UIImage?
-  /*
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    previousImage = UIGraphicsGetImageFromCurrentImageContext()
-  }
+  /* Possible Modes */
+  /* 
+   1. Pen
+   2. Rubber
+   3. Highlight
   */
+  var penMode: String = "pen"
+  var penSize: CGFloat = 2
+  var eraserSize: CGFloat = 10
+  var highlightSize: CGFloat = 10
+  var penColor: UIColor = UIColor.black
+  var highlightColor: UIColor = UIColor.init(red: 1.0, green: 1.0, blue: 0.0, alpha: 0.1)
+  
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    
+  }
   
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     let touch = touches.first
+    
     UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
     let context = UIGraphicsGetCurrentContext()
-    
     image?.draw(in: bounds)
-    drawStroke(context, touch: touch!)
+    
+    var touches = [UITouch]()
+    
+    if let coalesedTouches = event?.coalescedTouches(for: touch!){
+      touches = coalesedTouches
+    } else {
+      touches.append(touch!)
+    }
+        
+    //Draw according to different mode
+    for touch in touches {
+      drawStroke(context, touch: touch)
+    }
     
     image = UIGraphicsGetImageFromCurrentImageContext()
     
     UIGraphicsEndImageContext()
   }
   
-  /*
+  
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    //push the last drawing into a stack
-    let previous = touches.first?.previousLocation(in: self)
-    let current = touches.first?.location(in: self)
-    if(drawStack.count < 5) {
-      drawStack.append((CGPoint(x: previous.x, y: previous.y), CGPoint(x: current.x, y: current.y)))
-    }
+
   }
-  */
   
   func drawStroke(_ context: CGContext?, touch: UITouch) {
     let previous = touch.previousLocation(in: self)
     let current = touch.location(in: self)
     
-    context?.setLineWidth(CGFloat(penSize))
-    context?.setLineCap(.round)
-    
+    if self.penMode == "pen" {
+      //Set pen color
+      penColor.setStroke()
+      //Pen Size
+      if touch.force > 0 {
+        context?.setLineWidth(penSize * touch.force * 0.5)
+      } else {
+        context?.setLineWidth(penSize)
+      }
+      context?.setLineCap(.round)
+    } else if self.penMode == "eraser" {
+      context?.setLineWidth(CGFloat(eraserSize))
+      context?.setLineCap(.round)
+      context?.setBlendMode(.clear)
+      context?.setStrokeColor(red: CGFloat(GL_RED), green: CGFloat(GL_GREEN), blue: CGFloat(GL_BLUE), alpha: CGFloat(0.0))
+    } else if self.penMode == "highlight" {
+      highlightColor.setStroke()
+      context?.setLineWidth(CGFloat(highlightSize))
+      context?.setLineCap(.square)
+    }
     context?.move(to: CGPoint(x: previous.x, y: previous.y))
     context?.addLine(to: CGPoint(x: current.x, y: current.y))
     
     context?.strokePath()
   }
   
-  //Rubber
+  //Set Pen Mode
+  func setMyPenMode(_ mode: String) {
+    self.penMode = mode
+  }
+  
+  //Set Pen Color
+  func setMyPenColor(_ color: UIColor){
+    self.penColor = color
+  }
+  
+  //Set highlight Color
+  func setMyHighlightColor(_ color: UIColor){
+    self.highlightColor = color
+  }
+  
+  //Get pen size
+  func getPenSize() -> CGFloat {
+    return self.penSize
+  }
+  
+  //Get rubber size
+  func getRubberSize() -> CGFloat {
+    return self.eraserSize
+  }
+  
+  //Get highlight size
+  func getHighlightSize() -> CGFloat {
+    return self.highlightSize
+  }
   
   //Undo Function
-
-  //Pen size
+  func undo() {
+    print("Undo")
+  }
+  
+  //Redo Function
+  func redo() {
+    print("Redo")
+  }
 }

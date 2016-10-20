@@ -28,6 +28,10 @@
 		CD49074F1DA4CD9E00AE445D /* test_2.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD49074E1DA4CD9E00AE445D /* test_2.pdf */; };
 		CD4907511DA4CDA700AE445D /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD4907501DA4CDA700AE445D /* test.pdf */; };
 		CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */; };
+		CD7FCDAB1DB629720070A6BB /* PDFPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */; };
+		CD7FCDAD1DB635130070A6BB /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAC1DB635130070A6BB /* PDFViewController.swift */; };
+		CDBC22561DAE2D490025D33E /* roundUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22551DAE2D490025D33E /* roundUIButton.swift */; };
+		CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +67,10 @@
 		CD49074E1DA4CD9E00AE445D /* test_2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test_2.pdf; path = ../../test_2.pdf; sourceTree = "<group>"; };
 		CD4907501DA4CDA700AE445D /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test.pdf; path = ../../test.pdf; sourceTree = "<group>"; };
 		CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecordCanvas.swift; sourceTree = "<group>"; };
+		CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPageViewController.swift; sourceTree = "<group>"; };
+		CD7FCDAC1DB635130070A6BB /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PDFViewController.swift; path = ../PDFViewController.swift; sourceTree = "<group>"; };
+		CDBC22551DAE2D490025D33E /* roundUIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = roundUIButton.swift; sourceTree = "<group>"; };
+		CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bottomBorderUITextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,10 +112,14 @@
 		CD37DEF61DA3C697009B69FC /* fyp */ = {
 			isa = PBXGroup;
 			children = (
+				CD7FCDAC1DB635130070A6BB /* PDFViewController.swift */,
 				CD4907501DA4CDA700AE445D /* test.pdf */,
 				CD49074E1DA4CD9E00AE445D /* test_2.pdf */,
 				CD37DEF71DA3C697009B69FC /* AppDelegate.swift */,
 				CD37DEFB1DA3C697009B69FC /* Main.storyboard */,
+				CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */,
+				CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */,
+				CDBC22551DAE2D490025D33E /* roundUIButton.swift */,
 				CD4907401DA4B0CD00AE445D /* Assignment.swift */,
 				CD4907431DA4B16200AE445D /* AssignmentTableViewController.swift */,
 				CD4907451DA4B40400AE445D /* AssignmentRecord.swift */,
@@ -185,6 +197,7 @@
 				TargetAttributes = {
 					CD37DEF31DA3C697009B69FC = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = NP45BW7DPL;
 						ProvisioningStyle = Automatic;
 					};
 					CD37DF071DA3C698009B69FC = {
@@ -240,6 +253,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */,
 				CD49074D1DA4C8C300AE445D /* AssignmentRecordViewController.swift in Sources */,
 				CD4907491DA4B78000AE445D /* AssignmentRecordTableViewController.swift in Sources */,
 				CD4907441DA4B16200AE445D /* AssignmentTableViewController.swift in Sources */,
@@ -247,7 +261,10 @@
 				CD49074B1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift in Sources */,
 				CD4907411DA4B0CD00AE445D /* Assignment.swift in Sources */,
 				CD37DF1D1DA4A9B4009B69FC /* CourseTableViewCell.swift in Sources */,
+				CD7FCDAB1DB629720070A6BB /* PDFPageViewController.swift in Sources */,
 				CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */,
+				CDBC22561DAE2D490025D33E /* roundUIButton.swift in Sources */,
+				CD7FCDAD1DB635130070A6BB /* PDFViewController.swift in Sources */,
 				CD37DF1A1DA3CC80009B69FC /* Course.swift in Sources */,
 				CD49073F1DA4AFD900AE445D /* AssignmentTableViewCell.swift in Sources */,
 				CD37DF181DA3CA71009B69FC /* CourseTableViewController.swift in Sources */,
@@ -393,6 +410,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = NP45BW7DPL;
 				INFOPLIST_FILE = fyp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.fyp.fyp;
@@ -405,6 +425,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = NP45BW7DPL;
 				INFOPLIST_FILE = fyp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.fyp.fyp;
