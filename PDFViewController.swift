@@ -17,6 +17,9 @@ class PDFViewController: UIViewController{
   var currentScale: CGFloat = 1.0
   var maxScale: CGFloat = 3.0
   var minScale: CGFloat = 1.0
+  
+  //Gesture
+  var twoPan: UIPanGestureRecognizer?
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -26,9 +29,9 @@ class PDFViewController: UIViewController{
     
     //Gestures
     let pinch = UIPinchGestureRecognizer(target: self, action: #selector(PDFViewController.didPinch(_:)))
-    let twoPan = UIPanGestureRecognizer(target: self, action: #selector(PDFViewController.didTwoPan(_:)))
-    twoPan.minimumNumberOfTouches = 2
-    twoPan.maximumNumberOfTouches = 2
+    twoPan = UIPanGestureRecognizer(target: self, action: #selector(PDFViewController.didTwoPan(_:)))
+    twoPan?.minimumNumberOfTouches = 2
+    twoPan?.maximumNumberOfTouches = 2
     //Load the page of pdf
     if let parent = self.parent as? PDFPageViewController {
       //Get the page number from parent
@@ -50,9 +53,10 @@ class PDFViewController: UIViewController{
     //Wrap the pdf and canvas into a scroll view
     scrollView?.addSubview(pdfView!)
     scrollView?.addSubview(canvas!)
+    scrollView?.delaysContentTouches = false
+    scrollView?.isUserInteractionEnabled = true
     scrollView?.addGestureRecognizer(pinch)
-    scrollView?.addGestureRecognizer(twoPan)
-    scrollView?.bouncesZoom = true
+    scrollView?.addGestureRecognizer(twoPan!)
     //Make the scrollview visible
     view.addSubview(scrollView!)
   }
@@ -76,15 +80,35 @@ class PDFViewController: UIViewController{
   
   //Handle two tap
   func didTwoPan(_ sender: UIPanGestureRecognizer){
-    if sender.state == .began || sender.state == .changed {
+    if sender.state == .changed {
       //Move the scrollView
+      
       let scrollView = sender.view as! UIScrollView
+      
       let translation = sender.translation(in: scrollView)
-      sender.view!.center = CGPoint(x: sender.view!.center.x + translation.x, y: sender.view!.center.y + translation.y)        
+      sender.view!.center = CGPoint(x: sender.view!.center.x + translation.x, y: sender.view!.center.y + translation.y)
+      
+      /*let deltaY = sender.view!.center.y
+      
+      if (deltaY - view!.frame.size.height / 2) / currentScale < -50 {
+        sender.forwardingTarget(for: #selector(PDFPageViewController.prevPage))
+      } else if (deltaY + view!.frame.size.height / 2) / currentScale > view.frame.size.height + 50 {
+        sender.forwardingTarget(for: #selector(PDFPageViewController.nextPage))
+      }*/
+
       
       sender.setTranslation(CGPoint.zero, in: self.view)
     } else if sender.state == .ended {
+      let deltaX = sender.view!.center.x
+      let deltaY = sender.view!.center.y
       
+      if (deltaX - view!.frame.size.width / 2) / currentScale < -50 {
+        sender.view!.center = CGPoint(x: view!.frame.size.width / 2 * currentScale, y: deltaY)
+      } else if (deltaX + view!.frame.size.width / 2) / currentScale > view.frame.size.width + 50 {
+        sender.view!.center = CGPoint(x: view!.frame.size.width / 2 * currentScale, y: deltaY)
+      }
+      
+      sender.setTranslation(CGPoint.zero, in: self.view)
     }
   }
   

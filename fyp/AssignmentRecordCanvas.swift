@@ -31,23 +31,23 @@ class AssignmentRecordCanvas: UIImageView {
   var penColor: UIColor = UIColor.black
   var highlightColor: UIColor = UIColor.init(red: 1.0, green: 1.0, blue: 0.0, alpha: 0.1)
   
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    
-  }
+  var drawingImage: UIImage?
+  
+  var temp: UIImage?
   
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-    let touch = touches.first
+    guard let touch = touches.first else { return }
     
     UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
     let context = UIGraphicsGetCurrentContext()
-    image?.draw(in: bounds)
+    drawingImage?.draw(in: bounds)
     
     var touches = [UITouch]()
     
-    if let coalesedTouches = event?.coalescedTouches(for: touch!){
+    if let coalesedTouches = event?.coalescedTouches(for: touch){
       touches = coalesedTouches
     } else {
-      touches.append(touch!)
+      touches.append(touch)
     }
         
     //Draw according to different mode
@@ -55,14 +55,23 @@ class AssignmentRecordCanvas: UIImageView {
       drawStroke(context, touch: touch)
     }
     
+    drawingImage = UIGraphicsGetImageFromCurrentImageContext()
+    
+    if let predictedTouches = event?.predictedTouches(for: touch) {
+      for touch in predictedTouches {
+        drawStroke(context, touch: touch)
+      }
+    }
+    
     image = UIGraphicsGetImageFromCurrentImageContext()
     
     UIGraphicsEndImageContext()
   }
   
-  
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-
+    image = drawingImage
+    undoManager?.registerUndo(withTarget: self, selector: #selector(undo), object: temp)
+    temp = drawingImage
   }
   
   func drawStroke(_ context: CGContext?, touch: UITouch) {
@@ -126,12 +135,20 @@ class AssignmentRecordCanvas: UIImageView {
   }
   
   //Undo Function
-  func undo() {
-    print("Undo")
+  func undo(_ sender: UIImage) {
+    undoManager?.registerUndo(withTarget: self, selector: #selector(redo), object: image)
+    drawingImage = sender
+    image = sender
+    temp = sender
+    //print("Undo")
   }
   
   //Redo Function
-  func redo() {
-    print("Redo")
+  func redo(_ sender: UIImage) {
+    undoManager?.registerUndo(withTarget: self, selector: #selector(undo), object: image)
+    drawingImage = sender
+    image = sender
+    temp = sender
+    //print("Redo")
   }
 }

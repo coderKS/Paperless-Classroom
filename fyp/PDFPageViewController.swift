@@ -26,7 +26,9 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
   var eraserBtn: UIButton?
   var highlightBtn: UIButton?
   var clearBtn: UIButton?
-
+  var undoBtn: UIButton?
+  var redoBtn: UIButton?
+  
   //Pen Panel
   var penSizeSlider: UISlider?
   //Eraser Panel
@@ -42,12 +44,14 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
     //gestures
     let prevSwipe: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(PDFPageViewController.prevPage(_:)))
     prevSwipe.direction = UISwipeGestureRecognizerDirection.up
-    prevSwipe.numberOfTouchesRequired = 2
+    prevSwipe.numberOfTouchesRequired = 3
+    prevSwipe.delaysTouchesBegan = false
     self.view.addGestureRecognizer(prevSwipe)
     
     let nextSwipe: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(PDFPageViewController.nextPage(_:)))
     nextSwipe.direction = UISwipeGestureRecognizerDirection.down
-    nextSwipe.numberOfTouchesRequired = 2
+    nextSwipe.numberOfTouchesRequired = 3
+    nextSwipe.delaysTouchesBegan = false
     self.view.addGestureRecognizer(nextSwipe)
     
     //load PDF here
@@ -57,7 +61,10 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
     loadControlPanel()
   }
   
-  func prevPage(_ sender: AnyObject?) {
+  func prevPage(_ sender: UISwipeGestureRecognizer) {
+    if sender.state == .ended{
+    sender.require(toFail: PDFViewControllers[pageCurrent].twoPan!)
+    
     pageCurrent = pageCurrent - 1
     
     if pageCurrent < 0 {
@@ -67,10 +74,13 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
     let currentController = PDFViewControllers[pageCurrent]
     
     setViewControllers([currentController], direction: .forward, animated: true, completion: nil)
-
+    }
   }
   
-  func nextPage(_ sender: AnyObject?) {
+  func nextPage(_ sender: UISwipeGestureRecognizer) {
+    if sender.state == .ended{
+    sender.require(toFail: PDFViewControllers[pageCurrent].twoPan!)
+    
     pageCurrent = pageCurrent + 1
     
     if pageCurrent > PDFViewControllers.count - 1 {
@@ -80,6 +90,7 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
     let currentController = PDFViewControllers[pageCurrent]
     
     setViewControllers([currentController], direction: .reverse, animated: true, completion: nil)
+    }
   }
   
   override func didReceiveMemoryWarning() {
@@ -126,6 +137,7 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
     penLongPress.numberOfTapsRequired = 1
     penLongPress.allowableMovement = 50.0
     penLongPress.minimumPressDuration = 0.5
+    penLongPress.delaysTouchesBegan = false
     penBtn?.addGestureRecognizer(penLongPress)
     
     eraserBtn = UIButton(frame: CGRect(x: 0.0, y: 2 * btnSpacing, width: btnWidth, height: btnHeight))
@@ -135,6 +147,7 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
     eraserLongPress.numberOfTapsRequired = 1
     eraserLongPress.allowableMovement = 50.0
     eraserLongPress.minimumPressDuration = 0.5
+    eraserLongPress.delaysTouchesBegan = false
     eraserBtn?.addGestureRecognizer(eraserLongPress)
     
     
@@ -145,17 +158,27 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
     highlightLongPress.numberOfTapsRequired = 1
     highlightLongPress.allowableMovement = 50.0
     highlightLongPress.minimumPressDuration = 0.5
+    highlightLongPress.delaysTouchesBegan = false
     highlightBtn?.addGestureRecognizer(highlightLongPress)
     
     clearBtn = UIButton(frame: CGRect(x: 0.0, y: 4 * btnSpacing, width: btnWidth, height: btnHeight))
     clearBtn?.setTitle("Clear", for: .normal)
     clearBtn?.addTarget(self, action: #selector(clearBtnTapped), for: .touchUpInside)
     
+    undoBtn = UIButton(frame: CGRect(x: 0.0, y: 5 * btnSpacing, width: btnWidth, height: btnHeight))
+    undoBtn?.setTitle("Undo", for: .normal)
+    undoBtn?.addTarget(self, action: #selector(undoBtnTapped), for: .touchUpInside)
+    
+    redoBtn = UIButton(frame: CGRect(x: 0.0, y: 6 * btnSpacing, width: btnWidth, height: btnHeight))
+    redoBtn?.setTitle("Redo", for: .normal)
+    redoBtn?.addTarget(self, action: #selector(redoBtnTapped), for: .touchUpInside)
     
     panelView.addSubview(penBtn!)
     panelView.addSubview(eraserBtn!)
     panelView.addSubview(highlightBtn!)
     panelView.addSubview(clearBtn!)
+    panelView.addSubview(undoBtn!)
+    panelView.addSubview(redoBtn!)
     view.addSubview(panelView)
   }
   
@@ -186,7 +209,18 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
   
   func clearBtnTapped(_ sender: UIButton){
     //Clear the canvas
+    PDFViewControllers[pageCurrent].canvas?.drawingImage = nil
     PDFViewControllers[pageCurrent].canvas?.image = nil
+  }
+  
+  func undoBtnTapped(_ sender: UIButton){
+    //Clear the canvas
+    PDFViewControllers[pageCurrent].canvas?.undoManager?.undo()
+  }
+  
+  func redoBtnTapped(_ sender: UIButton){
+    //Clear the canvas
+    PDFViewControllers[pageCurrent].canvas?.undoManager?.redo()
   }
   
   func resetBtn() {
@@ -196,7 +230,7 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
   }
   
   func showPenOption(_ sender: UILongPressGestureRecognizer){
-    if sender.state == .began {
+    if sender.state == .ended {
       //Call an new view controller (another panel)
       
       //TODO: a custom view controller for pen panel
@@ -269,7 +303,8 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
       viewController.modalPresentationStyle = .popover
       viewController.preferredContentSize = CGSize(width: 150, height: 200)
       let popoverViewController = viewController.popoverPresentationController
-      popoverViewController?.permittedArrowDirections = .any
+      popoverViewController?.dismissalTransitionDidEnd(true)
+      popoverViewController?.permittedArrowDirections = .left
       popoverViewController?.delegate = self
       popoverViewController?.sourceView = sender.view
       popoverViewController?.sourceRect = CGRect(
@@ -279,13 +314,14 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
         height: 1)
       present(
         viewController,
-        animated: true,
+        animated: false,
         completion: nil)
+      
     }
   }
   
   func showEraserOption(_ sender: UILongPressGestureRecognizer){
-    if sender.state == .began {
+    if sender.state == .ended {
       //Call an new view controller (another panel)
       
       //TODO: a custom view controller for pen panel
@@ -319,7 +355,8 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
       viewController.modalPresentationStyle = .popover
       viewController.preferredContentSize = CGSize(width: 150, height: 200)
       let popoverViewController = viewController.popoverPresentationController
-      popoverViewController?.permittedArrowDirections = .any
+      popoverViewController?.dismissalTransitionDidEnd(true)
+      popoverViewController?.permittedArrowDirections = .left
       popoverViewController?.delegate = self
       popoverViewController?.sourceView = sender.view
       popoverViewController?.sourceRect = CGRect(
@@ -329,13 +366,13 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
         height: 1)
       present(
         viewController,
-        animated: true,
+        animated: false,
         completion: nil)
     }
   }
 
   func showHighlightOption(_ sender: UILongPressGestureRecognizer){
-    if sender.state == .began {
+    if sender.state == .ended {
       //Call an new view controller (another panel)
       
       //TODO: a custom view controller for pen panel
@@ -408,7 +445,9 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
       viewController.modalPresentationStyle = .popover
       viewController.preferredContentSize = CGSize(width: 150, height: 200)
       let popoverViewController = viewController.popoverPresentationController
-      popoverViewController?.permittedArrowDirections = .any
+      popoverViewController?.dismissalTransitionDidEnd(true)
+      popoverViewController?.permittedArrowDirections = .left
+
       popoverViewController?.delegate = self
       popoverViewController?.sourceView = sender.view
       popoverViewController?.sourceRect = CGRect(
@@ -418,10 +457,15 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
         height: 1)
       present(
         viewController,
-        animated: true,
+        animated: false,
         completion: nil)
     }
   }
+  
+  func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
+    return true
+  }
+  
   
   func changeHighlightColor(_ sender: UIButton){
     var color = UIColor.black

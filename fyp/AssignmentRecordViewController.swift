@@ -44,7 +44,7 @@ class AssignmentRecordViewController: UIViewController, UIWebViewDelegate {
     //Load PDF into the Webview
     webView = UIWebView(frame: CGRect(x: 100, y: 150, width: 800, height: 1000))
     let fileExtension = "pdf"
-    let localFilePath = Bundle.main.url(forResource: assignmentRecord!.assignmentURL, withExtension: fileExtension)
+    let localFilePath = Bundle.main.url(forResource: "test_2", withExtension: fileExtension)
     let request = NSURLRequest(url: localFilePath!)
     webView?.isUserInteractionEnabled = false
     webView?.delegate = self
@@ -58,17 +58,13 @@ class AssignmentRecordViewController: UIViewController, UIWebViewDelegate {
   
   func loadCanvas() {
     //Load a UIImageView
-    if pageCount! == 0 {
-      pageCount = 1
-    }
-    for _ in 1...pageCount! {
-      assignmentRecordCanvas += [AssignmentRecordCanvas(frame: CGRect(x: 100, y: 150, width: 800, height: 1000))]
-    }
-    assignmentRecordCanvas[selectedPage].isUserInteractionEnabled = true
-    self.view.addSubview(assignmentRecordCanvas[selectedPage])
-    
+    assignmentRecordCanvas += [AssignmentRecordCanvas(frame: CGRect(x: 100, y: 150, width: 800, height: 1000))]
+    print("V")
+    assignmentRecordCanvas[0].isUserInteractionEnabled = true
+    self.view.addSubview(assignmentRecordCanvas[0])
+    print("A")
     //Add size slider to change pen size
-    loadSizeSlider()
+    //loadSizeSlider()
   }
   
   func loadSizeSlider() {
@@ -142,7 +138,7 @@ class AssignmentRecordViewController: UIViewController, UIWebViewDelegate {
   
   //Undo draw/erase...
   @IBAction func undoButton(_ sender: AnyObject) {
-    assignmentRecordCanvas[selectedPage].undo()
+    
   }
   
   //Clear the canvas
