@@ -29,7 +29,9 @@
 		CD4907511DA4CDA700AE445D /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD4907501DA4CDA700AE445D /* test.pdf */; };
 		CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */; };
 		CD7FCDAB1DB629720070A6BB /* PDFPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */; };
-		CD7FCDAD1DB635130070A6BB /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAC1DB635130070A6BB /* PDFViewController.swift */; };
+		CD7FCDAF1DBDEFE30070A6BB /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */; };
+		CD7FCDB11DBEFF1B0070A6BB /* CircularTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */; };
+		CD7FCDB71DBF1FEA0070A6BB /* navigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */; };
 		CDBC22561DAE2D490025D33E /* roundUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22551DAE2D490025D33E /* roundUIButton.swift */; };
 		CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */; };
 /* End PBXBuildFile section */
@@ -68,7 +70,9 @@
 		CD4907501DA4CDA700AE445D /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test.pdf; path = ../../test.pdf; sourceTree = "<group>"; };
 		CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecordCanvas.swift; sourceTree = "<group>"; };
 		CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPageViewController.swift; sourceTree = "<group>"; };
-		CD7FCDAC1DB635130070A6BB /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PDFViewController.swift; path = ../PDFViewController.swift; sourceTree = "<group>"; };
+		CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
+		CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularTransition.swift; sourceTree = "<group>"; };
+		CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = navigationDelegate.swift; sourceTree = "<group>"; };
 		CDBC22551DAE2D490025D33E /* roundUIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = roundUIButton.swift; sourceTree = "<group>"; };
 		CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bottomBorderUITextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,7 +116,8 @@
 		CD37DEF61DA3C697009B69FC /* fyp */ = {
 			isa = PBXGroup;
 			children = (
-				CD7FCDAC1DB635130070A6BB /* PDFViewController.swift */,
+				CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */,
+				CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */,
 				CD4907501DA4CDA700AE445D /* test.pdf */,
 				CD49074E1DA4CD9E00AE445D /* test_2.pdf */,
 				CD37DEF71DA3C697009B69FC /* AppDelegate.swift */,
@@ -134,6 +139,7 @@
 				CD37DF1C1DA4A9B4009B69FC /* CourseTableViewCell.swift */,
 				CD37DF191DA3CC80009B69FC /* Course.swift */,
 				CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */,
+				CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */,
 			);
 			path = fyp;
 			sourceTree = "<group>";
@@ -253,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD7FCDB71DBF1FEA0070A6BB /* navigationDelegate.swift in Sources */,
 				CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */,
 				CD49074D1DA4C8C300AE445D /* AssignmentRecordViewController.swift in Sources */,
 				CD4907491DA4B78000AE445D /* AssignmentRecordTableViewController.swift in Sources */,
@@ -262,9 +269,10 @@
 				CD4907411DA4B0CD00AE445D /* Assignment.swift in Sources */,
 				CD37DF1D1DA4A9B4009B69FC /* CourseTableViewCell.swift in Sources */,
 				CD7FCDAB1DB629720070A6BB /* PDFPageViewController.swift in Sources */,
+				CD7FCDAF1DBDEFE30070A6BB /* PDFViewController.swift in Sources */,
+				CD7FCDB11DBEFF1B0070A6BB /* CircularTransition.swift in Sources */,
 				CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */,
 				CDBC22561DAE2D490025D33E /* roundUIButton.swift in Sources */,
-				CD7FCDAD1DB635130070A6BB /* PDFViewController.swift in Sources */,
 				CD37DF1A1DA3CC80009B69FC /* Course.swift in Sources */,
 				CD49073F1DA4AFD900AE445D /* AssignmentTableViewCell.swift in Sources */,
 				CD37DF181DA3CA71009B69FC /* CourseTableViewController.swift in Sources */,

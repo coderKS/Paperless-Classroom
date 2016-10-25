@@ -12,6 +12,8 @@ class CourseTableViewController: UITableViewController {
   
   var courses = [Course]()
   
+  let transition = CircularTransition()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -24,7 +26,6 @@ class CourseTableViewController: UITableViewController {
     
     //Set navigation item title
     self.navigationItem.title = "Course"
-    
     //Set the bar color
     self.tabBarController?.tabBar.backgroundColor = UIColor.init(red: CGFloat(GL_RED), green: CGFloat(GL_GREEN), blue: CGFloat(GL_BLUE), alpha: CGFloat(1.0))
     self.tabBarController?.tabBar.barTintColor = UIColor.init(red: 34/255, green: 50/255, blue: 60/255, alpha: 1.0)
@@ -67,17 +68,16 @@ class CourseTableViewController: UITableViewController {
   }
   
   
-   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-   let cellIdentifier = "CourseTableViewCell"
-   let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CourseTableViewCell
-   
-   // Configure the cell...
-   let course = courses[indexPath.row]
-   cell.courseName.text = course.name
-   cell.courseImage.image = course.image
-   return cell
-   }
-  
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cellIdentifier = "CourseTableViewCell"
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CourseTableViewCell
+    
+    // Configure the cell...
+    let course = courses[indexPath.row]
+    cell.courseName.text = course.name
+    cell.courseImage.image = course.image
+    return cell
+  }
   
   /*
    // Override to support conditional editing of the table view.
@@ -115,9 +115,9 @@ class CourseTableViewController: UITableViewController {
    */
   
   
-   // MARK: - Navigation
-   
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
+  // MARK: - Navigation
+  
+  // In a storyboard-based application, you will often want to do a little preparation before navigation
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     // Get the new view controller using segue.destinationViewController.
     // Pass the selected object to the new view controller.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="r5l-tS-SQH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="j9n-E2-GK8">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -81,7 +81,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Oh-l2-1Pj">
-                                <frame key="frameInset" minX="46" minY="15.89%" height="68.07%" maxX="47"/>
+                                <frame key="frameInset" minX="46" minY="15.74%" height="68.22%" maxX="47"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z6c-6L-4aS" customClass="roundUIButton" customModule="fyp" customModuleProvider="target">
@@ -170,11 +170,11 @@
         <!--Course Table View Controller-->
         <scene sceneID="2mo-eg-oeV">
             <objects>
-                <tableViewController id="BeT-1k-umK" customClass="CourseTableViewController" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController modalTransitionStyle="crossDissolve" id="BeT-1k-umK" customClass="CourseTableViewController" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="BYe-Eh-yq0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.12156862745098039" green="0.14509803921568626" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CourseTableViewCell" rowHeight="80" id="B8c-6q-5x2" customClass="CourseTableViewCell" customModule="fyp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="375" height="80"/>
@@ -197,6 +197,7 @@
                                     </subviews>
                                     <color key="backgroundColor" red="0.12156862745098039" green="0.14509803921568626" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.12156862745098039" green="0.14509803921568629" blue="0.20784313725490197" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="courseImage" destination="OZJ-go-svP" id="pMs-cg-YZ3"/>
                                     <outlet property="courseName" destination="ZB0-MI-QlI" id="gPa-Sv-uKY"/>
@@ -218,7 +219,7 @@
         <!--Assignment Table View Controller-->
         <scene sceneID="cyR-JY-JNi">
             <objects>
-                <tableViewController id="AQr-hg-ihL" customClass="AssignmentTableViewController" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController modalTransitionStyle="partialCurl" id="AQr-hg-ihL" customClass="AssignmentTableViewController" customModule="fyp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="OJ3-sc-KFD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -243,8 +244,9 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.12156862745098039" green="0.14509803921568626" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.12156862745098039" green="0.14509803921568629" blue="0.20784313725490197" alpha="1" colorSpace="calibratedRGB"/>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.12156862745098039" green="0.14509803921568629" blue="0.20784313725490197" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="assignmentImage" destination="PI6-fJ-wlQ" id="brS-qp-HLs"/>
                                     <outlet property="assignmentName" destination="Eou-aA-iHm" id="FcE-x9-xG0"/>
@@ -500,10 +502,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
+                        <outlet property="delegate" destination="ToK-sn-tLW" id="E2E-ro-H7N"/>
                         <segue destination="BeT-1k-umK" kind="relationship" relationship="rootViewController" id="74O-zp-M42"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rxm-Y0-Ci1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="ToK-sn-tLW" customClass="navigationDelegate" customModule="fyp" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="236" y="-396.25187406296857"/>
         </scene>
@@ -604,7 +608,7 @@
         <image name="default" width="255" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1ac-1g-mLp"/>
-        <segue reference="giz-Kh-HfG"/>
+        <segue reference="PcN-Ug-C5z"/>
+        <segue reference="Ryh-NQ-rSu"/>
     </inferredMetricsTieBreakers>
 </document>
