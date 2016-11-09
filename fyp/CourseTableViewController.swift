@@ -42,7 +42,7 @@ class CourseTableViewController: UITableViewController {
   }
   
   func loadCourse(){
-    let defaultImg = UIImage(named: "default")
+    let defaultImg = UIImage(named: "Course")
     let course1 = Course(name: "CSCI2100", image: defaultImg)!
     let course2 = Course(name: "CSCI2720", image: defaultImg)!
     let course3 = Course(name: "ELTU3003", image: defaultImg)!

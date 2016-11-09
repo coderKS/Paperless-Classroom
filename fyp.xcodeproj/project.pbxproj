@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CD2425151DD0A7E3006D5F17 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD2425141DD0A7E3006D5F17 /* CommentView.swift */; };
 		CD37DEF81DA3C697009B69FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD37DEF71DA3C697009B69FC /* AppDelegate.swift */; };
 		CD37DEFD1DA3C697009B69FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD37DEFB1DA3C697009B69FC /* Main.storyboard */; };
 		CD37DEFF1DA3C698009B69FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD37DEFE1DA3C698009B69FC /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CD2425141DD0A7E3006D5F17 /* CommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
 		CD37DEF41DA3C697009B69FC /* fyp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fyp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD37DEF71DA3C697009B69FC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD37DEFC1DA3C697009B69FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				CD37DF191DA3CC80009B69FC /* Course.swift */,
 				CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */,
 				CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */,
+				CD2425141DD0A7E3006D5F17 /* CommentView.swift */,
 			);
 			path = fyp;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD7FCDB71DBF1FEA0070A6BB /* navigationDelegate.swift in Sources */,
+				CD2425151DD0A7E3006D5F17 /* CommentView.swift in Sources */,
 				CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */,
 				CD49074D1DA4C8C300AE445D /* AssignmentRecordViewController.swift in Sources */,
 				CD4907491DA4B78000AE445D /* AssignmentRecordTableViewController.swift in Sources */,

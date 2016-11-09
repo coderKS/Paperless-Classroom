@@ -26,7 +26,7 @@ class AssignmentRecordTableViewController: UITableViewController {
   }
   
   func loadAssignmentRecords(){
-    let defaultImg = UIImage(named: "default")
+    let defaultImg = UIImage(named: "folder")
     let asgRecord1 = AssignmentRecord(studentID: "1234567890", image: defaultImg, dateTime: "05 Oct 2016", isMarked: true, score: 90, url: "test")!
     let asgRecord2 = AssignmentRecord(studentID: "9998887776", image: defaultImg, dateTime: "04 Sep 2016", isMarked: true, score: 90, url: "test_2")!
     let asgRecord3 = AssignmentRecord(studentID: "6767654132", image: defaultImg, dateTime: "03 Oct 2016", isMarked: false, score: nil, url: "test")!

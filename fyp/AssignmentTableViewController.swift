@@ -26,7 +26,7 @@ class AssignmentTableViewController: UITableViewController {
   }
   
   func loadAssignments(){
-    let defaultImg = UIImage(named: "default")
+    let defaultImg = UIImage(named: "folder")
     let assignment1 = Assignment(name: "Assignment 1", image: defaultImg)!
     let assignment2 = Assignment(name: "Assignment 2", image: defaultImg)!
     let assignment3 = Assignment(name: "Mid-Term Paper", image: defaultImg)!
