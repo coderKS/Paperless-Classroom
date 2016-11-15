@@ -8,7 +8,8 @@
 
 import UIKit
 
-class PDFPageViewController: UIPageViewController, UIPopoverPresentationControllerDelegate {
+class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowLayout,
+  UICollectionViewDataSource {
   
   //Navigation bar Color
   var navBarColor = UIColor.init(red: 31/255, green: 37/255, blue: 53/255, alpha: 1)
@@ -22,6 +23,15 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
   //Navigation Btn
   var navBar: UINavigationBar?
   var commentNavBar: UINavigationBar?
+  
+  //Overview view
+  var overviewView: UICollectionView?
+  var overviewOverlay: UIView?
+  var panelOverviewOverlay: UIView?
+  var animateOffsetX: CGFloat = 500
+  var overviewItemWidth:CGFloat = 100
+  var overviewItemHeight:CGFloat = 200
+  var overviewBackBtn: UIButton?
   
   //Panel View
   var panelView: UIView?
@@ -123,9 +133,6 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
     //load navigation item and bar button here
     loadNavigationItem()
     
-    //load the page overview btn here
-    loadPageOverviewBtn()
-    
     //load pen option panel here (Not Visible)
     loadPenOptionPanel()
     
@@ -143,6 +150,12 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
     
     //load control panel for comment!
     loadCommentControlPanel()
+    
+    //load the page overview btn here
+    loadPageOverviewBtn()
+    
+    //load the page overview view here (Not Visible)
+    loadPageOverviewView()
     
   }
   
@@ -189,6 +202,30 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
   
   func showPagesOverview(_ sender: UIScreenEdgePanGestureRecognizer){
     //Create a new view Controller pop up from the left
+    
+    if sender.state == .recognized {
+      self.view.addSubview(overviewOverlay!)
+      self.view.addSubview(panelOverviewOverlay!)
+      self.view.addSubview(overviewView!)
+      self.overviewView?.layer.setAffineTransform(CGAffineTransform(translationX: -animateOffsetX, y: 0))
+      UIView.animate(withDuration: 0.5, animations: {
+        self.overviewView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+      }, completion: nil)
+    }
+  }
+  
+  func hidePagesOverview(_ sender: UISwipeGestureRecognizer){
+    //Hide overviewView
+    if sender.state == .recognized {
+      UIView.animate(withDuration: 0.5, animations: {
+        self.overviewView?.layer.setAffineTransform(CGAffineTransform(translationX: -self.animateOffsetX, y: 0))
+      }, completion: {_ in
+        self.overviewView?.removeFromSuperview()
+        self.overviewOverlay?.removeFromSuperview()
+        self.panelOverviewOverlay?.removeFromSuperview()
+      })
+      
+    }
   }
   
   override func didReceiveMemoryWarning() {
@@ -221,10 +258,60 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
     pageOverViewBtn = UIButton(frame: CGRect(x: 5, y: (height - btnHeight) / 2, width: btnWidth, height: btnHeight))
     let arrowImg = UIImage(named: "arrow-right")
     pageOverViewBtn?.setImage(arrowImg, for: .normal)
-    pageOverViewBtn?.imageView?.transform = CGAffineTransform(rotationAngle: 180 * CGFloat(M_PI) / 180)
+    //pageOverViewBtn?.imageView?.transform = CGAffineTransform(rotationAngle: 180 * CGFloat(M_PI) / 180)
     pageOverViewBtn?.addTarget(self, action: #selector(showPagesOverview(_:)), for: .touchUpInside)
     
     view.addSubview(pageOverViewBtn!)
+  }
+  
+  func loadPageOverviewView(){
+    
+    
+    let overviewWidth:CGFloat = width / 4
+    let overviewHeight:CGFloat = height + panelHeight
+    
+    let left:CGFloat = 0
+    let top:CGFloat = 0
+    
+    overviewItemWidth = overviewWidth / 1.5
+    overviewItemHeight = overviewHeight / 5
+    
+    let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    layout.sectionInset = UIEdgeInsets(top: overviewHeight / 5, left: 10, bottom: 10, right: 10)
+    layout.itemSize = CGSize(width: overviewItemWidth, height: overviewItemHeight)
+    layout.minimumInteritemSpacing = overviewItemHeight / 5
+    
+    overviewView = UICollectionView(frame: CGRect(x: top, y: left, width: overviewWidth, height: overviewHeight), collectionViewLayout: layout)
+    overviewView?.backgroundColor = UIColor.init(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
+    let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(hidePagesOverview))
+    leftSwipe.direction = .left
+    leftSwipe.numberOfTouchesRequired = 1
+    overviewView?.addGestureRecognizer(leftSwipe)
+    
+    overviewView?.dataSource = self
+    overviewView?.delegate = self
+    overviewView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+    
+    
+    let btnWidth:CGFloat = 20
+    let btnHeight:CGFloat = 20
+    overviewBackBtn = UIButton(frame: CGRect(x: 5, y: (height - btnHeight) / 2, width: btnWidth, height: btnHeight))
+    let arrowImg = UIImage(named: "arrow-right")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
+    overviewBackBtn?.setImage(arrowImg, for: .normal)
+    overviewBackBtn?.tintColor = UIColor.white
+    overviewBackBtn?.imageView?.transform = CGAffineTransform(rotationAngle: 180 * CGFloat(M_PI) / 180)
+    overviewBackBtn?.addTarget(self, action: #selector(hidePagesOverview(_:)), for: .touchUpInside)
+    overviewView?.addSubview(overviewBackBtn!)
+    
+    let tap1 = UITapGestureRecognizer(target: self, action: #selector(hidePagesOverview(_:)))
+    overviewOverlay = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+    overviewOverlay?.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.5)
+    overviewOverlay?.addGestureRecognizer(tap1)
+    
+    let tap2 = UITapGestureRecognizer(target: self, action: #selector(hidePagesOverview(_:)))
+    panelOverviewOverlay = UIView(frame: CGRect(x: 0, y: height, width: panelWidth, height: panelHeight))
+    panelOverviewOverlay?.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.5)
+    panelOverviewOverlay?.addGestureRecognizer(tap2)
   }
   
   func loadNavigationItem(){
@@ -1132,6 +1219,79 @@ class PDFPageViewController: UIPageViewController, UIPopoverPresentationControll
     PDFViewControllers[pageCurrent].canvas?.highlightSize = CGFloat(sender.tag * 5 - 1)
   }
   
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return pageCount!
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath as IndexPath)
+    cell.backgroundColor = UIColor.clear
+    
+    //Get the UIImage of pdf
+    let pdf = drawPDF(PDFDocument!, indexPath.row + 1, overviewItemWidth, overviewItemHeight - 30)
+    
+    //Wrap the UIImage into UIImageView to be able to add into scrollview
+    let pdfView = UIImageView(image: pdf)
+    
+    pdfView.isUserInteractionEnabled = false
+    
+    cell.addSubview(pdfView)
+    
+    let label = UILabel(frame: CGRect(x: overviewItemWidth / 2 - 40 / 2, y: overviewItemHeight - 20, width: 40, height: 20))
+    let insets = UIEdgeInsets.init(top: 2, left: 0, bottom: 2, right: 0)
+    label.drawText(in: UIEdgeInsetsInsetRect(label.frame, insets))
+    label.text = String(indexPath.row + 1)
+    label.textAlignment = .center
+    label.textColor = UIColor.init(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
+    label.backgroundColor = UIColor.white
+    label.layer.cornerRadius = 3
+    label.clipsToBounds = true
+    cell.addSubview(label)
+    
+    let tap = UITapGestureRecognizer()
+    tap.numberOfTapsRequired = 1
+    tap.numberOfTouchesRequired = 1
+    
+    
+    tap.addTarget(self, action: #selector(switchPage))
+    cell.tag = indexPath.row
+    cell.addGestureRecognizer(tap)
+    return cell
+  }
+  
+  func switchPage(_ sender: UITapGestureRecognizer) {
+    let tag = sender.view?.tag
+    let currentController = PDFViewControllers[tag!]
+    if pageCurrent > tag! {
+      pageCurrent = tag!
+      setViewControllers([currentController], direction: .reverse, animated: true, completion: nil)
+    } else {
+      pageCurrent = tag!
+      setViewControllers([currentController], direction: .forward, animated: true, completion: nil)
+    }
+  }
+  
+  func drawPDF(_ document: CGPDFDocument, _ pageNumber: Int, _ width: CGFloat, _ height: CGFloat) -> UIImage?{
+    guard let page = document.page(at: pageNumber) else { return nil }
+    let pageRect = page.getBoxRect(.mediaBox)
+    let size:CGSize = CGSize(width: width, height: height)
+    let renderer = UIGraphicsImageRenderer(size: size)
+    let img = renderer.image { ctx in
+      UIColor.white.set()
+      ctx.fill(pageRect)
+      
+      let scaleX = width / pageRect.size.width
+      let scaleY = height / pageRect.size.height
+      
+      //Draw from left bottom
+      ctx.cgContext.translateBy(x: 0.0, y: height);
+      ctx.cgContext.scaleBy(x: scaleX, y: -scaleY);
+      
+      ctx.cgContext.drawPDFPage(page);
+    }
+    
+    return img
+  }
   
   // MARK: - Navigation
   

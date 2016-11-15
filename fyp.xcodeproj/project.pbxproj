@@ -25,7 +25,6 @@
 		CD4907471DA4B40400AE445D /* AssignmentRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907451DA4B40400AE445D /* AssignmentRecord.swift */; };
 		CD4907491DA4B78000AE445D /* AssignmentRecordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907481DA4B78000AE445D /* AssignmentRecordTableViewController.swift */; };
 		CD49074B1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD49074A1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift */; };
-		CD49074D1DA4C8C300AE445D /* AssignmentRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD49074C1DA4C8C300AE445D /* AssignmentRecordViewController.swift */; };
 		CD49074F1DA4CD9E00AE445D /* test_2.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD49074E1DA4CD9E00AE445D /* test_2.pdf */; };
 		CD4907511DA4CDA700AE445D /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD4907501DA4CDA700AE445D /* test.pdf */; };
 		CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */; };
@@ -33,6 +32,7 @@
 		CD7FCDAF1DBDEFE30070A6BB /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */; };
 		CD7FCDB11DBEFF1B0070A6BB /* CircularTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */; };
 		CD7FCDB71DBF1FEA0070A6BB /* navigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */; };
+		CDA6CF861DDB19120089A41D /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA6CF851DDB19120089A41D /* CollectionViewController.swift */; };
 		CDBC22561DAE2D490025D33E /* roundUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22551DAE2D490025D33E /* roundUIButton.swift */; };
 		CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */; };
 /* End PBXBuildFile section */
@@ -67,7 +67,6 @@
 		CD4907451DA4B40400AE445D /* AssignmentRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecord.swift; sourceTree = "<group>"; };
 		CD4907481DA4B78000AE445D /* AssignmentRecordTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecordTableViewController.swift; sourceTree = "<group>"; };
 		CD49074A1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecordTableViewCell.swift; sourceTree = "<group>"; };
-		CD49074C1DA4C8C300AE445D /* AssignmentRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecordViewController.swift; sourceTree = "<group>"; };
 		CD49074E1DA4CD9E00AE445D /* test_2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test_2.pdf; path = ../../test_2.pdf; sourceTree = "<group>"; };
 		CD4907501DA4CDA700AE445D /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test.pdf; path = ../../test.pdf; sourceTree = "<group>"; };
 		CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecordCanvas.swift; sourceTree = "<group>"; };
@@ -75,6 +74,7 @@
 		CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
 		CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularTransition.swift; sourceTree = "<group>"; };
 		CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = navigationDelegate.swift; sourceTree = "<group>"; };
+		CDA6CF851DDB19120089A41D /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		CDBC22551DAE2D490025D33E /* roundUIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = roundUIButton.swift; sourceTree = "<group>"; };
 		CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bottomBorderUITextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,6 +97,125 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CD2425161DDB0307006D5F17 /* OnlineGradingModule */ = {
+			isa = PBXGroup;
+			children = (
+				CD2425191DDB03D6006D5F17 /* View */,
+				CD2425181DDB03D0006D5F17 /* Controller */,
+			);
+			name = OnlineGradingModule;
+			sourceTree = "<group>";
+		};
+		CD2425181DDB03D0006D5F17 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */,
+				CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */,
+				CDA6CF851DDB19120089A41D /* CollectionViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		CD2425191DDB03D6006D5F17 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */,
+				CD2425141DD0A7E3006D5F17 /* CommentView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		CD2425211DDB0491006D5F17 /* NavigationModule */ = {
+			isa = PBXGroup;
+			children = (
+				CD2425241DDB0504006D5F17 /* Model */,
+				CD2425231DDB04FF006D5F17 /* Controller */,
+				CD2425221DDB04F9006D5F17 /* View */,
+			);
+			name = NavigationModule;
+			sourceTree = "<group>";
+		};
+		CD2425221DDB04F9006D5F17 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CD37DF1C1DA4A9B4009B69FC /* CourseTableViewCell.swift */,
+				CD49073E1DA4AFD900AE445D /* AssignmentTableViewCell.swift */,
+				CD49074A1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		CD2425231DDB04FF006D5F17 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CD4907431DA4B16200AE445D /* AssignmentTableViewController.swift */,
+				CD4907481DA4B78000AE445D /* AssignmentRecordTableViewController.swift */,
+				CD37DF171DA3CA71009B69FC /* CourseTableViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		CD2425241DDB0504006D5F17 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CD4907451DA4B40400AE445D /* AssignmentRecord.swift */,
+				CD4907401DA4B0CD00AE445D /* Assignment.swift */,
+				CD37DF191DA3CC80009B69FC /* Course.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		CD2425251DDB0592006D5F17 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				CDBC22551DAE2D490025D33E /* roundUIButton.swift */,
+				CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */,
+				CD2425261DDB059D006D5F17 /* CircularTransition */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		CD2425261DDB059D006D5F17 /* CircularTransition */ = {
+			isa = PBXGroup;
+			children = (
+				CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */,
+				CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */,
+			);
+			name = CircularTransition;
+			sourceTree = "<group>";
+		};
+		CD2425271DDB05F7006D5F17 /* LoginModule */ = {
+			isa = PBXGroup;
+			children = (
+				CD2425291DDB060D006D5F17 /* View */,
+				CD2425281DDB0606006D5F17 /* Controller */,
+			);
+			name = LoginModule;
+			sourceTree = "<group>";
+		};
+		CD2425281DDB0606006D5F17 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		CD2425291DDB060D006D5F17 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		CD24252A1DDB0652006D5F17 /* static */ = {
+			isa = PBXGroup;
+			children = (
+				CD4907501DA4CDA700AE445D /* test.pdf */,
+				CD49074E1DA4CD9E00AE445D /* test_2.pdf */,
+			);
+			name = static;
+			sourceTree = "<group>";
+		};
 		CD37DEEB1DA3C697009B69FC = {
 			isa = PBXGroup;
 			children = (
@@ -118,31 +237,16 @@
 		CD37DEF61DA3C697009B69FC /* fyp */ = {
 			isa = PBXGroup;
 			children = (
-				CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */,
-				CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */,
-				CD4907501DA4CDA700AE445D /* test.pdf */,
-				CD49074E1DA4CD9E00AE445D /* test_2.pdf */,
+				CD24252A1DDB0652006D5F17 /* static */,
+				CD2425271DDB05F7006D5F17 /* LoginModule */,
+				CD2425251DDB0592006D5F17 /* Utilities */,
+				CD2425211DDB0491006D5F17 /* NavigationModule */,
+				CD2425161DDB0307006D5F17 /* OnlineGradingModule */,
 				CD37DEF71DA3C697009B69FC /* AppDelegate.swift */,
 				CD37DEFB1DA3C697009B69FC /* Main.storyboard */,
-				CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */,
-				CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */,
-				CDBC22551DAE2D490025D33E /* roundUIButton.swift */,
-				CD4907401DA4B0CD00AE445D /* Assignment.swift */,
-				CD4907431DA4B16200AE445D /* AssignmentTableViewController.swift */,
-				CD4907451DA4B40400AE445D /* AssignmentRecord.swift */,
-				CD4907481DA4B78000AE445D /* AssignmentRecordTableViewController.swift */,
-				CD49074C1DA4C8C300AE445D /* AssignmentRecordViewController.swift */,
-				CD49074A1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift */,
-				CD49073E1DA4AFD900AE445D /* AssignmentTableViewCell.swift */,
 				CD37DEFE1DA3C698009B69FC /* Assets.xcassets */,
 				CD37DF001DA3C698009B69FC /* LaunchScreen.storyboard */,
 				CD37DF031DA3C698009B69FC /* Info.plist */,
-				CD37DF171DA3CA71009B69FC /* CourseTableViewController.swift */,
-				CD37DF1C1DA4A9B4009B69FC /* CourseTableViewCell.swift */,
-				CD37DF191DA3CC80009B69FC /* Course.swift */,
-				CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */,
-				CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */,
-				CD2425141DD0A7E3006D5F17 /* CommentView.swift */,
 			);
 			path = fyp;
 			sourceTree = "<group>";
@@ -265,7 +369,6 @@
 				CD7FCDB71DBF1FEA0070A6BB /* navigationDelegate.swift in Sources */,
 				CD2425151DD0A7E3006D5F17 /* CommentView.swift in Sources */,
 				CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */,
-				CD49074D1DA4C8C300AE445D /* AssignmentRecordViewController.swift in Sources */,
 				CD4907491DA4B78000AE445D /* AssignmentRecordTableViewController.swift in Sources */,
 				CD4907441DA4B16200AE445D /* AssignmentTableViewController.swift in Sources */,
 				CD4907461DA4B40400AE445D /* AssignmentRecord.swift in Sources */,
@@ -275,6 +378,7 @@
 				CD7FCDAB1DB629720070A6BB /* PDFPageViewController.swift in Sources */,
 				CD7FCDAF1DBDEFE30070A6BB /* PDFViewController.swift in Sources */,
 				CD7FCDB11DBEFF1B0070A6BB /* CircularTransition.swift in Sources */,
+				CDA6CF861DDB19120089A41D /* CollectionViewController.swift in Sources */,
 				CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */,
 				CDBC22561DAE2D490025D33E /* roundUIButton.swift in Sources */,
 				CD37DF1A1DA3CC80009B69FC /* Course.swift in Sources */,
