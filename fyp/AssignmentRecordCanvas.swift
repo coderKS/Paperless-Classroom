@@ -18,28 +18,14 @@ class AssignmentRecordCanvas: UIImageView {
    }
    */
   
-  /* Possible Modes */
-  /* 
-   1. Pen
-   2. Rubber
-   3. Highlight
-  */
-  var penMode: String = "pen"
-  var penSize: CGFloat = 2
-  var pencilSize: CGFloat = 2
-  var eraserSize: CGFloat = 10
-  var highlightSize: CGFloat = 10
-  var penColor: UIColor = UIColor.black
-  var pencilTexture: UIColor = UIColor(patternImage: UIImage(named: "PencilTexture")!)
-  var highlightColor: UIColor = UIColor.init(red: 1.0, green: 1.0, blue: 0.0, alpha: 0.1)
-  
   //var drawingImage: UIImage?
   
   var temp: UIImage?
+  var parentController: PDFPageViewController?
   
+  /* Draw Method */
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     guard let touch = touches.first else { return }
-    
     UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
     let context = UIGraphicsGetCurrentContext()
     image?.draw(in: bounds)
@@ -52,20 +38,47 @@ class AssignmentRecordCanvas: UIImageView {
       touches.append(touch)
     }
     
-    //Draw according to different mode
+    //Draw according to different mode in PDF page at pageCurrent
+    var size:CGFloat?
+    var color:UIColor?
+    let parent = parentController!
+    let penMode = parent.penMode
+    switch penMode {
+    case "pen":
+      size = parent.penSize
+      color = parent.penColor
+      break
+    case "pencil":
+      size = parent.pencilSize
+      color = parent.pencilTexture
+      break
+    case "eraser":
+      size = parent.eraserSize
+      color = nil
+      break
+    case "highlight":
+      size = parent.highlightSize
+      color = parent.highlightColor
+      break
+    default:
+      size = parent.penSize
+      color = parent.penColor
+      break
+    }
+    
     for touch in touches {
-      drawStroke(context, touch: touch)
+      drawStroke(context, touch: touch, penMode: penMode, color: color, size: size!)
     }
     
     /*
      drawingImage = UIGraphicsGetImageFromCurrentImageContext()
-    
-    if let predictedTouches = event?.predictedTouches(for: touch) {
-      for touch in predictedTouches {
-        drawStroke(context, touch: touch)
-      }
-    }
-    */
+     
+     if let predictedTouches = event?.predictedTouches(for: touch) {
+     for touch in predictedTouches {
+     drawStroke(context, touch: touch)
+     }
+     }
+     */
     image = UIGraphicsGetImageFromCurrentImageContext()
     
     UIGraphicsEndImageContext()
@@ -73,41 +86,50 @@ class AssignmentRecordCanvas: UIImageView {
   
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     //image = drawingImage
+    
+    //If pen mode is textBox
+    let parent = parentController!
+    let penMode = parent.penMode
+    if penMode == "textBox" {
+      //Draw a editable text field
+      //Ask for keyboard input
+    }
     undoManager?.registerUndo(withTarget: self, selector: #selector(undo), object: temp)
-    temp = image
+    setTempImage(image)
   }
+
   
-  func drawStroke(_ context: CGContext?, touch: UITouch) {
+  func drawStroke(_ context: CGContext?, touch: UITouch, penMode: String, color: UIColor?, size: CGFloat) {
     let previous = touch.previousLocation(in: self)
     let current = touch.location(in: self)
     
-    if self.penMode == "pen" {
+    if penMode == "pen" {
       //Set pen color
-      penColor.setStroke()
+      color?.setStroke()
       //Pen Size
       if touch.force > 0 {
-        context?.setLineWidth(penSize * touch.force * 0.5)
+        context?.setLineWidth(size * touch.force * 0.5)
       } else {
-        context?.setLineWidth(penSize)
+        context?.setLineWidth(size)
       }
       context?.setLineCap(.round)
-    } else if self.penMode == "pencil" {
+    } else if penMode == "pencil" {
       //Set pen color
-      pencilTexture.setStroke()
+      color?.setStroke()
       //Pen Size
       if touch.force > 0 {
-        context?.setLineWidth(pencilSize * touch.force * 0.5)
+        context?.setLineWidth(size * touch.force * 0.5)
       } else {
-        context?.setLineWidth(pencilSize)
+        context?.setLineWidth(size)
       }
-    } else if self.penMode == "eraser" {
-      context?.setLineWidth(CGFloat(eraserSize))
+    } else if penMode == "eraser" {
+      context?.setLineWidth(size)
       context?.setLineCap(.round)
       context?.setBlendMode(.clear)
       context?.setStrokeColor(red: CGFloat(GL_RED), green: CGFloat(GL_GREEN), blue: CGFloat(GL_BLUE), alpha: CGFloat(0.0))
-    } else if self.penMode == "highlight" {
-      highlightColor.setStroke()
-      context?.setLineWidth(CGFloat(highlightSize))
+    } else if penMode == "highlight" {
+      color?.setStroke()
+      context?.setLineWidth(size)
       context?.setLineCap(.square)
     }
     context?.move(to: CGPoint(x: previous.x, y: previous.y))
@@ -116,65 +138,58 @@ class AssignmentRecordCanvas: UIImageView {
     context?.strokePath()
   }
   
-  //Set Pen Mode
-  func setMyPenMode(_ mode: String) {
-    self.penMode = mode
+  func textToImage(drawText text: NSString, atPoint point: CGPoint) -> UIImage {
+    let textColor = UIColor.white
+    let textFont = UIFont(name: "Helvetica Bold", size: 12)!
+    
+    let scale = UIScreen.main.scale
+    UIGraphicsBeginImageContextWithOptions((image?.size)!, false, scale)
+    
+    let textFontAttributes = [
+      NSFontAttributeName: textFont,
+      NSForegroundColorAttributeName: textColor,
+      ] as [String : Any]
+    image?.draw(in: CGRect(origin: CGPoint.zero, size: (image?.size)!))
+    
+    let rect = CGRect(origin: point, size: (image?.size)!)
+    text.draw(in: rect, withAttributes: textFontAttributes)
+    
+    let newImage = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    return newImage!
   }
   
-  //Set Pen Color
-  func setMyPenColor(_ color: UIColor){
-    self.penColor = color
+  func getImage() -> UIImage? {
+    return self.image
   }
   
-  //Set highlight Color
-  func setMyHighlightColor(_ color: UIColor){
-    self.highlightColor = color
+  func getTemp() -> UIImage? {
+    return self.temp
   }
   
-  //Get Pen Color
-  func getMyPenColor() -> UIColor {
-    return self.penColor
+  func setTempImage(_ new:UIImage?) {
+    self.temp = new
   }
   
-  //Get Highlight Color
-  func getMyHighlightColor() -> UIColor {
-    return self.highlightColor
-  }
-  
-  //Get pen size
-  func getPenSize() -> CGFloat {
-    return self.penSize
-  }
-  
-  //Get pencil size
-  func getPencilSize() -> CGFloat {
-    return self.pencilSize
-  }
-  
-  //Get rubber size
-  func getRubberSize() -> CGFloat {
-    return self.eraserSize
-  }
-  
-  //Get highlight size
-  func getHighlightSize() -> CGFloat {
-    return self.highlightSize
+  func setCurrentImage(_ new:UIImage?) {
+    self.image = new
   }
   
   //Clear Function
   func clear(){
     undoManager?.registerUndo(withTarget: self, selector: #selector(redo), object: image)
     //drawingImage = nil
-    image = nil
-    temp = nil
+    setCurrentImage(nil)
+    setTempImage(nil)
   }
   
   //Undo Function
   func undo(_ sender: UIImage) {
     undoManager?.registerUndo(withTarget: self, selector: #selector(redo), object: image)
     //drawingImage = sender
-    image = sender
-    temp = sender
+    setCurrentImage(sender)
+    setTempImage(sender)
     //print("Undo")
   }
   
@@ -182,8 +197,8 @@ class AssignmentRecordCanvas: UIImageView {
   func redo(_ sender: UIImage) {
     undoManager?.registerUndo(withTarget: self, selector: #selector(undo), object: image)
     //drawingImage = sender
-    image = sender
-    temp = sender
+    setCurrentImage(sender)
+    setTempImage(sender)
     //print("Redo")
   }
 }
