@@ -11,6 +11,9 @@ import UIKit
 class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowLayout,
   UICollectionViewDataSource {
   
+  //Data from the previous controller
+  var assignmentRecord: AssignmentRecord?
+  
   //Navigation bar Color
   var navBarColor = UIColor.init(red: 31/255, green: 37/255, blue: 53/255, alpha: 1)
   
@@ -52,9 +55,6 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   var pageCount: Int?
   var pageCurrent = 0
   
-  //Data from the previous controller
-  var assignmentRecord: AssignmentRecord?
-  
   //CGPDFDocument to hold the whole PDF
   var PDFDocument: CGPDFDocument?
   
@@ -81,12 +81,23 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   var penOptionColorLabel: UILabel?
   var highlightOptionColorLabel: UILabel?
   
-  //Pen Panel
-  var penSizeSlider: UISlider?
-  //Eraser Panel
-  var eraserSizeSlider: UISlider?
-  //Highlight Panel
-  var highlightSizeSlider: UISlider?
+  /* Draw */
+  
+  /* Possible Modes */
+  /*
+   1. Pen
+   2. Rubber
+   3. Highlight
+   */
+  var penMode: String = "pen"
+  var penSize: CGFloat = 2
+  var pencilSize: CGFloat = 2
+  var eraserSize: CGFloat = 10
+  var highlightSize: CGFloat = 10
+  var penColor: UIColor = UIColor.black
+  var pencilTexture: UIColor = UIColor(patternImage: UIImage(named: "PencilTexture")!)
+  var highlightColor: UIColor = UIColor.init(red: 1.0, green: 1.0, blue: 0.0, alpha: 0.1)
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -112,14 +123,12 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     leftEdgePan.edges = .left
     self.view.addGestureRecognizer(leftEdgePan)
     
-    
     //Init layout value
     let percentage:CGFloat = 0.92;
     width = view.frame.size.width;
     height = view.frame.size.height * percentage;
     panelWidth = view.frame.size.width;
     panelHeight = view.frame.size.height * (1 - percentage);
-    print(width, height, panelHeight)
     
     //Disable tab bar
     tabBarController?.tabBar.isHidden = true;
@@ -351,7 +360,8 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     navBar?.barTintColor = navBarColor
     self.view.addSubview(navBar!)
     let navItem = UINavigationItem()
-    navItem.setRightBarButtonItems([doneItem,commentItem,redoItem,undoItem], animated: true)
+    navItem.setRightBarButtonItems([doneItem,redoItem,undoItem], animated: true)
+    navItem.setLeftBarButtonItems([commentItem], animated: true)
     navBar?.setItems([navItem], animated: false);
     
     //Comment Navigation Bar
@@ -449,7 +459,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     currentPenColorLabel = UILabel(frame: CGRect(x: btnOffsetX + 1 * btnSpacing, y: btnOffsetY + btnHeight + labelHeight / 2, width:labelWidth, height: labelHeight))
     //currentPenColorLabel?.layer.cornerRadius = 10
     currentPenColorLabel?.clipsToBounds = true
-    let penColor = PDFViewControllers[pageCurrent].canvas?.getMyPenColor()
+    let penColor = getMyPenColor()
     currentPenColorLabel?.backgroundColor = penColor
     //End Pen
     
@@ -473,7 +483,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     
     //Create Label
     currentPencilColorLabel = UILabel(frame: CGRect(x: btnOffsetX + 2 * btnSpacing, y: btnOffsetY + btnHeight + labelHeight / 2, width:labelWidth, height: labelHeight))
-    let pencilColor = PDFViewControllers[pageCurrent].canvas?.getMyPenColor()
+    let pencilColor = getMyPenColor()
     currentPenColorLabel?.backgroundColor = pencilColor
     //End Penil
     
@@ -730,7 +740,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     //Create Label
     penOptionColorLabel = UILabel(frame: CGRect(x: btnOffsetX + 6 * btnSpacing, y: btnOffsetY + btnHeight, width:btnWidth, height: btnHeight / 10))
     penOptionColorLabel?.clipsToBounds = true
-    let penColor = PDFViewControllers[pageCurrent].canvas?.getMyPenColor()
+    let penColor = getMyPenColor()
     penOptionColorLabel?.backgroundColor = penColor
     
     //Create size button
@@ -945,7 +955,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   //Btn handler
   func penBtnTapped(_ sender: UIButton){
     //Set draw mode to pen
-    PDFViewControllers[pageCurrent].canvas?.setMyPenMode("pen")
+    setMyPenMode("pen")
     //Reset button state
     resetBtn()
     penBtn?.titleLabel?.backgroundColor = UIColor.darkGray
@@ -953,7 +963,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   
   func pencilBtnTapped(_ sender: UIButton){
     //Set draw mode to pencil
-    PDFViewControllers[pageCurrent].canvas?.setMyPenMode("pencil")
+    setMyPenMode("pencil")
     //Reset button state
     resetBtn()
     pencilBtn?.titleLabel?.backgroundColor = UIColor.darkGray
@@ -961,7 +971,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   
   func textBoxBtnTapped(_ sender: UIButton){
     //Set draw mode to text Box
-    PDFViewControllers[pageCurrent].canvas?.setMyPenMode("textBox")
+    setMyPenMode("textBox")
     //Reset button state
     resetBtn()
     textBoxBtn?.titleLabel?.backgroundColor = UIColor.darkGray
@@ -969,7 +979,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   
   func eraserBtnTapped(_ sender: UIButton){
     //Set draw mode to eraser
-    PDFViewControllers[pageCurrent].canvas?.setMyPenMode("eraser")
+    setMyPenMode("eraser")
     //Reset button state
     resetBtn()
     eraserBtn?.titleLabel?.backgroundColor = UIColor.darkGray
@@ -977,7 +987,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   
   func highlightBtnTapped(_ sender: UIButton){
     //Set draw mode to highlight
-    PDFViewControllers[pageCurrent].canvas?.setMyPenMode("highlight")
+    setMyPenMode("highlight")
     //Reset button state
     resetBtn()
     highlightBtn?.titleLabel?.backgroundColor = UIColor.darkGray
@@ -999,6 +1009,8 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   }
   
   func doneBtnTapped(_ sender: UIButton){
+    //Finish and upload it back to the server
+    finishAnnotation()
     //Return to the previous view
     performSegue(withIdentifier: "backToAssignmentRecord", sender: nil)
   }
@@ -1077,6 +1089,10 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       panelView?.isHidden = true
       //Show pen Option panel View
       self.view.addSubview(penOptionPanelView!)
+      penOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: panelHeight))
+      UIView.animate(withDuration: 0.3, animations: {
+        self.penOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+      }, completion: nil)
     }
   }
   
@@ -1085,7 +1101,13 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       //Show panel View
       panelView?.isHidden = false
       //Hide penOption panel View
-      penOptionPanelView?.removeFromSuperview()
+      panelView?.layer.opacity = 0.001
+      UIView.animate(withDuration: 0.3, animations: {
+        self.panelView?.layer.opacity = 1
+        self.penOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: self.panelHeight))
+      }, completion: { _ in
+        self.penOptionPanelView?.removeFromSuperview()
+      })
     }
   }
   
@@ -1095,6 +1117,10 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       panelView?.isHidden = true
       //Show pencil Option panel View
       self.view.addSubview(pencilOptionPanelView!)
+      pencilOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: panelHeight))
+      UIView.animate(withDuration: 0.3, animations: {
+        self.pencilOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+      }, completion: nil)
     }
   }
   
@@ -1103,7 +1129,13 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       //Show panel View
       panelView?.isHidden = false
       //Hide eraser Option panel View
-      pencilOptionPanelView?.removeFromSuperview()
+      panelView?.layer.opacity = 0.001
+      UIView.animate(withDuration: 0.3, animations: {
+        self.panelView?.layer.opacity = 1
+        self.pencilOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: self.panelHeight))
+      }, completion: { _ in
+        self.pencilOptionPanelView?.removeFromSuperview()
+      })
     }
   }
   
@@ -1113,6 +1145,11 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       panelView?.isHidden = true
       //Show eraser Option panel View
       self.view.addSubview(eraserOptionPanelView!)
+      eraserOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: panelHeight))
+      UIView.animate(withDuration: 0.3, animations: {
+        self.eraserOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+      }, completion: nil)
+
     }
   }
 
@@ -1121,7 +1158,13 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       //Show panel View
       panelView?.isHidden = false
       //Hide eraser Option panel View
-      eraserOptionPanelView?.removeFromSuperview()
+      panelView?.layer.opacity = 0.001
+      UIView.animate(withDuration: 0.3, animations: {
+        self.panelView?.layer.opacity = 1
+        self.eraserOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: self.panelHeight))
+      }, completion: { _ in
+        self.eraserOptionPanelView?.removeFromSuperview()
+      })
     }
   }
   
@@ -1131,6 +1174,10 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       panelView?.isHidden = true
       //Show highlight Option panel View
       self.view.addSubview(highlightOptionPanelView!)
+      highlightOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: panelHeight))
+      UIView.animate(withDuration: 0.3, animations: {
+        self.highlightOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+      }, completion: nil)
     }
   }
   
@@ -1139,7 +1186,14 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       //Show panel View
       panelView?.isHidden = false
       //Hide penOption panel View
-      highlightOptionPanelView?.removeFromSuperview()
+      panelView?.layer.opacity = 0.001
+      UIView.animate(withDuration: 0.3, animations: {
+        self.panelView?.layer.opacity = 1
+        self.highlightOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: self.panelHeight))
+      }, completion: { _ in
+        self.highlightOptionPanelView?.removeFromSuperview()
+      })
+      
     }
   }
   
@@ -1172,7 +1226,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       break
     default: break
     }
-    PDFViewControllers[pageCurrent].canvas?.setMyHighlightColor(actualColor)
+    setMyHighlightColor(actualColor)
     //Update the current highlight color label
     currentHighlightColorLabel?.backgroundColor = color
     //Update the highlight option color label
@@ -1196,7 +1250,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       break
     default: break
     }
-    PDFViewControllers[pageCurrent].canvas?.setMyPenColor(color)
+    setMyPenColor(color)
     //Update the current pen color label
     currentPenColorLabel?.backgroundColor = color
     //Update the pen option color label
@@ -1204,19 +1258,19 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   }
   
   func changePenSize(_ sender: UIButton){
-    PDFViewControllers[pageCurrent].canvas?.penSize = CGFloat(sender.tag * 2 - 1)
+    penSize = CGFloat(sender.tag * 2 - 1)
   }
   
   func changePencilSize(_ sender: UIButton){
-    PDFViewControllers[pageCurrent].canvas?.pencilSize = CGFloat(sender.tag * 2 - 1)
+    pencilSize = CGFloat(sender.tag * 2 - 1)
   }
   
   func changeEraserSize(_ sender: UIButton) {
-    PDFViewControllers[pageCurrent].canvas?.eraserSize = CGFloat(sender.tag * 5 - 1)
+    eraserSize = CGFloat(sender.tag * 5 - 1)
   }
   
   func changeHighlightSize(_ sender: UIButton) {
-    PDFViewControllers[pageCurrent].canvas?.highlightSize = CGFloat(sender.tag * 5 - 1)
+    highlightSize = CGFloat(sender.tag * 5 - 1)
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -1291,6 +1345,73 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     }
     
     return img
+  }
+  
+  //Set Pen Mode
+  func setMyPenMode(_ mode: String) {
+    self.penMode = mode
+  }
+  
+  //Set Pen Color
+  func setMyPenColor(_ color: UIColor){
+    self.penColor = color
+  }
+  
+  //Set highlight Color
+  func setMyHighlightColor(_ color: UIColor){
+    self.highlightColor = color
+  }
+  
+  //Get Pen Color
+  func getMyPenColor() -> UIColor {
+    return self.penColor
+  }
+  
+  //Get Highlight Color
+  func getMyHighlightColor() -> UIColor {
+    return self.highlightColor
+  }
+  
+  //Get pen size
+  func getPenSize() -> CGFloat {
+    return self.penSize
+  }
+  
+  //Get pencil size
+  func getPencilSize() -> CGFloat {
+    return self.pencilSize
+  }
+  
+  //Get rubber size
+  func getRubberSize() -> CGFloat {
+    return self.eraserSize
+  }
+  
+  //Get highlight size
+  func getHighlightSize() -> CGFloat {
+    return self.highlightSize
+  }
+  
+  
+  /* API CALL */
+  func finishAnnotation() {
+    
+  }
+  
+  func getAnnotation() {
+    //Get the data from server
+  }
+  
+  func addAnnotation(_ linePath: LinePath) {
+    //Send the data to server
+  }
+  
+  func undoAnnotation() {
+    //Undo the data uploaded to server
+  }
+  
+  func redoAnnotation() {
+    //Redo the data deleted from server
   }
   
   // MARK: - Navigation

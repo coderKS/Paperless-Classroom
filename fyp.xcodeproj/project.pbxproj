@@ -28,6 +28,7 @@
 		CD49074F1DA4CD9E00AE445D /* test_2.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD49074E1DA4CD9E00AE445D /* test_2.pdf */; };
 		CD4907511DA4CDA700AE445D /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD4907501DA4CDA700AE445D /* test.pdf */; };
 		CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */; };
+		CD69E0191DDCC24D0029B168 /* LinePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD69E0181DDCC24D0029B168 /* LinePath.swift */; };
 		CD7FCDAB1DB629720070A6BB /* PDFPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */; };
 		CD7FCDAF1DBDEFE30070A6BB /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */; };
 		CD7FCDB11DBEFF1B0070A6BB /* CircularTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */; };
@@ -78,6 +79,7 @@
 		CD49074E1DA4CD9E00AE445D /* test_2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test_2.pdf; path = ../../test_2.pdf; sourceTree = "<group>"; };
 		CD4907501DA4CDA700AE445D /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test.pdf; path = ../../test.pdf; sourceTree = "<group>"; };
 		CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecordCanvas.swift; sourceTree = "<group>"; };
+		CD69E0181DDCC24D0029B168 /* LinePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinePath.swift; sourceTree = "<group>"; };
 		CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPageViewController.swift; sourceTree = "<group>"; };
 		CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
 		CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularTransition.swift; sourceTree = "<group>"; };
@@ -116,7 +118,11 @@
 		CD2425161DDB0307006D5F17 /* OnlineGradingModule */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+				CD69E0171DDCC21D0029B168 /* Model */,
+=======
 				E014CBD01DDCC16700A97E80 /* Model */,
+>>>>>>> c3cb6184243762cdec1a4c2c0b174913b6cef12d
 				CD2425191DDB03D6006D5F17 /* View */,
 				CD2425181DDB03D0006D5F17 /* Controller */,
 			);
@@ -260,6 +266,7 @@
 		CD37DEF61DA3C697009B69FC /* fyp */ = {
 			isa = PBXGroup;
 			children = (
+				CDA6CF871DDC48A40089A41D /* ImageLayer */,
 				CD24252A1DDB0652006D5F17 /* static */,
 				CD2425271DDB05F7006D5F17 /* LoginModule */,
 				CD2425251DDB0592006D5F17 /* Utilities */,
@@ -283,6 +290,12 @@
 			path = fypTests;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
+		CD69E0171DDCC21D0029B168 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CD69E0181DDCC24D0029B168 /* LinePath.swift */,
+=======
 		E014CBCB1DDBFD4800A97E80 /* Connector */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,16 +309,25 @@
 			isa = PBXGroup;
 			children = (
 				E014CBD11DDCC18C00A97E80 /* Annotator.swift */,
+>>>>>>> c3cb6184243762cdec1a4c2c0b174913b6cef12d
 			);
 			name = Model;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
+		CDA6CF871DDC48A40089A41D /* ImageLayer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ImageLayer;
+=======
 		E01B05971DDB795700FF539F /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				E01B05981DDB796400FF539F /* User.swift */,
 			);
 			name = Model;
+>>>>>>> c3cb6184243762cdec1a4c2c0b174913b6cef12d
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,7 +375,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = IK1603;
 				TargetAttributes = {
 					CD37DEF31DA3C697009B69FC = {
@@ -421,6 +443,7 @@
 				E01B05921DDB653800FF539F /* MysqlConnector.swift in Sources */,
 				CD4907441DA4B16200AE445D /* AssignmentTableViewController.swift in Sources */,
 				CD4907461DA4B40400AE445D /* AssignmentRecord.swift in Sources */,
+				CD69E0191DDCC24D0029B168 /* LinePath.swift in Sources */,
 				CD49074B1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift in Sources */,
 				E014CBD21DDCC18C00A97E80 /* Annotator.swift in Sources */,
 				E01B059D1DDB7B7100FF539F /* Convertor.swift in Sources */,
@@ -503,6 +526,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -553,6 +577,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -586,10 +611,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = NP45BW7DPL;
 				INFOPLIST_FILE = fyp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.fyp.fyp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos10.0;
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -601,10 +629,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = NP45BW7DPL;
 				INFOPLIST_FILE = fyp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.fyp.fyp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos10.0;
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

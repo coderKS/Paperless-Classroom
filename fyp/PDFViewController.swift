@@ -56,6 +56,7 @@ class PDFViewController: UIViewController{
     //Create canvas for drawing
     canvas = AssignmentRecordCanvas(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
     self.view.backgroundColor = UIColor.white
+    canvas?.parentController = self.parent as! PDFPageViewController?
     canvas?.isUserInteractionEnabled = true
     
     //Create a view for comments
@@ -138,7 +139,7 @@ class PDFViewController: UIViewController{
       
       let scaleX = width / pageRect.size.width
       let scaleY = height / pageRect.size.height
-
+      
       //Draw from left bottom
       ctx.cgContext.translateBy(x: 0.0, y: height);
       ctx.cgContext.scaleBy(x: scaleX, y: -scaleY);
@@ -147,6 +148,7 @@ class PDFViewController: UIViewController{
     }
     
     return img
+    
   }
   
   func enableComment(){
