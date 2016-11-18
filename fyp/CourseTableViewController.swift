@@ -10,6 +10,7 @@ import UIKit
 
 class CourseTableViewController: UITableViewController {
   
+  var userId = ""
   var courses = [Course]()
   
   let transition = CircularTransition()
@@ -42,12 +43,25 @@ class CourseTableViewController: UITableViewController {
   }
   
   func loadCourse(){
-    let defaultImg = UIImage(named: "Course")
-    let course1 = Course(name: "CSCI2100", image: defaultImg)!
-    let course2 = Course(name: "CSCI2720", image: defaultImg)!
-    let course3 = Course(name: "ELTU3003", image: defaultImg)!
-    let course4 = Course(name: "CPTH2100", image: defaultImg)!
-    courses += [course1, course2, course3, course4]
+    print("loadCourse# start")
+    let connectorType = ConnectorType.Localhost
+    print("loadCourse# connectorType=\(connectorType)")
+    let api = AppAPI(connectorType: connectorType)
+    if(api == nil){
+      print ("Fail to load api")
+      
+    }
+    api!.getCourseList(userId: self.userId){
+      (courses) in
+      self.courses = courses
+      self.tableView.reloadData()
+    }
+
+//    let course1 = Course(name: "CSCI2100", image: defaultImg)!
+//    let course2 = Course(name: "CSCI2720", image: defaultImg)!
+//    let course3 = Course(name: "ELTU3003", image: defaultImg)!
+//    let course4 = Course(name: "CPTH2100", image: defaultImg)!
+//    courses += [course1, course2, course3, course4]
   }
   
   override func didReceiveMemoryWarning() {

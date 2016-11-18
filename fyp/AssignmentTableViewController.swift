@@ -27,10 +27,10 @@ class AssignmentTableViewController: UITableViewController {
   
   func loadAssignments(){
     let defaultImg = UIImage(named: "folder")
-    let assignment1 = Assignment(name: "Assignment 1", image: defaultImg)!
-    let assignment2 = Assignment(name: "Assignment 2", image: defaultImg)!
-    let assignment3 = Assignment(name: "Mid-Term Paper", image: defaultImg)!
-    let assignment4 = Assignment(name: "Final Paper", image: defaultImg)!
+    let assignment1 = Assignment(id: "0", name: "Assignment 1", image: defaultImg, submittedNum: 18, lastModified: Date(), status: AssignmentStatus.OPENED_FOR_SUBMISSION, dueDate: Convertor.stringToDate(dateString: "2016-11-15 23:59:59")!)!
+    let assignment2 = Assignment(id: "0", name: "Assignment 2", image: defaultImg, submittedNum: 18, lastModified: Date(), status: AssignmentStatus.OPENED_FOR_SUBMISSION, dueDate: Convertor.stringToDate(dateString: "2016-11-15 23:59:59")!)!
+    let assignment3 = Assignment(id: "0", name: "Assignment 3", image: defaultImg, submittedNum: 18, lastModified: Date(), status: AssignmentStatus.OPENED_FOR_SUBMISSION, dueDate: Convertor.stringToDate(dateString: "2016-11-15 23:59:59")!)!
+    let assignment4 = Assignment(id: "0", name: "Assignment 4", image: defaultImg, submittedNum: 18, lastModified: Date(), status: AssignmentStatus.OPENED_FOR_SUBMISSION, dueDate: Convertor.stringToDate(dateString: "2016-11-15 23:59:59")!)!
     assignments += [assignment1, assignment2, assignment3, assignment4]
   }
   

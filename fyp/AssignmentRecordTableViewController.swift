@@ -27,9 +27,9 @@ class AssignmentRecordTableViewController: UITableViewController {
   
   func loadAssignmentRecords(){
     let defaultImg = UIImage(named: "folder")
-    let asgRecord1 = AssignmentRecord(studentID: "1234567890", image: defaultImg, dateTime: "05 Oct 2016", isMarked: true, score: 90, url: "test")!
-    let asgRecord2 = AssignmentRecord(studentID: "9998887776", image: defaultImg, dateTime: "04 Sep 2016", isMarked: true, score: 90, url: "test_2")!
-    let asgRecord3 = AssignmentRecord(studentID: "6767654132", image: defaultImg, dateTime: "03 Oct 2016", isMarked: false, score: nil, url: "test")!
+    let asgRecord1 = AssignmentRecord(id: "01", submissionStatus: 1, submissionDateTime: Convertor.stringToDate(dateString: "2016-10-15 23:59:59")!, studentID: "1155047854", studentName: "Wong Kam Shing", gradingStatus: AssignmentRecordStatus.IN_GRADING, image: defaultImg, score: 100, grade: "A", assignmentURL: "abc.pdf", lastModified: Convertor.stringToDate(dateString: "2016-10-16 14:08:12")!)!
+    let asgRecord2 = AssignmentRecord(id: "01", submissionStatus: 1, submissionDateTime: Convertor.stringToDate(dateString: "2016-10-15 23:59:59")!, studentID: "1155012345", studentName: "Wong Kam Shing", gradingStatus: AssignmentRecordStatus.IN_GRADING, image: defaultImg, score: 90, grade: "A-", assignmentURL: "abc.pdf", lastModified: Convertor.stringToDate(dateString: "2016-10-16 14:08:12")!)!
+    let asgRecord3 = AssignmentRecord(id: "01", submissionStatus: 1, submissionDateTime: Convertor.stringToDate(dateString: "2016-10-15 23:59:59")!, studentID: "1234567890", studentName: "Wong Kam Shing", gradingStatus: AssignmentRecordStatus.IN_GRADING, image: defaultImg, score: 80, grade: "B+", assignmentURL: "abc.pdf", lastModified: Convertor.stringToDate(dateString: "2016-10-16 14:08:12")!)!
     assignmentRecords += [asgRecord1, asgRecord2, asgRecord3]
   }
   
@@ -60,7 +60,7 @@ class AssignmentRecordTableViewController: UITableViewController {
     cell.studentID.text = asgRecord.studentID
     cell.assignmentRecordImage.image = asgRecord.assignmentRecordImage
     cell.score.text = asgRecord.score?.description
-    cell.submissionDateTime.text = asgRecord.submissionDateTime
+    cell.submissionDateTime.text = Convertor.dateToString(date: asgRecord.submissionDateTime!)
     
     return cell
   }
