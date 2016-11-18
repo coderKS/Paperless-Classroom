@@ -1,0 +1,51 @@
+[
+  {
+    "id": "0",
+    "submissionStatus": "1",
+    "submissionDateTime": "2016-10-12 13:44:50",
+    "studentID": "1155047854",
+    "studentName": "Wong Kam Shing",
+    "gradingStatus": "-9",
+    "assignmentRecordImage": "",
+    "score": "92",
+    "grade": "A-",
+    "assignmentURL": "/Paper_1155047854.pdf",
+    "lastModified": "2016-10-14 21:44:50"
+  },{
+    "id": "1",
+    "submissionStatus": "1",
+    "submissionDateTime": "2016-10-08 13:44:50",
+    "studentID": "1155012345",
+    "studentName": "Anthony Wong",
+    "gradingStatus": "1",
+    "assignmentRecordImage": "",
+    "score": "",
+    "grade": "",
+    "assignmentURL": "/Paper_1155012345.pdf",
+    "lastModified": "2016-10-15 21:44:50"
+  },{
+    "id": "2",
+    "submissionStatus": "1",
+    "submissionDateTime": "2016-10-18 13:44:50",
+    "studentID": "1234567890",
+    "studentName": "Chan Tai Man",
+    "gradingStatus": "-1",
+    "assignmentRecordImage": "",
+    "score": "",
+    "grade": "",
+    "assignmentURL": "/Paper_1234567890.pdf",
+    "lastModified": "2016-10-15 21:44:50"
+  },{
+    "id": "3",
+    "submissionStatus": "0",
+    "submissionDateTime": "",
+    "studentID": "9876543210",
+    "studentName": "Tony Tai",
+    "gradingStatus": "-1",
+    "assignmentRecordImage": "",
+    "score": "",
+    "grade": "",
+    "assignmentURL": "/Paper_9876543210.pdf",
+    "lastModified": "2016-10-15 21:44:50"
+  }
+]

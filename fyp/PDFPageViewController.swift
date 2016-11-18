@@ -594,7 +594,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     }
     
     //Set the default comment
-    PDFViewControllers[pageCurrent].commentView?.setComment(comments[0])
+    //PDFViewControllers[pageCurrent].commentView?.setComment(comments[0])
     //Set visual feedback
     commentBtns[0].backgroundColor = UIColor.init(red: 0, green: 99/255, blue: 99/255, alpha: 1)
     commentBtns[0].setTitleColor(UIColor.white, for: .normal)
@@ -1033,7 +1033,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     panelView?.isHidden = false
     PDFViewControllers[pageCurrent].disableComment()
     //Save all changes
-    PDFViewControllers[pageCurrent].commentView?.done()
+    //PDFViewControllers[pageCurrent].commentView?.done()
     
     commentPanelView?.removeFromSuperview()
     commentNavBar?.removeFromSuperview()
@@ -1045,7 +1045,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     panelView?.isHidden = false
     PDFViewControllers[pageCurrent].disableComment()
     //Clear all changes
-    PDFViewControllers[pageCurrent].commentView?.cancel()
+    //PDFViewControllers[pageCurrent].commentView?.cancel()
     
     commentPanelView?.removeFromSuperview()
     commentNavBar?.removeFromSuperview()
@@ -1055,7 +1055,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     //Get the comment based on tag value
     let selectedComment = comments[sender.tag]
     //Draw the comment on PDFViewController
-    PDFViewControllers[pageCurrent].commentView?.setComment(selectedComment)
+    //PDFViewControllers[pageCurrent].commentView?.setComment(selectedComment)
     //Visual feedback of selected comment
     for btn in commentBtns {
       btn.backgroundColor = UIColor.cyan

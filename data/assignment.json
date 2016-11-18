@@ -1,0 +1,35 @@
+[
+  {
+    "id": "0",
+    "name": "Assignment1: Resume",
+    "image": "",
+    "submittedNum": "18",
+    "lastModified": "2016-10-15 13:44:50",
+    "status": "2",
+    "dueDate": "2016-10-13 23:59:59"
+  },{
+    "id": "1",
+    "name": "Assignment2: CoverLetter",
+    "image": "",
+    "submittedNum": "12",
+    "lastModified": "2016-11-11 21:04:00",
+    "status": "2",
+    "dueDate": "2016-11-07 17:00:00"
+  },{
+    "id": "2",
+    "name": "Assignment3: Business Email",
+    "image": "",
+    "submittedNum": "2",
+    "lastModified": "2016-11-15 18:15:30",
+    "status": "1",
+    "dueDate": "2016-11-31 23:59:59"
+  },{
+    "id": "3",
+    "name": "Assignment4: Final Paper",
+    "image": "",
+    "submittedNum": "0",
+    "lastModified": "2016-12-07 18:41:50",
+    "status": "-1",
+    "dueDate": "2016-12-07 17:00:00"
+  }
+]
