@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+protocol Connector {
+  // MARK: Properties
+  var baseUrl: String {get}
+  // MARK: Action
+  
+  // An async function that return the response by given url, parameters
+  // @return: responseString
+  func sendPostRequest(urlString: String, postString: String?, completion: @escaping (Data?) -> ())
+  
+  // An async function that return the response by given url
+  // @return: responseString
+  func sendGetRequest(urlString: String, completion: @escaping (Data?) -> ())
+  
+}

@@ -50,16 +50,16 @@ class AppAPI {
       // 1. create url with userId as parameters
       let urlString = connector.baseUrl
       //let param = "Course?userId=\(userId)"
-      let urlWithParam = urlString + "Course/" + userId
+      let urlWithParam = urlString + "Course/" + userId + "/course.json"
       
       print ("urlWithParam = \(urlWithParam)")
       
       connector.sendGetRequest(urlString: urlWithParam) {
         // 2. get the responseString
-        (responseString) in
-        print ("responseString = \(responseString)")
+        (data) in
+        print ("data = \(data)")
         // 3. parse the responseString to JSON
-        let json = JSON(responseString)
+        let json = JSON(data: data!)
         // 4. convert the JSON into an array of Course Object
         let courses = Convertor.jsonToCourseList(json: json)
         completion(courses)
@@ -102,6 +102,7 @@ class AppAPI {
     
     return assignemntRecords
   }
+  
   
   
 }

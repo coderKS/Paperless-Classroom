@@ -10,7 +10,7 @@ import UIKit
 
 class CourseTableViewController: UITableViewController {
   
-  var userId = ""
+  var userId = "king"
   var courses = [Course]()
   
   let transition = CircularTransition()
