@@ -40,6 +40,7 @@
 		E014CBCA1DDBF72A00A97E80 /* Connector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E014CBC91DDBF72A00A97E80 /* Connector.swift */; };
 		E014CBCD1DDBFD6000A97E80 /* DummyConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E014CBCC1DDBFD6000A97E80 /* DummyConnector.swift */; };
 		E014CBCF1DDBFF5A00A97E80 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = E014CBCE1DDBFF5A00A97E80 /* SwiftyJSON.swift */; };
+		E014CBD21DDCC18C00A97E80 /* Annotator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E014CBD11DDCC18C00A97E80 /* Annotator.swift */; };
 		E01B05921DDB653800FF539F /* MysqlConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B05911DDB653800FF539F /* MysqlConnector.swift */; };
 		E01B05991DDB796400FF539F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B05981DDB796400FF539F /* User.swift */; };
 		E01B059D1DDB7B7100FF539F /* Convertor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B059C1DDB7B7100FF539F /* Convertor.swift */; };
@@ -118,6 +119,13 @@
 			isa = PBXGroup;
 			children = (
 				CD69E0171DDCC21D0029B168 /* Model */,
+<<<<<<< HEAD
+        CD2425191DDB03D6006D5F17 /* View */,
+        CD2425181DDB03D0006D5F17 /* Controller */,
+
+        E014CBD01DDCC16700A97E80 /* Model */,
+=======
+>>>>>>> c0bc9a7a57817c89a64c3069406d698efed11e3c
 				CD2425191DDB03D6006D5F17 /* View */,
 				CD2425181DDB03D0006D5F17 /* Controller */,
 			);
@@ -285,21 +293,26 @@
 			path = fypTests;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
+=======
+
+>>>>>>> c0bc9a7a57817c89a64c3069406d698efed11e3c
 		CD69E0171DDCC21D0029B168 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				CD69E0181DDCC24D0029B168 /* LinePath.swift */,
+<<<<<<< HEAD
+      );
+      name = Model;
+      sourceTree = "<group>";
+    };
+=======
 			);
 			name = Model;
 			sourceTree = "<group>";
 		};
-		CDA6CF871DDC48A40089A41D /* ImageLayer */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = ImageLayer;
-			sourceTree = "<group>";
-		};
+>>>>>>> c0bc9a7a57817c89a64c3069406d698efed11e3c
+
 		E014CBCB1DDBFD4800A97E80 /* Connector */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +322,28 @@
 			name = Connector;
 			sourceTree = "<group>";
 		};
+		E014CBD01DDCC16700A97E80 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E014CBD11DDCC18C00A97E80 /* Annotator.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+
+		CDA6CF871DDC48A40089A41D /* ImageLayer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ImageLayer;
+<<<<<<< HEAD
+      sourceTree = "<group>";
+    };
+=======
+			sourceTree = "<group>";
+		};
+>>>>>>> c0bc9a7a57817c89a64c3069406d698efed11e3c
+
 		E01B05971DDB795700FF539F /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -317,6 +352,7 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -602,7 +638,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.fyp.fyp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos10.1;
+				SDKROOT = iphoneos10.0;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -620,7 +656,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.fyp.fyp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos10.1;
+				SDKROOT = iphoneos10.0;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
