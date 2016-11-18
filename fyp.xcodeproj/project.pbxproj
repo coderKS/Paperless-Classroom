@@ -28,6 +28,7 @@
 		CD49074F1DA4CD9E00AE445D /* test_2.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD49074E1DA4CD9E00AE445D /* test_2.pdf */; };
 		CD4907511DA4CDA700AE445D /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD4907501DA4CDA700AE445D /* test.pdf */; };
 		CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */; };
+		CD69E0191DDCC24D0029B168 /* LinePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD69E0181DDCC24D0029B168 /* LinePath.swift */; };
 		CD7FCDAB1DB629720070A6BB /* PDFPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */; };
 		CD7FCDAF1DBDEFE30070A6BB /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */; };
 		CD7FCDB11DBEFF1B0070A6BB /* CircularTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */; };
@@ -70,6 +71,7 @@
 		CD49074E1DA4CD9E00AE445D /* test_2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test_2.pdf; path = ../../test_2.pdf; sourceTree = "<group>"; };
 		CD4907501DA4CDA700AE445D /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test.pdf; path = ../../test.pdf; sourceTree = "<group>"; };
 		CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecordCanvas.swift; sourceTree = "<group>"; };
+		CD69E0181DDCC24D0029B168 /* LinePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinePath.swift; sourceTree = "<group>"; };
 		CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPageViewController.swift; sourceTree = "<group>"; };
 		CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
 		CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularTransition.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 		CD2425161DDB0307006D5F17 /* OnlineGradingModule */ = {
 			isa = PBXGroup;
 			children = (
+				CD69E0171DDCC21D0029B168 /* Model */,
 				CD2425191DDB03D6006D5F17 /* View */,
 				CD2425181DDB03D0006D5F17 /* Controller */,
 			);
@@ -261,6 +264,14 @@
 			path = fypTests;
 			sourceTree = "<group>";
 		};
+		CD69E0171DDCC21D0029B168 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CD69E0181DDCC24D0029B168 /* LinePath.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		CDA6CF871DDC48A40089A41D /* ImageLayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,6 +391,7 @@
 				CD4907491DA4B78000AE445D /* AssignmentRecordTableViewController.swift in Sources */,
 				CD4907441DA4B16200AE445D /* AssignmentTableViewController.swift in Sources */,
 				CD4907461DA4B40400AE445D /* AssignmentRecord.swift in Sources */,
+				CD69E0191DDCC24D0029B168 /* LinePath.swift in Sources */,
 				CD49074B1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift in Sources */,
 				CD4907411DA4B0CD00AE445D /* Assignment.swift in Sources */,
 				CD37DF1D1DA4A9B4009B69FC /* CourseTableViewCell.swift in Sources */,

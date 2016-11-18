@@ -1089,6 +1089,10 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       panelView?.isHidden = true
       //Show pen Option panel View
       self.view.addSubview(penOptionPanelView!)
+      penOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: panelHeight))
+      UIView.animate(withDuration: 0.3, animations: {
+        self.penOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+      }, completion: nil)
     }
   }
   
@@ -1097,7 +1101,13 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       //Show panel View
       panelView?.isHidden = false
       //Hide penOption panel View
-      penOptionPanelView?.removeFromSuperview()
+      panelView?.layer.opacity = 0.001
+      UIView.animate(withDuration: 0.3, animations: {
+        self.panelView?.layer.opacity = 1
+        self.penOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: self.panelHeight))
+      }, completion: { _ in
+        self.penOptionPanelView?.removeFromSuperview()
+      })
     }
   }
   
@@ -1107,6 +1117,10 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       panelView?.isHidden = true
       //Show pencil Option panel View
       self.view.addSubview(pencilOptionPanelView!)
+      pencilOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: panelHeight))
+      UIView.animate(withDuration: 0.3, animations: {
+        self.pencilOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+      }, completion: nil)
     }
   }
   
@@ -1115,7 +1129,13 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       //Show panel View
       panelView?.isHidden = false
       //Hide eraser Option panel View
-      pencilOptionPanelView?.removeFromSuperview()
+      panelView?.layer.opacity = 0.001
+      UIView.animate(withDuration: 0.3, animations: {
+        self.panelView?.layer.opacity = 1
+        self.pencilOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: self.panelHeight))
+      }, completion: { _ in
+        self.pencilOptionPanelView?.removeFromSuperview()
+      })
     }
   }
   
@@ -1125,6 +1145,11 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       panelView?.isHidden = true
       //Show eraser Option panel View
       self.view.addSubview(eraserOptionPanelView!)
+      eraserOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: panelHeight))
+      UIView.animate(withDuration: 0.3, animations: {
+        self.eraserOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+      }, completion: nil)
+
     }
   }
 
@@ -1133,7 +1158,13 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       //Show panel View
       panelView?.isHidden = false
       //Hide eraser Option panel View
-      eraserOptionPanelView?.removeFromSuperview()
+      panelView?.layer.opacity = 0.001
+      UIView.animate(withDuration: 0.3, animations: {
+        self.panelView?.layer.opacity = 1
+        self.eraserOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: self.panelHeight))
+      }, completion: { _ in
+        self.eraserOptionPanelView?.removeFromSuperview()
+      })
     }
   }
   
@@ -1143,6 +1174,10 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       panelView?.isHidden = true
       //Show highlight Option panel View
       self.view.addSubview(highlightOptionPanelView!)
+      highlightOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: panelHeight))
+      UIView.animate(withDuration: 0.3, animations: {
+        self.highlightOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+      }, completion: nil)
     }
   }
   
@@ -1151,7 +1186,14 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       //Show panel View
       panelView?.isHidden = false
       //Hide penOption panel View
-      highlightOptionPanelView?.removeFromSuperview()
+      panelView?.layer.opacity = 0.001
+      UIView.animate(withDuration: 0.3, animations: {
+        self.panelView?.layer.opacity = 1
+        self.highlightOptionPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: self.panelHeight))
+      }, completion: { _ in
+        self.highlightOptionPanelView?.removeFromSuperview()
+      })
+      
     }
   }
   
@@ -1357,19 +1399,19 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   }
   
   func getAnnotation() {
-    
+    //Get the data from server
   }
   
-  func addAnnotation() {
-    
+  func addAnnotation(_ linePath: LinePath) {
+    //Send the data to server
   }
   
   func undoAnnotation() {
-    
+    //Undo the data uploaded to server
   }
   
   func redoAnnotation() {
-    
+    //Redo the data deleted from server
   }
   
   // MARK: - Navigation

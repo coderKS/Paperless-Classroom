@@ -22,6 +22,7 @@ class AssignmentRecordCanvas: UIImageView {
   
   var temp: UIImage?
   var parentController: PDFPageViewController?
+  var saved = [CGPoint]()
   
   /* Draw Method */
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -94,14 +95,53 @@ class AssignmentRecordCanvas: UIImageView {
       //Draw a editable text field
       //Ask for keyboard input
     }
+    
+    //Push Undo History
     undoManager?.registerUndo(withTarget: self, selector: #selector(undo), object: temp)
+    
+    //Save the last Image
     setTempImage(image)
+    
+    //Create a line path Object
+    var size:CGFloat?
+    var color:UIColor?
+    switch penMode {
+    case "pen":
+      size = parent.penSize
+      color = parent.penColor
+      break
+    case "pencil":
+      size = parent.pencilSize
+      color = parent.pencilTexture
+      break
+    case "eraser":
+      size = parent.eraserSize
+      color = nil
+      break
+    case "highlight":
+      size = parent.highlightSize
+      color = parent.highlightColor
+      break
+    default:
+      size = parent.penSize
+      color = parent.penColor
+      break
+    }
+    let linePath = LinePath(positions: saved, color: color!, lineWidth: size!, category: parent.penMode,
+                            userID: 1, assignmentRecordID: 1, assignmentID: 1)
+    
+    //Empty the saved positions
+    saved.removeAll(keepingCapacity: false)
+    //API Call to addAnnotation
+    parentController?.addAnnotation(linePath!)
   }
 
   
   func drawStroke(_ context: CGContext?, touch: UITouch, penMode: String, color: UIColor?, size: CGFloat) {
     let previous = touch.previousLocation(in: self)
     let current = touch.location(in: self)
+    
+    saved.append(CGPoint(x: current.x, y: current.y))
     
     if penMode == "pen" {
       //Set pen color
