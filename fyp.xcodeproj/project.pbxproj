@@ -118,11 +118,11 @@
 		CD2425161DDB0307006D5F17 /* OnlineGradingModule */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 				CD69E0171DDCC21D0029B168 /* Model */,
-=======
-				E014CBD01DDCC16700A97E80 /* Model */,
->>>>>>> c3cb6184243762cdec1a4c2c0b174913b6cef12d
+        CD2425191DDB03D6006D5F17 /* View */,
+        CD2425181DDB03D0006D5F17 /* Controller */,
+
+        E014CBD01DDCC16700A97E80 /* Model */,
 				CD2425191DDB03D6006D5F17 /* View */,
 				CD2425181DDB03D0006D5F17 /* Controller */,
 			);
@@ -290,12 +290,15 @@
 			path = fypTests;
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
 		CD69E0171DDCC21D0029B168 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				CD69E0181DDCC24D0029B168 /* LinePath.swift */,
-=======
+      );
+      name = Model;
+      sourceTree = "<group>";
+    };
+
 		E014CBCB1DDBFD4800A97E80 /* Connector */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,27 +312,28 @@
 			isa = PBXGroup;
 			children = (
 				E014CBD11DDCC18C00A97E80 /* Annotator.swift */,
->>>>>>> c3cb6184243762cdec1a4c2c0b174913b6cef12d
 			);
 			name = Model;
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
+
 		CDA6CF871DDC48A40089A41D /* ImageLayer */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = ImageLayer;
-=======
+      sourceTree = "<group>";
+    };
+
 		E01B05971DDB795700FF539F /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				E01B05981DDB796400FF539F /* User.swift */,
 			);
 			name = Model;
->>>>>>> c3cb6184243762cdec1a4c2c0b174913b6cef12d
 			sourceTree = "<group>";
 		};
+
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
