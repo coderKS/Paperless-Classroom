@@ -127,13 +127,13 @@ class AssignmentRecordCanvas: UIImageView {
       color = parent.penColor
       break
     }
-    let linePath = LinePath(positions: saved, color: color!, lineWidth: size!, category: parent.penMode,
-                            userID: 1, assignmentRecordID: 1, assignmentID: 1)
-    
+    //let linePath = LinePath(positions: saved, color: color!, lineWidth: size!, category: parent.penMode,
+     //                       userID: 1, assignmentRecordID: 1, assignmentID: 1)
+    //print(saved)
     //Empty the saved positions
     saved.removeAll(keepingCapacity: false)
     //API Call to addAnnotation
-    parentController?.addAnnotation(linePath!)
+    //parentController?.addAnnotation(linePath!)
   }
 
   
@@ -240,5 +240,25 @@ class AssignmentRecordCanvas: UIImageView {
     setCurrentImage(sender)
     setTempImage(sender)
     //print("Redo")
+  }
+  
+  //For GetAnnotation
+  func drawFromJSON(_ previous: CGPoint, _ current: CGPoint, _ penMode: String, _ color: UIColor?, _ size: CGFloat) {
+    UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
+    let context = UIGraphicsGetCurrentContext()
+    image?.draw(in: bounds)
+    
+    color?.setStroke()
+    context?.setLineCap(.round)
+    context?.setLineWidth(size)
+    
+    context?.move(to: CGPoint(x: previous.x, y: previous.y))
+    context?.addLine(to: CGPoint(x: current.x, y: current.y))
+    
+    context?.strokePath()
+    
+    image = UIGraphicsGetImageFromCurrentImageContext()
+    
+    UIGraphicsEndImageContext()
   }
 }

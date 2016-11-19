@@ -9,7 +9,7 @@
 import UIKit
 
 class LinePath: NSObject {
-  var type = "line"
+  var type = "LinePath"
   var positions = [CGPoint]()
   var color: UIColor
   var lineWidth: CGFloat

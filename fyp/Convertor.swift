@@ -27,6 +27,18 @@ class Convertor {
     return formatter.string(from: date)
   }
   
+  static func stringToRGB(rgbString: String) -> [Int] {
+      do {
+        let regex = try NSRegularExpression(pattern: "[0-9]+")
+        let nsString = rgbString as NSString
+        let results = regex.matches(in: rgbString, range: NSRange(location: 0, length: nsString.length))
+        return results.map { Int(nsString.substring(with: $0.range))!}
+      } catch let error {
+        print("invalid regex: \(error.localizedDescription)")
+        return []
+      }
+  }
+  
   static func jsonToCourseList(json: JSON) -> [Course] {
     var courses = [Course]()
     for (_,subJson):(String, JSON) in json {
