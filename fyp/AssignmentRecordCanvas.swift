@@ -22,7 +22,7 @@ class AssignmentRecordCanvas: UIImageView {
   
   var temp: UIImage?
   var parentController: PDFPageViewController?
-  var saved = [CGPoint]()
+  var saved = [[Float]]()
   
   /* Draw Method */
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -102,38 +102,8 @@ class AssignmentRecordCanvas: UIImageView {
     //Save the last Image
     setTempImage(image)
     
-    //Create a line path Object
-    var size:CGFloat?
-    var color:UIColor?
-    switch penMode {
-    case "pen":
-      size = parent.penSize
-      color = parent.penColor
-      break
-    case "pencil":
-      size = parent.pencilSize
-      color = parent.pencilTexture
-      break
-    case "eraser":
-      size = parent.eraserSize
-      color = nil
-      break
-    case "highlight":
-      size = parent.highlightSize
-      color = parent.highlightColor
-      break
-    default:
-      size = parent.penSize
-      color = parent.penColor
-      break
-    }
-    //let linePath = LinePath(positions: saved, color: color!, lineWidth: size!, category: parent.penMode,
-     //                       userID: 1, assignmentRecordID: 1, assignmentID: 1)
-    //print(saved)
-    //Empty the saved positions
-    saved.removeAll(keepingCapacity: false)
-    //API Call to addAnnotation
-    //parentController?.addAnnotation(linePath!)
+    //Add this annotation to the server
+    addAnnotation()
   }
 
   
@@ -141,7 +111,7 @@ class AssignmentRecordCanvas: UIImageView {
     let previous = touch.previousLocation(in: self)
     let current = touch.location(in: self)
     
-    saved.append(CGPoint(x: current.x, y: current.y))
+    saved.append([Float(current.x), Float(current.y)])
     
     if penMode == "pen" {
       //Set pen color
@@ -260,5 +230,14 @@ class AssignmentRecordCanvas: UIImageView {
     image = UIGraphicsGetImageFromCurrentImageContext()
     
     UIGraphicsEndImageContext()
+  }
+  
+  //For AddAnnotation
+  func addAnnotation() {
+    //API Call to addAnnotation
+    parentController?.addAnnotation(saved)
+    
+    //Empty the saved positions
+    saved.removeAll(keepingCapacity: false)
   }
 }

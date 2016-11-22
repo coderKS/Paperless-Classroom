@@ -15,7 +15,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   var assignmentRecord: AssignmentRecord?
   
   //Navigation bar Color
-  var navBarColor = UIColor.init(red: 31/255, green: 37/255, blue: 53/255, alpha: 1)
+  var navBarColor = Theme.navBarTintColor
   
   //Layout info
   var width:CGFloat = 0;
@@ -203,12 +203,13 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
         let pointCoordinatePairs = detailsJSON["pointCoordinatePairs"].array!
         
         if(pointCoordinatePairs.count == 1){
-          print("Now Ignore One Point!!!")
+          let current = CGPoint(x: pointCoordinatePairs[0][0].double!, y: pointCoordinatePairs[0][1].double!)
+          self.PDFViewControllers[pageCurrent].canvas?.drawFromJSON(current, current, "pen", pointColor, pointSize!)
         } else {
           for i in 1...pointCoordinatePairs.count - 1 {
             let previous = CGPoint(x: pointCoordinatePairs[i - 1][0].double!, y: pointCoordinatePairs[i - 1][1].double!)
             let current = CGPoint(x: pointCoordinatePairs[i][0].double!, y: pointCoordinatePairs[i][1].double!)
-            print(previous, current)
+            //print(previous, current)
             self.PDFViewControllers[pageCurrent].canvas?.drawFromJSON(previous, current, "pen", pointColor, pointSize!)
           }
         }
@@ -635,7 +636,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     }
     
     //Set the default comment
-    //PDFViewControllers[pageCurrent].commentView?.setComment(comments[0])
+    PDFViewControllers[pageCurrent].commentView?.setComment(comments[0])
     //Set visual feedback
     commentBtns[0].backgroundColor = UIColor.init(red: 0, green: 99/255, blue: 99/255, alpha: 1)
     commentBtns[0].setTitleColor(UIColor.white, for: .normal)
@@ -1066,6 +1067,13 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     //Make comment panel view visible
     self.view.addSubview(commentPanelView!)
     self.view.addSubview(commentNavBar!)
+    commentNavBar?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: -100))
+    commentPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 200))
+    UIView.animate(withDuration: 0.5, animations: {
+      self.commentNavBar?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+      self.commentPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+    })
+    
   }
   
   func commentDoneBtnTapped(_ sender: UIButton){
@@ -1074,10 +1082,16 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     panelView?.isHidden = false
     PDFViewControllers[pageCurrent].disableComment()
     //Save all changes
-    //PDFViewControllers[pageCurrent].commentView?.done()
+    PDFViewControllers[pageCurrent].commentView?.done()
     
-    commentPanelView?.removeFromSuperview()
-    commentNavBar?.removeFromSuperview()
+    UIView.animate(withDuration: 0.5, animations: {
+      self.commentNavBar?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: -100))
+      self.commentPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 200))
+    }, completion: {_ in
+      self.commentPanelView?.removeFromSuperview()
+      self.commentNavBar?.removeFromSuperview()
+    })
+    
   }
   
   func commentCancelBtnTapped(_ sender: UIButton){
@@ -1086,17 +1100,22 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     panelView?.isHidden = false
     PDFViewControllers[pageCurrent].disableComment()
     //Clear all changes
-    //PDFViewControllers[pageCurrent].commentView?.cancel()
+    PDFViewControllers[pageCurrent].commentView?.cancel()
     
-    commentPanelView?.removeFromSuperview()
-    commentNavBar?.removeFromSuperview()
+    UIView.animate(withDuration: 0.5, animations: {
+      self.commentNavBar?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: -100))
+      self.commentPanelView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 200))
+    }, completion: {_ in
+      self.commentPanelView?.removeFromSuperview()
+      self.commentNavBar?.removeFromSuperview()
+    })
   }
   
   func commentSelectBtnTapped(_ sender: UIButton){
     //Get the comment based on tag value
     let selectedComment = comments[sender.tag]
     //Draw the comment on PDFViewController
-    //PDFViewControllers[pageCurrent].commentView?.setComment(selectedComment)
+    PDFViewControllers[pageCurrent].commentView?.setComment(selectedComment)
     //Visual feedback of selected comment
     for btn in commentBtns {
       btn.backgroundColor = UIColor.cyan
@@ -1471,8 +1490,45 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     //Get the data from server
   }
   
-  func addAnnotation(_ linePath: LinePath) {
+  func addAnnotation(_ positions: [[Float]]) {
     //Send the data to server
+    var size:CGFloat?
+    var color:UIColor?
+    switch self.penMode {
+    case "pen":
+      size = self.penSize
+      color = self.penColor
+      break
+    case "pencil":
+      size = self.pencilSize
+      color = self.pencilTexture
+      break
+    case "eraser":
+      size = self.eraserSize
+      color = nil
+      break
+    case "highlight":
+      size = self.highlightSize
+      color = self.highlightColor
+      break
+    default:
+      size = self.penSize
+      color = self.penColor
+      break
+    }
+    
+    //Get user details
+    let userID = 1
+    let assignmentRecordID = 1
+    let assignmentID = 1
+    
+    //Create a line path Object
+    let linePath = LinePath(positions: positions, color: color!, lineWidth: size!, category: self.penMode,
+                            pageID: pageCurrent, userID: userID, assignmentRecordID: assignmentRecordID, assignmentID: assignmentID)
+    let json = LinePath.toJSON(linePath!)
+    let api = AppAPI(connectorType: .Localhost)
+    
+    
   }
   
   func undoAnnotation() {

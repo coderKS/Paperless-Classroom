@@ -128,4 +128,18 @@ class AppAPI {
 
   }
   
+  func addAnnotation(linePathJSON: JSON,completion: @escaping ()->()) {
+    //var msg = "Success"
+    
+    switch self.connectorType {
+    case .Veriguide:
+      print("Not yet implemented")
+      break
+    case .Localhost:
+      print("Send LinePath to the server")
+      let urlWithParam = connector.baseUrl
+      break
+    }
+  }
+  
 }
