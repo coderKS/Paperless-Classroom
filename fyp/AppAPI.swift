@@ -6,7 +6,8 @@
 //  Copyright © 2016年 IK1603. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
 public enum ConnectorType {
   case Veriguide
   case Localhost
@@ -107,6 +108,28 @@ class AppAPI {
     
   }
   
-  func 
+  func getAnnotation(completion: @escaping (JSON)->()) {
+    
+    var json:JSON?
+    
+    switch self.connectorType {
+    case ConnectorType.Veriguide:
+      print("Not yet implemented")
+      break
+    case ConnectorType.Localhost:
+      let urlWithParam = connector.baseUrl + "addAnnotation.json"
+      
+      //print ("urlWithParam = \(urlWithParam)")
+      
+      self.connector.sendGetRequest(urlString: urlWithParam, completion: {data in
+        //print ("data = \(data)")
+        json = JSON(data: data!)
+        completion(json!)
+      })
+      
+      break
+    }
+
+  }
   
 }

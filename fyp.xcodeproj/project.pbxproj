@@ -29,11 +29,11 @@
 		CD4907511DA4CDA700AE445D /* test.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD4907501DA4CDA700AE445D /* test.pdf */; };
 		CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */; };
 		CD69E0191DDCC24D0029B168 /* LinePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD69E0181DDCC24D0029B168 /* LinePath.swift */; };
+		CD69E01D1DE0AD8E0029B168 /* test3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD69E01C1DE0AD8E0029B168 /* test3.pdf */; };
 		CD7FCDAB1DB629720070A6BB /* PDFPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */; };
 		CD7FCDAF1DBDEFE30070A6BB /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */; };
 		CD7FCDB11DBEFF1B0070A6BB /* CircularTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */; };
 		CD7FCDB71DBF1FEA0070A6BB /* navigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */; };
-		CDA6CF861DDB19120089A41D /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA6CF851DDB19120089A41D /* CollectionViewController.swift */; };
 		CDBC22561DAE2D490025D33E /* roundUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22551DAE2D490025D33E /* roundUIButton.swift */; };
 		CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */; };
 		E014CBC81DDBF6E500A97E80 /* AppAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E014CBC71DDBF6E500A97E80 /* AppAPI.swift */; };
@@ -79,18 +79,17 @@
 		CD4907501DA4CDA700AE445D /* test.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test.pdf; path = ../../test.pdf; sourceTree = "<group>"; };
 		CD4907521DA4CE4300AE445D /* AssignmentRecordCanvas.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentRecordCanvas.swift; sourceTree = "<group>"; };
 		CD69E0181DDCC24D0029B168 /* LinePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinePath.swift; sourceTree = "<group>"; };
+		CD69E01C1DE0AD8E0029B168 /* test3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test3.pdf; path = ../../../Downloads/test3.pdf; sourceTree = "<group>"; };
 		CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPageViewController.swift; sourceTree = "<group>"; };
 		CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
 		CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularTransition.swift; sourceTree = "<group>"; };
 		CD7FCDB61DBF1FEA0070A6BB /* navigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = navigationDelegate.swift; sourceTree = "<group>"; };
-		CDA6CF851DDB19120089A41D /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		CDBC22551DAE2D490025D33E /* roundUIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = roundUIButton.swift; sourceTree = "<group>"; };
 		CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = bottomBorderUITextField.swift; sourceTree = "<group>"; };
 		E014CBC71DDBF6E500A97E80 /* AppAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppAPI.swift; sourceTree = "<group>"; };
 		E014CBC91DDBF72A00A97E80 /* Connector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connector.swift; sourceTree = "<group>"; };
 		E014CBCC1DDBFD6000A97E80 /* DummyConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyConnector.swift; sourceTree = "<group>"; };
 		E014CBCE1DDBFF5A00A97E80 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
-		E014CBD11DDCC18C00A97E80 /* Annotator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Annotator.swift; sourceTree = "<group>"; };
 		E01B05911DDB653800FF539F /* MysqlConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MysqlConnector.swift; sourceTree = "<group>"; };
 		E01B05981DDB796400FF539F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E01B059C1DDB7B7100FF539F /* Convertor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Convertor.swift; sourceTree = "<group>"; };
@@ -129,7 +128,6 @@
 			children = (
 				CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */,
 				CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */,
-				CDA6CF851DDB19120089A41D /* CollectionViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -234,6 +232,7 @@
 		CD24252A1DDB0652006D5F17 /* static */ = {
 			isa = PBXGroup;
 			children = (
+				CD69E01C1DE0AD8E0029B168 /* test3.pdf */,
 				CD4907501DA4CDA700AE445D /* test.pdf */,
 				CD49074E1DA4CD9E00AE445D /* test_2.pdf */,
 			);
@@ -261,7 +260,6 @@
 		CD37DEF61DA3C697009B69FC /* fyp */ = {
 			isa = PBXGroup;
 			children = (
-				CDA6CF871DDC48A40089A41D /* ImageLayer */,
 				CD24252A1DDB0652006D5F17 /* static */,
 				CD2425271DDB05F7006D5F17 /* LoginModule */,
 				CD2425251DDB0592006D5F17 /* Utilities */,
@@ -291,13 +289,6 @@
 				CD69E0181DDCC24D0029B168 /* LinePath.swift */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		CDA6CF871DDC48A40089A41D /* ImageLayer */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = ImageLayer;
 			sourceTree = "<group>";
 		};
 		E014CBCB1DDBFD4800A97E80 /* Connector */ = {
@@ -403,6 +394,7 @@
 			files = (
 				CD37DF021DA3C698009B69FC /* LaunchScreen.storyboard in Resources */,
 				CD37DEFF1DA3C698009B69FC /* Assets.xcassets in Resources */,
+				CD69E01D1DE0AD8E0029B168 /* test3.pdf in Resources */,
 				CD37DEFD1DA3C697009B69FC /* Main.storyboard in Resources */,
 				CD49074F1DA4CD9E00AE445D /* test_2.pdf in Resources */,
 				CD4907511DA4CDA700AE445D /* test.pdf in Resources */,
@@ -432,7 +424,6 @@
 				CD4907461DA4B40400AE445D /* AssignmentRecord.swift in Sources */,
 				CD69E0191DDCC24D0029B168 /* LinePath.swift in Sources */,
 				CD49074B1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift in Sources */,
-				E014CBD21DDCC18C00A97E80 /* Annotator.swift in Sources */,
 				E01B059D1DDB7B7100FF539F /* Convertor.swift in Sources */,
 				CD4907411DA4B0CD00AE445D /* Assignment.swift in Sources */,
 				CD37DF1D1DA4A9B4009B69FC /* CourseTableViewCell.swift in Sources */,
@@ -440,7 +431,6 @@
 				CD7FCDAF1DBDEFE30070A6BB /* PDFViewController.swift in Sources */,
 				E014CBCD1DDBFD6000A97E80 /* DummyConnector.swift in Sources */,
 				CD7FCDB11DBEFF1B0070A6BB /* CircularTransition.swift in Sources */,
-				CDA6CF861DDB19120089A41D /* CollectionViewController.swift in Sources */,
 				CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */,
 				E014CBCA1DDBF72A00A97E80 /* Connector.swift in Sources */,
 				CDBC22561DAE2D490025D33E /* roundUIButton.swift in Sources */,

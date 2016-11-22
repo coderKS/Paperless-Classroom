@@ -81,6 +81,9 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   var penOptionColorLabel: UILabel?
   var highlightOptionColorLabel: UILabel?
   
+  var jsonAnnotation: JSON?
+  var jsonAnnotationPages = [Int]()
+  var json2PageCurrentMapping = [Int:Int]()
   /* Draw */
   
   /* Possible Modes */
@@ -130,6 +133,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     panelWidth = view.frame.size.width;
     panelHeight = view.frame.size.height * (1 - percentage);
     
+    
     //Disable tab bar
     tabBarController?.tabBar.isHidden = true;
     
@@ -177,6 +181,47 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     navigationController?.isNavigationBarHidden = false;
   }
   
+  func changePage(_ currentController: PDFViewController, _ direction: UIPageViewControllerNavigationDirection){
+    setViewControllers([currentController], direction: direction, animated: true, completion: nil)
+    var pointSize: CGFloat?
+    var pointColor: UIColor? = UIColor.red
+    var pointColorString: String?
+    var pointColorArray = [Int]()
+    //Draw json file here if exists
+    if jsonAnnotationPages.contains(pageCurrent) {
+      let map = json2PageCurrentMapping[pageCurrent]
+      for (_,subJSON):(String, JSON) in (jsonAnnotation?[map!]["data"])! {
+        
+        //let pageID = subJsonB["pageId"]
+        //let type = subJsonB["className"]
+        let str = subJSON["data"].string?.data(using: .utf8)
+        let detailsJSON = JSON(data: str!)
+        pointSize = CGFloat(detailsJSON["pointSize"].int!)
+        pointColorString = detailsJSON["pointColor"].string!
+        pointColorArray = Convertor.stringToRGB(rgbString: pointColorString!)
+        pointColor = UIColor.init(red: CGFloat(pointColorArray[0]/255), green: CGFloat(pointColorArray[1]/255), blue: CGFloat(pointColorArray[2] / 255), alpha: 1.0)
+        let pointCoordinatePairs = detailsJSON["pointCoordinatePairs"].array!
+        
+        if(pointCoordinatePairs.count == 1){
+          print("Now Ignore One Point!!!")
+        } else {
+          for i in 1...pointCoordinatePairs.count - 1 {
+            let previous = CGPoint(x: pointCoordinatePairs[i - 1][0].double!, y: pointCoordinatePairs[i - 1][1].double!)
+            let current = CGPoint(x: pointCoordinatePairs[i][0].double!, y: pointCoordinatePairs[i][1].double!)
+            print(previous, current)
+            self.PDFViewControllers[pageCurrent].canvas?.drawFromJSON(previous, current, "pen", pointColor, pointSize!)
+          }
+        }
+
+      }
+      
+      //Remove the indexes afterwards
+      let index = jsonAnnotationPages.index(of: pageCurrent)
+      jsonAnnotationPages.remove(at: index!)
+    }
+
+  }
+  
   func prevPage(_ sender: UISwipeGestureRecognizer) {
     if sender.state == .ended{
     sender.require(toFail: PDFViewControllers[pageCurrent].twoPan!)
@@ -188,8 +233,8 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     }
     
     let currentController = PDFViewControllers[pageCurrent]
-    
-    setViewControllers([currentController], direction: .forward, animated: true, completion: nil)
+      
+    changePage(currentController, .forward)
     }
   }
   
@@ -205,35 +250,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     
     let currentController = PDFViewControllers[pageCurrent]
     
-    setViewControllers([currentController], direction: .reverse, animated: true, completion: nil)
-    }
-  }
-  
-  func showPagesOverview(_ sender: UIScreenEdgePanGestureRecognizer){
-    //Create a new view Controller pop up from the left
-    
-    if sender.state == .recognized {
-      self.view.addSubview(overviewOverlay!)
-      self.view.addSubview(panelOverviewOverlay!)
-      self.view.addSubview(overviewView!)
-      self.overviewView?.layer.setAffineTransform(CGAffineTransform(translationX: -animateOffsetX, y: 0))
-      UIView.animate(withDuration: 0.5, animations: {
-        self.overviewView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
-      }, completion: nil)
-    }
-  }
-  
-  func hidePagesOverview(_ sender: UISwipeGestureRecognizer){
-    //Hide overviewView
-    if sender.state == .recognized {
-      UIView.animate(withDuration: 0.5, animations: {
-        self.overviewView?.layer.setAffineTransform(CGAffineTransform(translationX: -self.animateOffsetX, y: 0))
-      }, completion: {_ in
-        self.overviewView?.removeFromSuperview()
-        self.overviewOverlay?.removeFromSuperview()
-        self.panelOverviewOverlay?.removeFromSuperview()
-      })
-      
+    changePage(currentController, .reverse)
     }
   }
   
@@ -244,7 +261,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   
   //Init
   func loadAssignmentRecordURL() {
-    let path = Bundle.main.path(forResource: "test_2.pdf", ofType: nil)
+    let path = Bundle.main.path(forResource: "test3.pdf", ofType: nil)
     
     // Create an NSURL object based on the file path.
     let url = NSURL.fileURL(withPath: path!)
@@ -257,10 +274,34 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       PDFViewControllers += [PDFViewController()]
     }
     if let firstViewController = PDFViewControllers.first {
-      setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)
+      changePage(firstViewController, .forward)
     }
+    
+    //DRAW records from database
+    loadAnnotationJSON()
   }
 
+  func loadAnnotationJSON() {
+    print("loadAnnotation# start")
+    let connectorType = ConnectorType.Localhost
+    print("loadAnnotation# connectorType=\(connectorType)")
+    let api = AppAPI(connectorType: connectorType)
+    if(api == nil){
+      print ("Fail to load api")
+      
+    }
+    
+    api!.getAnnotation(){json in
+      self.jsonAnnotation = json
+      for (index, subJSON):(String, JSON) in json {
+        let pageNumber = subJSON["page"].int!
+        self.jsonAnnotationPages.append(pageNumber)
+        self.json2PageCurrentMapping[pageNumber] = Int(index)!
+      }
+    }
+    
+  }
+  
   func loadPageOverviewBtn(){
     let btnWidth:CGFloat = 20
     let btnHeight:CGFloat = 20
@@ -1083,6 +1124,34 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     textBoxBtn?.titleLabel?.backgroundColor = UIColor.clear
   }
   
+  func showPagesOverview(_ sender: UIScreenEdgePanGestureRecognizer){
+    //Create a new view Controller pop up from the left
+    
+    if sender.state == .recognized {
+      self.view.addSubview(overviewOverlay!)
+      self.view.addSubview(panelOverviewOverlay!)
+      self.view.addSubview(overviewView!)
+      self.overviewView?.layer.setAffineTransform(CGAffineTransform(translationX: -animateOffsetX, y: 0))
+      UIView.animate(withDuration: 0.5, animations: {
+        self.overviewView?.layer.setAffineTransform(CGAffineTransform(translationX: 0, y: 0))
+      }, completion: nil)
+    }
+  }
+  
+  func hidePagesOverview(_ sender: UISwipeGestureRecognizer){
+    //Hide overviewView
+    if sender.state == .recognized {
+      UIView.animate(withDuration: 0.5, animations: {
+        self.overviewView?.layer.setAffineTransform(CGAffineTransform(translationX: -self.animateOffsetX, y: 0))
+      }, completion: {_ in
+        self.overviewView?.removeFromSuperview()
+        self.overviewOverlay?.removeFromSuperview()
+        self.panelOverviewOverlay?.removeFromSuperview()
+      })
+      
+    }
+  }
+  
   func showPenOption(_ sender: UILongPressGestureRecognizer){
     if sender.state == .began {
       //Hide panel View
@@ -1318,10 +1387,10 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     let currentController = PDFViewControllers[tag!]
     if pageCurrent > tag! {
       pageCurrent = tag!
-      setViewControllers([currentController], direction: .reverse, animated: true, completion: nil)
+      changePage(currentController, .reverse)
     } else {
       pageCurrent = tag!
-      setViewControllers([currentController], direction: .forward, animated: true, completion: nil)
+      changePage(currentController, .forward)
     }
   }
   

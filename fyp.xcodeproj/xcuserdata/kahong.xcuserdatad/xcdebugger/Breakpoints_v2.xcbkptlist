@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/PDFPageViewController.swift"
-            timestampString = "500994716.885441"
+            timestampString = "501267345.996217"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/PDFPageViewController.swift"
-            timestampString = "500997527.955378"
+            timestampString = "501269541.460221"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "567"
-            endingLineNumber = "567"
+            startingLineNumber = "613"
+            endingLineNumber = "613"
             landmarkName = "loadCommentControlPanel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -222,9 +222,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "100"
-            endingLineNumber = "100"
-            landmarkName = "cancel()"
-            landmarkType = "7">
+            endingLineNumber = "100">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -234,11 +232,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/PDFPageViewController.swift"
-            timestampString = "500997527.955378"
+            timestampString = "501269541.460221"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1038"
-            endingLineNumber = "1038"
+            startingLineNumber = "1084"
+            endingLineNumber = "1084"
             landmarkName = "commentDoneBtnTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -250,11 +248,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/PDFPageViewController.swift"
-            timestampString = "500997527.955378"
+            timestampString = "501269541.460221"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "746"
-            endingLineNumber = "746"
+            startingLineNumber = "792"
+            endingLineNumber = "792"
             landmarkName = "loadPenOptionPanel()"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,11 +264,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/PDFPageViewController.swift"
-            timestampString = "500997527.955378"
+            timestampString = "501269541.460221"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "303"
-            endingLineNumber = "303"
+            startingLineNumber = "349"
+            endingLineNumber = "349"
             landmarkName = "loadPageOverviewView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -394,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/PDFPageViewController.swift"
-            timestampString = "501006757.345439"
+            timestampString = "501269541.460221"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1180"
-            endingLineNumber = "1180"
+            startingLineNumber = "1254"
+            endingLineNumber = "1254"
             landmarkName = "showHighlightOption(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -432,6 +430,116 @@
             startingLineNumber = "115"
             endingLineNumber = "115"
             landmarkName = "touchesEnded(_:with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "fyp/AppAPI.swift"
+            timestampString = "501260612.602686"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "getAnnotation(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "fyp/PDFPageViewController.swift"
+            timestampString = "501267762.357819"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "PDFPageViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "fyp.PDFPageViewController.penMode.getter : Swift.String"
+                  moduleName = "fyp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kahong/Desktop/Paperless-Classroom/fyp/PDFPageViewController.swift"
+                  timestampString = "501267763.269824"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "53">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "fyp.PDFPageViewController.penMode.setter : Swift.String"
+                  moduleName = "fyp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kahong/Desktop/Paperless-Classroom/fyp/PDFPageViewController.swift"
+                  timestampString = "501267763.274039"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "95">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "fyp.PDFPageViewController.init (transitionStyle : __C.UIPageViewControllerTransitionStyle, navigationOrientation : __C.UIPageViewControllerNavigationOrientation, options : Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Any&gt;&gt;) -&gt; fyp.PDFPageViewController"
+                  moduleName = "fyp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kahong/Desktop/Paperless-Classroom/fyp/PDFPageViewController.swift"
+                  timestampString = "501267763.276676"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "1439">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "fyp.PDFPageViewController.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;fyp.PDFPageViewController&gt;"
+                  moduleName = "fyp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kahong/Desktop/Paperless-Classroom/fyp/PDFPageViewController.swift"
+                  timestampString = "501267763.279292"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95"
+                  offsetFromSymbolStart = "1379">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "fyp/PDFPageViewController.swift"
+            timestampString = "501269541.460221"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
+            landmarkName = "loadAnnotationJSON()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
