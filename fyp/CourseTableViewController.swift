@@ -44,7 +44,7 @@ class CourseTableViewController: UITableViewController {
   
   func loadCourse(){
     print("loadCourse# start")
-    let connectorType = ConnectorType.Localhost
+    let connectorType = ConnectorType.Veriguide
     print("loadCourse# connectorType=\(connectorType)")
     let api = AppAPI(connectorType: connectorType)
     if(api == nil){

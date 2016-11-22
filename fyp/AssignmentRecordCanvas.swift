@@ -152,7 +152,7 @@ class AssignmentRecordCanvas: UIImageView {
       } else {
         context?.setLineWidth(size)
       }
-      context?.set2LineCap(.round)
+      context?.setLineCap(.round)
     } else if penMode == "pencil" {
       //Set pen color
       color?.setStroke()

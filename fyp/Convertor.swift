@@ -46,12 +46,13 @@ class Convertor {
       let name = subJson["name"].string!
       let imageStr = subJson["image"].string!
       let term = subJson["term"].string!
-      let year = subJson["year"].string!
+      let startYear = subJson["startYear"].string!
+      let endYear = subJson["endYear"].string!
       let code = subJson["code"].string!
       let enrollmentNumber = subJson["enrollmentNumber"].string!
       
       // print
-      print ("id=\(id),name=\(name),imageStr=\(imageStr),term=\(term),year=\(year),code=\(code),enrolNum=\(enrollmentNumber)")
+      print ("id=\(id),name=\(name),imageStr=\(imageStr),term=\(term),startYear=\(startYear),endYear=\(endYear),code=\(code),enrolNum=\(enrollmentNumber)")
       
       var image: UIImage
       if imageStr == "" {
@@ -59,7 +60,7 @@ class Convertor {
       } else {
         image = UIImage(named: imageStr)!
       }
-      courses += [Course(id: id, name: name, image: image, term: term, year: year, code: code, enrollmentNumber: Int(enrollmentNumber)!)!]
+      courses += [Course(id: id, name: name, image: image, term: term, startYear: startYear, endYear: endYear, code: code, enrollmentNumber: Int(enrollmentNumber)!)!]
       
     }
     return courses
@@ -75,5 +76,11 @@ class Convertor {
     var assignmentRecords = [AssignmentRecord]()
     
     return assignmentRecords
+  }
+  
+  static func jsonToLinePathList(json: JSON) -> [LinePath] {
+    var linePaths = [LinePath]()
+  
+    return linePaths
   }
 }

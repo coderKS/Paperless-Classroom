@@ -46,48 +46,35 @@ class AppAPI {
    * 4. convert the JSON into an array of Course Object
    */
   func getCourseList(userId: String, completion: @escaping ([Course])->()) {
+    let urlWithParam: String
     switch self.connectorType {
     case ConnectorType.Veriguide:
       // 1. create url with userId as parameters
       let urlString = connector.baseUrl
       //let param = "Course?userId=\(userId)"
-      let urlWithParam = urlString + "Course/" + userId + "/course.json"
-      
-      print ("urlWithParam = \(urlWithParam)")
-      
-      connector.sendGetRequest(urlString: urlWithParam) {
-        // 2. get the responseString
-        (data) in
-        print ("data = \(data)")
-        // 3. parse the responseString to JSON
-        let json = JSON(data: data!)
-        // 4. convert the JSON into an array of Course Object
-        let courses = Convertor.jsonToCourseList(json: json)
-        completion(courses)
-      }
+      urlWithParam = urlString + "Course/" + userId + "/course.json"
       break
     case ConnectorType.Localhost:
       // 1. create url with userId as parameters
       let urlString = connector.baseUrl
       //let param = "Course?userId=\(userId)"
-      let urlWithParam = urlString + "course.json"
-      
-      print ("urlWithParam = \(urlWithParam)")
-      
-      self.connector.sendGetRequest(urlString: urlWithParam) {
-        // 2. get the responseString
-        (data) in
-        print ("data = \(data)")
-        // 3. parse the responseString to JSON
-        let json = JSON(data: data!)
-        // 4. convert the JSON into an array of Course Object
-        let courses = Convertor.jsonToCourseList(json: json)
-        completion(courses)
-      }
+      urlWithParam = urlString + "course.json"
       break
     }
     
+    print ("urlWithParam = \(urlWithParam)")
     
+    self.connector.sendGetRequest(urlString: urlWithParam) {
+      // 2. get the responseString
+      (data) in
+      print ("data = \(data)")
+      // 3. parse the responseString to JSON
+      let json = JSON(data: data!)
+      // 4. convert the JSON into an array of Course Object
+      let courses = Convertor.jsonToCourseList(json: json)
+      completion(courses)
+    }
+
   }
   
   func getAssignmentList(courseId: String) -> Array<Assignment> {
@@ -108,28 +95,36 @@ class AppAPI {
     
   }
   
-  func getAnnotation(completion: @escaping (JSON)->()) {
-    
+  func getAnnotation(pageId: String, completion: @escaping (JSON)->()) {
+    let urlWithParam: String
     var json:JSON?
     
     switch self.connectorType {
     case ConnectorType.Veriguide:
-      print("Not yet implemented")
+      // 1. create url with userId as parameters
+      let urlString = connector.baseUrl
+      //let param = "Course?userId=\(userId)"
+      urlWithParam = urlString + "Annotations?version=1&gradeId=1&page=" + pageId
       break
     case ConnectorType.Localhost:
-      let urlWithParam = connector.baseUrl + "addAnnotation.json"
-      
-      //print ("urlWithParam = \(urlWithParam)")
-      
-      self.connector.sendGetRequest(urlString: urlWithParam, completion: {data in
-        //print ("data = \(data)")
-        json = JSON(data: data!)
-        completion(json!)
-      })
-      
+      // 1. create url with userId as parameters
+      let urlString = connector.baseUrl
+      //let param = "Course?userId=\(userId)"
+      urlWithParam = urlString + "page/" + pageId + "/getAnnotation.json"
       break
     }
-
+    print ("urlWithParam = \(urlWithParam)")
+    
+    self.connector.sendGetRequest(urlString: urlWithParam) {
+      // 2. get the responseString
+      (data) in
+      print ("data = \(data)")
+      // 3. parse the responseString to JSON
+      let json = JSON(data: data!)
+      // 4. convert the JSON into an array of Course Object
+      let linePaths = Convertor.jsonToLinePathList(json: json)
+      completion(linePaths)
+    }
   }
   
 }
