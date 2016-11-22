@@ -43,18 +43,12 @@ class CourseTableViewController: UITableViewController {
   }
   
   func loadCourse(){
-    print("loadCourse# start")
-    let connectorType = ConnectorType.Veriguide
-    print("loadCourse# connectorType=\(connectorType)")
-    let api = AppAPI(connectorType: connectorType)
-    if(api == nil){
-      print ("Fail to load api")
-      
-    }
-    api!.getCourseList(userId: self.userId){
-      (courses) in
-      self.courses = courses
-      self.tableView.reloadData()
+    if let api = AppAPI() {
+      api.getCourseList(userId: self.userId){
+        (courses) in
+        self.courses = courses
+        self.tableView.reloadData()
+      }
     }
 
 //    let course1 = Course(name: "CSCI2100", image: defaultImg)!

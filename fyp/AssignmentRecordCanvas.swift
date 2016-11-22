@@ -218,9 +218,30 @@ class AssignmentRecordCanvas: UIImageView {
     let context = UIGraphicsGetCurrentContext()
     image?.draw(in: bounds)
     
-    color?.setStroke()
-    context?.setLineCap(.round)
-    context?.setLineWidth(size)
+    if penMode == "pen" {
+      //Set pen color
+      color?.setStroke()
+      //Pen Size
+      
+      context?.setLineWidth(size)
+      
+      context?.setLineCap(.round)
+    } else if penMode == "pencil" {
+      //Set pen color
+      color?.setStroke()
+      //Pen Size
+      context?.setLineWidth(size)
+      
+    } else if penMode == "eraser" {
+      context?.setLineWidth(size)
+      context?.setLineCap(.round)
+      context?.setBlendMode(.clear)
+      context?.setStrokeColor(red: CGFloat(GL_RED), green: CGFloat(GL_GREEN), blue: CGFloat(GL_BLUE), alpha: CGFloat(0.0))
+    } else if penMode == "highlight" {
+      color?.setStroke()
+      context?.setLineWidth(size)
+      context?.setLineCap(.square)
+    }
     
     context?.move(to: CGPoint(x: previous.x, y: previous.y))
     context?.addLine(to: CGPoint(x: current.x, y: current.y))

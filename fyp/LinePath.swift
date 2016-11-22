@@ -8,9 +8,8 @@
 
 import UIKit
 
-class LinePath: NSObject {
-  var type = "LinePath"
-  var positions = [[Float]]()
+class LinePath: DrawObject {
+  var positions: [CGPoint]
   var color: UIColor
   var lineWidth: CGFloat
   var category: String
@@ -22,7 +21,7 @@ class LinePath: NSObject {
   var assignmentRecordID: Int
   var assignmentID: Int
   
-  init?(positions: [[Float]], color:UIColor, lineWidth: CGFloat, category: String, pageID: Int,
+  init?(positions: [CGPoint], color:UIColor, lineWidth: CGFloat, category: String, pageID: Int,
         userID: Int, assignmentRecordID: Int, assignmentID: Int){
     self.positions = positions
     self.color = color
@@ -35,7 +34,7 @@ class LinePath: NSObject {
     self.assignmentID = assignmentID
     self.assignmentRecordID = assignmentRecordID
     
-    super.init()
+    super.init(type: "LinePath")
   }
   
   static func toJSON(_ linePath: LinePath) -> JSON {
@@ -62,4 +61,6 @@ class LinePath: NSObject {
     
     return json!
   }
+  
+  
 }

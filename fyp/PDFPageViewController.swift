@@ -183,44 +183,99 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   
   func changePage(_ currentController: PDFViewController, _ direction: UIPageViewControllerNavigationDirection){
     setViewControllers([currentController], direction: direction, animated: true, completion: nil)
-    var pointSize: CGFloat?
-    var pointColor: UIColor? = UIColor.red
-    var pointColorString: String?
-    var pointColorArray = [Int]()
-    //Draw json file here if exists
-    if jsonAnnotationPages.contains(pageCurrent) {
-      let map = json2PageCurrentMapping[pageCurrent]
-      for (_,subJSON):(String, JSON) in (jsonAnnotation?[map!]["data"])! {
-        
-        //let pageID = subJsonB["pageId"]
-        //let type = subJsonB["className"]
-        let str = subJSON["data"].string?.data(using: .utf8)
-        let detailsJSON = JSON(data: str!)
-        pointSize = CGFloat(detailsJSON["pointSize"].int!)
-        pointColorString = detailsJSON["pointColor"].string!
-        pointColorArray = Convertor.stringToRGB(rgbString: pointColorString!)
-        pointColor = UIColor.init(red: CGFloat(pointColorArray[0]/255), green: CGFloat(pointColorArray[1]/255), blue: CGFloat(pointColorArray[2] / 255), alpha: 1.0)
-        let pointCoordinatePairs = detailsJSON["pointCoordinatePairs"].array!
-        
-        if(pointCoordinatePairs.count == 1){
-          let current = CGPoint(x: pointCoordinatePairs[0][0].double!, y: pointCoordinatePairs[0][1].double!)
-          self.PDFViewControllers[pageCurrent].canvas?.drawFromJSON(current, current, "pen", pointColor, pointSize!)
-        } else {
-          for i in 1...pointCoordinatePairs.count - 1 {
-            let previous = CGPoint(x: pointCoordinatePairs[i - 1][0].double!, y: pointCoordinatePairs[i - 1][1].double!)
-            let current = CGPoint(x: pointCoordinatePairs[i][0].double!, y: pointCoordinatePairs[i][1].double!)
-            //print(previous, current)
-            self.PDFViewControllers[pageCurrent].canvas?.drawFromJSON(previous, current, "pen", pointColor, pointSize!)
+//    var pointSize: CGFloat?
+//    var pointColor: UIColor? = UIColor.red
+//    var pointColorString: String?
+//    var pointColorArray = [Int]()
+//    //Draw json file here if exists
+//      if jsonAnnotationPages.contains(pageCurrent) {
+    
+//      let map = json2PageCurrentMapping[pageCurrent]
+//      for (_,subJSON):(String, JSON) in (jsonAnnotation?[map!]["data"])! {
+//        
+//        //let pageID = subJsonB["pageId"]
+//        //let type = subJsonB["className"]
+//        let str = subJSON["data"].string?.data(using: .utf8)
+//        let detailsJSON = JSON(data: str!)
+//        pointSize = CGFloat(detailsJSON["pointSize"].int!)
+//        pointColorString = detailsJSON["pointColor"].string!
+//        pointColorArray = Convertor.stringToRGB(rgbString: pointColorString!)
+//        pointColor = UIColor.init(red: CGFloat(pointColorArray[0]/255), green: CGFloat(pointColorArray[1]/255), blue: CGFloat(pointColorArray[2] / 255), alpha: 1.0)
+//        let pointCoordinatePairs = detailsJSON["pointCoordinatePairs"].array!
+//        
+//        if(pointCoordinatePairs.count == 1){
+//          let current = CGPoint(x: pointCoordinatePairs[0][0].double!, y: pointCoordinatePairs[0][1].double!)
+//          self.PDFViewControllers[pageCurrent].canvas?.drawFromJSON(current, current, "pen", pointColor, pointSize!)
+//        } else {
+//          for i in 1...pointCoordinatePairs.count - 1 {
+//            let previous = CGPoint(x: pointCoordinatePairs[i - 1][0].double!, y: pointCoordinatePairs[i - 1][1].double!)
+//            let current = CGPoint(x: pointCoordinatePairs[i][0].double!, y: pointCoordinatePairs[i][1].double!)
+//            //print(previous, current)
+//            self.PDFViewControllers[pageCurrent].canvas?.drawFromJSON(previous, current, "pen", pointColor, pointSize!)
+//          }
+//        }
+//
+//      }
+//      
+      //Remove the indexes afterwards
+//      let index = jsonAnnotationPages.index(of: pageCurrent)
+//      jsonAnnotationPages.remove(at: index!)
+//    }
+    print ("changePage#start")
+    if let api = AppAPI() {
+      api.getLocalAnnotation(pageId: String(pageCurrent)){
+        (drawObjects) in
+        print ("changePage#size of drawObject=\(drawObjects.count)")
+        for i in 1...drawObjects.count - 1 {
+          switch(drawObjects[i].type){
+            case "Line":
+              if let obj = drawObjects[i] as? Line {
+                let previous = obj.startPoint
+                let current = obj.endPoint
+                let category = obj.category
+                let pointColor = obj.color
+                let pointSize = obj.lineWidth
+                
+                self.PDFViewControllers[self.pageCurrent].canvas?.drawFromJSON(previous, current, category, pointColor, pointSize)
+              }
+              break
+            
+            case "LinePath":
+              if let obj = drawObjects[i] as? LinePath {
+                let positions = obj.positions
+                let category = obj.category
+                let pointColor = obj.color
+                let pointSize = obj.lineWidth
+                
+                for j in 1...positions.count - 1 {
+                  let previous = CGPoint(x: positions[j-1].x, y: positions[j-1].y)
+                  let current = CGPoint(x: positions[j].x, y: positions[j].y)
+                  self.PDFViewControllers[self.pageCurrent].canvas?.drawFromJSON(previous, current, category, pointColor, pointSize)
+                }
+              }
+              break
+            
+            case "ErasedLinePath":
+              if let obj = drawObjects[i] as? ErasedLinePath {
+                let positions = obj.positions
+                let category = obj.category
+                let pointSize = obj.lineWidth
+                
+                for j in 1...positions.count - 1 {
+                  let previous = CGPoint(x: positions[j-1].x, y: positions[j-1].y)
+                  let current = CGPoint(x: positions[j].x, y: positions[j].y)
+                  self.PDFViewControllers[self.pageCurrent].canvas?.drawFromJSON(previous, current, category, nil, pointSize)
+                }
+              }
+              break
+            
+            default:
+              print ("Type of drawObject not found")
+              break
           }
         }
-
       }
-      
-      //Remove the indexes afterwards
-      let index = jsonAnnotationPages.index(of: pageCurrent)
-      jsonAnnotationPages.remove(at: index!)
     }
-
   }
   
   func prevPage(_ sender: UISwipeGestureRecognizer) {
@@ -279,29 +334,23 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     }
     
     //DRAW records from database
-    loadAnnotationJSON()
+//    loadAnnotationJSON()
   }
 
-  func loadAnnotationJSON() {
-    print("loadAnnotation# start")
-    let connectorType = ConnectorType.Localhost
-    print("loadAnnotation# connectorType=\(connectorType)")
-    let api = AppAPI(connectorType: connectorType)
-    if(api == nil){
-      print ("Fail to load api")
-      
-    }
-    
-    api!.getAnnotation(){json in
-      self.jsonAnnotation = json
-      for (index, subJSON):(String, JSON) in json {
-        let pageNumber = subJSON["page"].int!
-        self.jsonAnnotationPages.append(pageNumber)
-        self.json2PageCurrentMapping[pageNumber] = Int(index)!
-      }
-    }
-    
-  }
+//  func loadAnnotationJSON() {
+//    if let api = AppAPI() {
+//      api.getAnnotation(){json in
+//        self.jsonAnnotation = json
+//        for (index, subJSON):(String, JSON) in json {
+//          let pageNumber = subJSON["page"].int!
+//          self.jsonAnnotationPages.append(pageNumber)
+//          self.json2PageCurrentMapping[pageNumber] = Int(index)!
+//        }
+//      }
+//    }
+//  
+//    //MARK: TODO draw line in overview
+//  }
   
   func loadPageOverviewBtn(){
     let btnWidth:CGFloat = 20

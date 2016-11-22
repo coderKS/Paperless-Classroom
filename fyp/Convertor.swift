@@ -78,9 +78,115 @@ class Convertor {
     return assignmentRecords
   }
   
-  static func jsonToLinePathList(json: JSON) -> [LinePath] {
-    var linePaths = [LinePath]()
+  static func jsonToDrawObjectList(json: JSON) -> [DrawObject] {
+    var drawObjects = [DrawObject]()
+    for (_,subJson):(String, JSON) in json["shapes"] {
+      if let className = subJson["className"].string {
+        switch className {
+        case "Line":
+          if let line = Convertor.jsonToLine(json: subJson){
+            drawObjects += [line]
+          }
+          break
+        case "LinePath":
+          if let linePath = Convertor.jsonToLinePath(json: subJson){
+            drawObjects += [linePath]
+          }
+          break
+        case "ErasedLinePath":
+          if let erasedLinePath = Convertor.jsonToErasedLinePath(json: subJson){
+            drawObjects += [erasedLinePath]
+          }
+          break
+        default:
+          continue
+        }
+      }
+    }
+    return drawObjects
+  }
   
-    return linePaths
+  static func jsonToLine(json: JSON) -> Line? {
+    if let x1 = json["data"]["x1"].double,
+      let y1 = json["data"]["y1"].double,
+      let x2 = json["data"]["x2"].double,
+      let y2 = json["data"]["y2"].double,
+      let colorString = json["data"]["color"].string,
+      let lineWidth = json["data"]["strokeWidth"].float{
+      
+      let startPoint = CGPoint(x: x1, y:y1)
+      let endPoint = CGPoint(x: x2, y: y2)
+      let colorArray = Convertor.stringToRGB(rgbString: colorString)
+      let color = UIColor.init(red: CGFloat(colorArray[0]/255), green: CGFloat(colorArray[1]/255), blue: CGFloat(colorArray[2] / 255), alpha: 1.0)
+      let category = "pen"
+      
+      let line = Line(startPoint: startPoint, endPoint: endPoint, color: color, lineWidth: CGFloat(lineWidth), category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0)
+      
+      return line
+    }
+    
+    return nil
+  }
+  
+  static func jsonToLinePath(json: JSON) -> LinePath? {
+    if let colorString = json["data"]["pointColor"].string,
+      let lineWidth = json["data"]["pointSize"].float,
+      let pointCoordinatePairs = json["data"]["pointCoordinatePairs"].array{
+    
+      let colorArray = Convertor.stringToRGB(rgbString: colorString)
+      let color = UIColor.init(red: CGFloat(colorArray[0]/255), green: CGFloat(colorArray[1]/255), blue: CGFloat(colorArray[2] / 255), alpha: 1.0)
+      let category = "pen"
+      
+      var positions = [CGPoint]()
+      for i in 0...pointCoordinatePairs.count - 1 {
+        positions += [CGPoint(x: pointCoordinatePairs[i][0].double!, y: pointCoordinatePairs[i][1].double!)]
+      }
+      
+      let linePath = LinePath(positions: positions, color: color, lineWidth: CGFloat(lineWidth), category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0)
+      
+      return linePath
+    }
+    
+    return nil
+  }
+  
+  static func jsonToErasedLinePath(json: JSON) -> ErasedLinePath? {
+    if let lineWidth = json["data"]["pointSize"].float,
+      let pointCoordinatePairs = json["data"]["pointCoordinatePairs"].array{
+      let category = "eraser"
+      
+      var positions = [CGPoint]()
+      for i in 0...pointCoordinatePairs.count - 1 {
+        positions += [CGPoint(x: pointCoordinatePairs[i][0].double!, y: pointCoordinatePairs[i][1].double!)]
+      }
+      
+      let erasedLinePath = ErasedLinePath(positions: positions, lineWidth: CGFloat(lineWidth), category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0)
+      
+      return erasedLinePath
+    }
+    
+    return nil
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -16,6 +16,10 @@ class AppAPI {
   var connectorType: ConnectorType
   var connector: Connector
   
+  init?(){
+    self.connectorType = ConnectorType.Localhost
+  }
+  
   init?(connectorType: ConnectorType) {
     print("AppAPI# init - connectType=\(connectorType)")
     self.connectorType = connectorType
@@ -95,9 +99,8 @@ class AppAPI {
     
   }
   
-  func getAnnotation(pageId: String, completion: @escaping (JSON)->()) {
+  func getAnnotation(pageId: String, completion: @escaping ([DrawObject])->()) {
     let urlWithParam: String
-    var json:JSON?
     
     switch self.connectorType {
     case ConnectorType.Veriguide:
@@ -122,8 +125,8 @@ class AppAPI {
       // 3. parse the responseString to JSON
       let json = JSON(data: data!)
       // 4. convert the JSON into an array of Course Object
-      let linePaths = Convertor.jsonToLinePathList(json: json)
-      completion(linePaths)
+      let drawObjects = Convertor.jsonToDrawObjectList(json: json)
+      completion(drawObjects)
     }
   }
   
@@ -138,6 +141,21 @@ class AppAPI {
       print("Send LinePath to the server")
       let urlWithParam = connector.baseUrl
       break
+    }
+  }
+  
+  func getLocalAnnotation(pageId: String, completion: @escaping ([DrawObject])->()) {
+    print ("getLocalAnnotation#start")
+    // if read exist
+    // 1. read file to filecontent
+    // 2. convert filecontent to json
+    // 3. convert the json into a list of DrawObject (copy the implementation code in getAnnotation)
+    
+    // else
+    // call getAnnotation
+    self.getAnnotation(pageId: pageId){
+      (drawObjects) in
+      completion(drawObjects)
     }
   }
   

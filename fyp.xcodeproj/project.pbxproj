@@ -43,6 +43,9 @@
 		E01B05921DDB653800FF539F /* MysqlConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B05911DDB653800FF539F /* MysqlConnector.swift */; };
 		E01B05991DDB796400FF539F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B05981DDB796400FF539F /* User.swift */; };
 		E01B059D1DDB7B7100FF539F /* Convertor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B059C1DDB7B7100FF539F /* Convertor.swift */; };
+		E080B8011DE466BE00BEF251 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = E080B8001DE466BE00BEF251 /* Line.swift */; };
+		E080B8031DE466CF00BEF251 /* ErasedLinePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E080B8021DE466CF00BEF251 /* ErasedLinePath.swift */; };
+		E080B8051DE46E9D00BEF251 /* DrawObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E080B8041DE46E9D00BEF251 /* DrawObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +96,9 @@
 		E01B05911DDB653800FF539F /* MysqlConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MysqlConnector.swift; sourceTree = "<group>"; };
 		E01B05981DDB796400FF539F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E01B059C1DDB7B7100FF539F /* Convertor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Convertor.swift; sourceTree = "<group>"; };
+		E080B8001DE466BE00BEF251 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		E080B8021DE466CF00BEF251 /* ErasedLinePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErasedLinePath.swift; sourceTree = "<group>"; };
+		E080B8041DE46E9D00BEF251 /* DrawObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,6 +293,9 @@
 			isa = PBXGroup;
 			children = (
 				CD69E0181DDCC24D0029B168 /* LinePath.swift */,
+				E080B8001DE466BE00BEF251 /* Line.swift */,
+				E080B8021DE466CF00BEF251 /* ErasedLinePath.swift */,
+				E080B8041DE46E9D00BEF251 /* DrawObject.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -419,6 +428,7 @@
 				CD2425151DD0A7E3006D5F17 /* CommentView.swift in Sources */,
 				CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */,
 				CD4907491DA4B78000AE445D /* AssignmentRecordTableViewController.swift in Sources */,
+				E080B8031DE466CF00BEF251 /* ErasedLinePath.swift in Sources */,
 				E01B05921DDB653800FF539F /* MysqlConnector.swift in Sources */,
 				CD4907441DA4B16200AE445D /* AssignmentTableViewController.swift in Sources */,
 				CD4907461DA4B40400AE445D /* AssignmentRecord.swift in Sources */,
@@ -430,6 +440,8 @@
 				CD7FCDAB1DB629720070A6BB /* PDFPageViewController.swift in Sources */,
 				CD7FCDAF1DBDEFE30070A6BB /* PDFViewController.swift in Sources */,
 				E014CBCD1DDBFD6000A97E80 /* DummyConnector.swift in Sources */,
+				E080B8051DE46E9D00BEF251 /* DrawObject.swift in Sources */,
+				E080B8011DE466BE00BEF251 /* Line.swift in Sources */,
 				CD7FCDB11DBEFF1B0070A6BB /* CircularTransition.swift in Sources */,
 				CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */,
 				E014CBCA1DDBF72A00A97E80 /* Connector.swift in Sources */,
