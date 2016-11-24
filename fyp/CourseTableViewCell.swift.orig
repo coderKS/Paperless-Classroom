@@ -1,0 +1,39 @@
+//
+//  CourseTableViewCell.swift
+//  fyp
+//
+<<<<<<< HEAD
+//  Created by Ka Hong Ngai on 24/11/2016.
+=======
+//  Created by Ka Hong Ngai on 5/10/2016.
+>>>>>>> bb0038f01b25e22a100d44c6b07bcc42d5a7b164
+//  Copyright © 2016 IK1603. All rights reserved.
+//
+
+import UIKit
+
+class CourseTableViewCell: UITableViewCell {
+
+<<<<<<< HEAD
+  @IBOutlet weak var courseImage: UIImageView!
+  @IBOutlet weak var name: UILabel!
+  @IBOutlet weak var courseCode: UILabel!
+  @IBOutlet weak var enrollmentNumber: UILabel!
+  @IBOutlet weak var teacher: UILabel!
+=======
+  @IBOutlet weak var courseName: UILabel!
+  @IBOutlet weak var courseImage: UIImageView!
+  
+>>>>>>> bb0038f01b25e22a100d44c6b07bcc42d5a7b164
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+
+}

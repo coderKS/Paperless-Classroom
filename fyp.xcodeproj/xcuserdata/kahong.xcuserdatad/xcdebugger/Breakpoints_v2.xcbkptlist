@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/AssignmentRecordViewController.swift"
-            timestampString = "501687257.278603"
+            timestampString = "501692329.010834"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244">
+            startingLineNumber = "251"
+            endingLineNumber = "251">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -56,11 +56,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/AssignmentRecordViewController.swift"
-            timestampString = "501687257.278603"
+            timestampString = "501692329.010834"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241">
+            startingLineNumber = "248"
+            endingLineNumber = "248">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -70,11 +70,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/AssignmentRecordViewController.swift"
-            timestampString = "501687257.278603"
+            timestampString = "501692329.010834"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284">
+            startingLineNumber = "291"
+            endingLineNumber = "291">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -84,11 +84,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/AssignmentRecordViewController.swift"
-            timestampString = "501687257.278603"
+            timestampString = "501692329.010834"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "281"
-            endingLineNumber = "281">
+            startingLineNumber = "288"
+            endingLineNumber = "288">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -178,12 +178,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/PDFPageViewController.swift"
-            timestampString = "501654176.117378"
+            timestampString = "501722814.466752"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "621"
-            endingLineNumber = "621"
-            landmarkName = "loadCommentControlPanel()"
+            startingLineNumber = "615"
+            endingLineNumber = "615"
+            landmarkName = "loadControlPanel()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -208,12 +208,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/PDFPageViewController.swift"
-            timestampString = "501654176.117378"
+            timestampString = "501722814.466752"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1105"
-            endingLineNumber = "1105"
-            landmarkName = "commentCancelBtnTapped(_:)"
+            startingLineNumber = "1099"
+            endingLineNumber = "1099"
+            landmarkName = "loadHighlightOptionPanel()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -224,12 +224,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/PDFPageViewController.swift"
-            timestampString = "501654176.117378"
+            timestampString = "501722814.466752"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "800"
-            endingLineNumber = "800"
-            landmarkName = "loadPenOptionPanel()"
+            startingLineNumber = "794"
+            endingLineNumber = "794"
+            landmarkName = "loadEraserOptionPanel()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -240,12 +240,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/PDFPageViewController.swift"
-            timestampString = "501654176.117378"
+            timestampString = "501722814.466752"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "357"
-            endingLineNumber = "357"
-            landmarkName = "loadPageOverviewView()"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
+            landmarkName = "didReceiveMemoryWarning()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -256,7 +256,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/AssignmentRecordCanvas.swift"
-            timestampString = "501688244.222849"
+            timestampString = "501698553.646664"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "136"
@@ -272,7 +272,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/AssignmentRecordCanvas.swift"
-            timestampString = "501688244.222849"
+            timestampString = "501698553.646664"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "139"
@@ -288,7 +288,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/AssignmentRecordCanvas.swift"
-            timestampString = "501688244.222849"
+            timestampString = "501698553.646664"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "138"
@@ -304,7 +304,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/AssignmentRecordCanvas.swift"
-            timestampString = "501688244.222849"
+            timestampString = "501698553.646664"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "140"
@@ -320,11 +320,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/PDFViewController.swift"
-            timestampString = "500997527.955378"
+            timestampString = "501721706.390667"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
             landmarkName = "drawPDF(_:_:_:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -336,11 +336,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/PDFViewController.swift"
-            timestampString = "500997527.955378"
+            timestampString = "501721706.390667"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "drawPDF(_:_:_:_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -368,12 +368,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/PDFPageViewController.swift"
-            timestampString = "501654176.117378"
+            timestampString = "501722814.466752"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1280"
-            endingLineNumber = "1280"
-            landmarkName = "hideHighlightOption(_:)"
+            startingLineNumber = "1274"
+            endingLineNumber = "1274"
+            landmarkName = "hidePagesOverview(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -389,7 +389,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "26"
             endingLineNumber = "26"
-            landmarkName = "init(positions:color:lineWidth:category:pageID:userID:assignmentRecordID:assignmentID:)"
+            landmarkName = "init(positions:color:lineWidth:category:pageID:userID:assignmentRecordID:assignmentID:refId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -405,7 +405,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "123"
             endingLineNumber = "123"
-            landmarkName = "getAnnotation(completion:)"
+            landmarkName = "getCourseList(userId:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -499,8 +499,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "312"
             endingLineNumber = "312"
-            landmarkName = "PDFPageViewController"
-            landmarkType = "3">
+            landmarkName = "drawObjectsToPane(drawObjects:pageId:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -510,12 +510,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/AssignmentRecordCanvas.swift"
-            timestampString = "501688244.222849"
+            timestampString = "501698553.646664"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "240"
             endingLineNumber = "240"
-            landmarkName = "addAnnotation()"
+            landmarkName = "drawFromJSON(_:_:_:_:_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -574,7 +574,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/AssignmentRecordCanvas.swift"
-            timestampString = "501654176.117378"
+            timestampString = "501698700.243665"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "114"
@@ -604,11 +604,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/AssignmentViewController.swift"
-            timestampString = "501677567.456039"
+            timestampString = "501700237.385122"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
             landmarkName = "collectionView(_:viewForSupplementaryElementOfKind:at:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -620,11 +620,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/AssignmentViewController.swift"
-            timestampString = "501677567.456039"
+            timestampString = "501700237.385122"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
             landmarkName = "tableView(_:viewForHeaderInSection:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -636,11 +636,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/CourseViewController.swift"
-            timestampString = "501675722.606104"
+            timestampString = "501689975.055857"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
             landmarkName = "animateCollection()"
             landmarkType = "7">
          </BreakpointContent>
@@ -648,7 +648,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fyp/Theme.swift"
