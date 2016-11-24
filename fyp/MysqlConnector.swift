@@ -25,21 +25,21 @@ class MysqlConnector: Connector{
       
       guard let data = data, error == nil else {
         // check for fundamental/networking error
-        print("error=\(error)")
+        print("sendPostRequest# error=\(error)")
         completion(nil, ConnectionError.NetworkError)
         return
       }
       
       if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
         // check for http errors
-        print("statusCode should be 200, but is \(httpStatus.statusCode)")
-        print("response = \(response)")
+        print("sendPostRequest# statusCode should be 200, but is \(httpStatus.statusCode)")
+        print("sendPostRequest# response = \(response)")
         completion(nil, ConnectionError.NotFound)
         return
       }
       
       let responseString = String(data: data, encoding: .utf8)
-      print("responseString = \(responseString)")
+      print("sendPostRequest# responseString = \(responseString)")
       
       // add reponseString to completion
       completion(data, nil)
@@ -50,30 +50,38 @@ class MysqlConnector: Connector{
   
   
   func sendGetRequest(urlString: String, completion: @escaping (Data?, ConnectionError?) -> ()) {
+    
+
     let url = URL(string: urlString)
     var request = URLRequest(url: url!)
     request.httpMethod = "GET"
 
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-      
+      print("---------------sendGetRequest#start\n")
       guard let data = data, error == nil else {
         // check for fundamental/networking error
-        print("error=\(error)")
+        print("sendGetRequest#error=\(error)")
         completion(nil, ConnectionError.NetworkError)
         return
       }
       
       if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
         // check for http errors
-        print("statusCode should be 200, but is \(httpStatus.statusCode)")
-        print("response = \(response)")
+        print("sendGetRequest#statusCode should be 200, but is \(httpStatus.statusCode)")
+        print("sendGetRequest#response = \(response)")
         completion(nil, ConnectionError.NotFound)
         return
       }
       
       let responseString = String(data: data, encoding: .utf8)
-      print("sendGetRequest# responseString = \(responseString?.characters.count)")
+      if (responseString?.characters.count)! > 100{
+        print("sendGetRequest# responseString = \(responseString?.characters.count)")
+      } else {
+        print("sendGetRequest# responseString = \(responseString)")
+      }
+      
       print("sendGetRequest# urlString = \(urlString)")
+      print("---------------sendGetRequest#end\n\n")
       // add reponseString to completion
       completion(data, nil)
     }

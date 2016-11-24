@@ -29,8 +29,9 @@ class AssignmentRecord: NSObject {
   var grade: String?
   var assignmentURL: String?
   var lastModified: Date
+  var refID: String
   
-  init?(id: String, submissionStatus: Int, submissionDateTime: Date?, studentID: String, studentName: String, gradingStatus: AssignmentRecordStatus, image: UIImage?, score: Int?, grade: String?, assignmentURL: String?, lastModified: Date){
+  init?(id: String, submissionStatus: Int, submissionDateTime: Date?, studentID: String, studentName: String, gradingStatus: AssignmentRecordStatus, image: UIImage?, score: Int?, grade: String?, assignmentURL: String?, lastModified: Date, refID: String){
     self.id = id
     self.submissionStatus = submissionStatus
     self.submissionDateTime = submissionDateTime
@@ -42,6 +43,7 @@ class AssignmentRecord: NSObject {
     self.grade = grade
     self.assignmentURL = assignmentURL
     self.lastModified = lastModified
+    self.refID = refID
     
     super.init()
     

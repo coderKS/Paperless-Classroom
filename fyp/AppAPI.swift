@@ -150,8 +150,39 @@ class AppAPI {
     return assignemntRecords
   }
   
-  func addAnnotation() {
+  func addAnnotation(fileId: String, pageDrawObjects: [Int: [DrawObject]], version: String, gradeId: String, completion: @escaping (Bool, ConnectionError?)->()) {
+    var postString: String
+    let urlWithParam: String
     
+    switch self.connectorType {
+    case ConnectorType.Veriguide:
+      // 1. create url with userId as parameters
+      let urlString = connector.baseUrl
+      //let param = "Course?userId=\(userId)"
+      urlWithParam = urlString + "Annotations/Add"
+      break
+    case ConnectorType.Localhost:
+      /* Not Implementated */
+      completion(false, ConnectionError.ConnectorNotSupport)
+      return
+    }
+    
+    print ("addAnnotation# urlWithParam = \(urlWithParam)")
+    
+    if let json = Convertor.pageDrawObjectsToJson(pageDrawObjects: pageDrawObjects){
+      postString = "data=" + json.rawString(String.Encoding.utf8, options: JSONSerialization.WritingOptions(rawValue: 0))! + "&version=" + version + "&gradeId=" + gradeId
+      self.connector.sendPostRequest(urlString: urlWithParam, postString: postString){
+        (data, error) in
+        let dataString = String(data: data!, encoding: String.Encoding.utf8)
+        if data == nil || error != nil || dataString == "error" {
+          completion(false, error)
+          return
+        } else {
+          completion(true, nil)
+        }
+      }
+  
+    }
   }
   
   func getAnnotation(fileId: String, pageId: String, completion: @escaping ([DrawObject]?, ConnectionError?)->()) {
@@ -177,8 +208,10 @@ class AppAPI {
     self.connector.sendGetRequest(urlString: urlWithParam) {
       // 2. get the responseString
       (data, error) in
-      print ("data = \(data)")
-      if data == nil || error != nil{
+      let dataString = String(data: data!, encoding: String.Encoding.utf8)
+      print ("getAnnotation# data = \(data)")
+      
+      if data == nil || error != nil || dataString == "error" {
         // if cannot get data from server, try to read it in local file
         let drawObjects = self.readLocalAnnotation(fileId: fileId, pageId: pageId)
         if drawObjects == nil {
@@ -188,10 +221,11 @@ class AppAPI {
         }
         return
       }
+    
+      
       // if able to get data from server,
       // parse the responseString to JSON
       let json = JSON(data: data!)
-      let dataString = String(data: data!, encoding: String.Encoding.utf8)
       let result = self.writeLocalAnnotation(fileId: fileId, pageId: pageId, content: dataString!)
       if !result {
         print ("Fail to write back annotation into loca file")
@@ -200,20 +234,6 @@ class AppAPI {
       let drawObjects = Convertor.jsonToDrawObjectList(json: json)
       print ("AppAPI# return drawObjects size=\(drawObjects.count) in page=[\(pageId)]")
       completion(drawObjects, nil)
-    }
-  }
-  
-  func addAnnotation(linePathJSON: JSON,completion: @escaping ()->()) {
-    //var msg = "Success"
-    
-    switch self.connectorType {
-    case .Veriguide:
-      print("Not yet implemented")
-      break
-    case .Localhost:
-      print("Send LinePath to the server")
-      let urlWithParam = connector.baseUrl
-      break
     }
   }
   
@@ -252,6 +272,25 @@ class AppAPI {
   func writeLocalAnnotation(fileId: String, pageId: String, content: String) -> Bool{
     let fileName = self.fileNamePrefix + "-file-" + fileId + "-page-" + pageId
     return self.writeFile(fileName: fileName, content: content)
+  }
+  
+  func writeLocalAnnotations(fileId: String, pageDrawObjects: [Int:[DrawObject]]) -> Bool{
+    
+    if(pageDrawObjects.count == 0 ){
+      return false
+    }
+    
+    for i in 0...pageDrawObjects.count {
+      let fileName = self.fileNamePrefix + "-file-" + fileId + "-page-" + String(i+1)
+      if pageDrawObjects[i]?.count == 0 || pageDrawObjects[i]?.count == nil{
+        continue
+      }
+      print("writeLocalAnnotations# pageDrawObjects[\(i)] size=\(pageDrawObjects[i]?.count)")
+      let dataJSON = Convertor.drawObjectsToLocalDataJson(pageDrawObjects: pageDrawObjects[i]!)!
+      let dataString = dataJSON.rawString(String.Encoding.utf8, options: JSONSerialization.WritingOptions(rawValue: 0))!
+      self.writeFile(fileName: fileName, content: dataString)
+    }
+    return true
   }
   
   func readLocalCourseList(userId: String) -> [Course]? {

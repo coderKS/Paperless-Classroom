@@ -91,9 +91,40 @@ class AssignmentRecordCanvas: UIImageView {
     //If pen mode is textBox
     let parent = parentController!
     let penMode = parent.penMode
-    if penMode == "textBox" {
-      //Draw a editable text field
-      //Ask for keyboard input
+    var size:CGFloat?
+    var color:UIColor?
+    
+    let positions = self.saved
+    let smoothPositions = self.saved
+    let pageId = parent.pageCurrent
+    
+    //Document Related Attributes
+    let userID = 0
+    let assignmentRecordID = 0
+    let assignmentID = 0
+    
+    switch penMode {
+    case "pen":
+      size = parent.penSize
+      color = parent.penColor
+      
+      break
+    case "pencil":
+      size = parent.pencilSize
+      color = parent.pencilTexture
+      break
+    case "eraser":
+      size = parent.eraserSize
+      color = nil
+      break
+    case "highlight":
+      size = parent.highlightSize
+      color = parent.highlightColor
+      break
+    default:
+      size = parent.penSize
+      color = parent.penColor
+      break
     }
     
     //Push Undo History
@@ -102,14 +133,18 @@ class AssignmentRecordCanvas: UIImageView {
     //Save the last Image
     setTempImage(image)
     
+    let linePath = LinePath(positions: positions, smoothPositions: smoothPositions, color:color!, lineWidth: size!, category: "pen", pageID: pageId,
+                            userID: userID, assignmentRecordID: assignmentRecordID, assignmentID: assignmentID, refId: Utilities.getReferenceId())
+    parent.pageDrawObjects[pageId]?.append(linePath!)
+    print ("AssignmentRecordCanvas#touchesEnded- positions size=\(positions.count), pageId=\(pageId), size=\(size), pageDrawObjects[\(pageId)=\(parent.pageDrawObjects[pageId]?.count)]")
     //Add this annotation to the server
     addAnnotation()
   }
 
   
   func drawStroke(_ context: CGContext?, touch: UITouch, penMode: String, color: UIColor?, size: CGFloat) {
-    let previous = touch.previousLocation(in: self)
-    let current = touch.location(in: self)
+    let previous = touch.precisePreviousLocation(in: self) 
+    let current = touch.preciseLocation(in: self)
     
     saved.append(CGPoint(x: Double(current.x),y: Double(current.y)))
     
@@ -201,6 +236,14 @@ class AssignmentRecordCanvas: UIImageView {
     setCurrentImage(sender)
     setTempImage(sender)
     //print("Undo")
+    let parent = parentController!
+    if((parent.pageDrawObjects[parent.pageCurrent]?.count)! > 0){
+      let firstDrawObjects = parent.pageDrawObjects[parent.pageCurrent]?[0]
+      parent.pageDrawObjects[parent.pageCurrent]?.removeFirst()
+      parent.redoDrawObjects[parent.pageCurrent]?.append(firstDrawObjects!)
+      
+      print ("pop pageDrawObjects[\(parent.pageCurrent)], size=\(parent.pageDrawObjects[parent.pageCurrent]?.count), redoDrawObjects=\(parent.redoDrawObjects[parent.pageCurrent]?.count)")
+    }
   }
   
   //Redo Function
@@ -210,6 +253,15 @@ class AssignmentRecordCanvas: UIImageView {
     setCurrentImage(sender)
     setTempImage(sender)
     //print("Redo")
+    let parent = parentController!
+    let redoSize = (parent.redoDrawObjects[parent.pageCurrent]?.count)!
+    if( redoSize > 0){
+      let lastDrawObjects = parent.redoDrawObjects[parent.pageCurrent]?[redoSize-1]
+      parent.redoDrawObjects[parent.pageCurrent]?.removeLast()
+      parent.pageDrawObjects[parent.pageCurrent]?.append(lastDrawObjects!)
+      
+      print ("push pageDrawObjects[\(parent.pageCurrent)], size=\(parent.pageDrawObjects[parent.pageCurrent]?.count), redoDrawObjects=\(parent.redoDrawObjects[parent.pageCurrent]?.count)")
+    }
   }
   
   //For GetAnnotation
@@ -256,9 +308,11 @@ class AssignmentRecordCanvas: UIImageView {
   
   //For AddAnnotation
   func addAnnotation() {
-    //API Call to addAnnotation
-    parentController?.addAnnotation(saved)
-    
+    let parent = parentController!
+    let pageCurrent = parent.pageCurrent
+    let scheduler = parent.scheduler
+    parent.pageLastModifiedTime[pageCurrent] = Date()
+    scheduler.addAnnotation(fileId: Constants.fileId, lastModifiedTime: Date(), pageDrawObjects: parent.pageDrawObjects)
     //Empty the saved positions
     saved.removeAll(keepingCapacity: false)
   }

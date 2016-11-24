@@ -10,6 +10,7 @@ import UIKit
 
 class ErasedLinePath: DrawObject {
   var positions: [CGPoint]
+  var smoothPositions: [CGPoint]
   var lineWidth: CGFloat
   var category: String
   
@@ -20,9 +21,10 @@ class ErasedLinePath: DrawObject {
   var assignmentRecordID: Int
   var assignmentID: Int
   
-  init?(positions: [CGPoint], lineWidth: CGFloat, category: String, pageID: Int,
+  init?(positions: [CGPoint], smoothPositions: [CGPoint], lineWidth: CGFloat, category: String, pageID: Int,
         userID: Int, assignmentRecordID: Int, assignmentID: Int, refId: String){
     self.positions = positions
+    self.smoothPositions = smoothPositions
     self.lineWidth = lineWidth
     self.category = category
     

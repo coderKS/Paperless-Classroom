@@ -11,4 +11,5 @@ import Foundation
 public enum ConnectionError : Error {
   case NetworkError
   case NotFound
+  case ConnectorNotSupport
 }
