@@ -3,33 +3,41 @@
     "id": "0",
     "name": "Data Structure",
     "code": "CSCI2100",
-    "year": "2016",
+    "startYear": "2016",
+    "endYear": "2017",
     "term": "1",
     "image": "",
-    "enrollmentNumber": "100"
+    "enrollmentNumber": "100",
+    "instructor": "Irwin King"
   },{
     "id": "1",
     "name": "English for Engineering Students",
     "code": "ELTU3014",
-    "year": "2015",
+    "startYear": "2016",
+    "endYear": "2017",
     "term": "2",
     "image": "",
-    "enrollmentNumber": "23"
+    "enrollmentNumber": "23",
+    "instructor": "Irwin King"
   },{
     "id": "2",
     "name": "Intermediate Pu Tong Hua",
     "code": "CPTH2100",
-    "year": "2016",
+    "startYear": "2015",
+    "endYear": "2016",
     "term": "1",
     "image": "",
-    "enrollmentNumber": "25"
+    "enrollmentNumber": "25",
+    "instructor": "Irwin King"
   },{
     "id": "3",
     "name": "Intermediate Pu Tong Hua",
     "code": "CPTH2100",
-    "year": "2015",
+    "startYear": "2015",
+    "endYear": "2016",
     "term": "1",
     "image": "",
-    "enrollmentNumber": "24"
+    "enrollmentNumber": "24",
+    "instructor": "Irwin King"
   }
 ]

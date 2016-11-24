@@ -10,7 +10,7 @@ import UIKit
 
 class AssignmentRecordViewController: UIViewController,
   //For Table View
-  UITableViewDelegate, UITableViewDataSource {
+UITableViewDelegate, UITableViewDataSource {
   
   var course: Course?
   var assignment: Assignment?
@@ -148,10 +148,10 @@ class AssignmentRecordViewController: UIViewController,
     cell.name.text = assignmentRecord.studentName
     cell.assignmentRecordImage.image = UIImage(named: "calendar")//assignment.image
     cell.studentID.text = assignmentRecord.studentID
-    cell.submissionDateTime.text = Convertor.dateToString(date: assignmentRecord.submissionDateTime!)
+    cell.submissionDateTime.text = Convertor.dateToMonthDayHourMin(date: assignmentRecord.submissionDateTime!)
     cell.grade.text = assignmentRecord.grade //With point
     cell.status.text = "-"//assignmentRecord.gradingStatus
-    cell.lastModifiedDateTime.text = Convertor.dateToString(date: assignmentRecord.lastModified)
+    cell.lastModifiedDateTime.text = Convertor.dateToMonthDayHourMin(date: assignmentRecord.lastModified)
     return cell
   }
   
@@ -218,14 +218,21 @@ class AssignmentRecordViewController: UIViewController,
     performSegue(withIdentifier: "backToAssignment", sender: nil)
   }
   
-  /*
-   // MARK: - Navigation
-   
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-   // Get the new view controller using segue.destinationViewController.
-   // Pass the selected object to the new view controller.
-   }
-   */
+  
+  // MARK: - Navigation
+  
+  // In a storyboard-based application, you will often want to do a little preparation before navigation
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
+    if segue.identifier == "backToAssignment" {
+      let assignmentViewController = segue.destination as! AssignmentViewController
+      assignmentViewController.course = self.course
+    } else if segue.identifier == "backToCourse" {
+      
+    }
+
+  }
+  
   
 }

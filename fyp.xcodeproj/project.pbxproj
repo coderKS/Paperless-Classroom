@@ -39,6 +39,8 @@
 		CD69E03D1DE6065D0029B168 /* CourseTableViewHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD69E03C1DE6065D0029B168 /* CourseTableViewHeaderView.xib */; };
 		CD69E03F1DE606770029B168 /* CourseTableViewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD69E03E1DE606770029B168 /* CourseTableViewHeaderView.swift */; };
 		CD69E0411DE60B210029B168 /* CourseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD69E0401DE60B210029B168 /* CourseTableViewCell.swift */; };
+		CD69E0431DE73A500029B168 /* AssignmentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD69E0421DE73A500029B168 /* AssignmentCollectionViewCell.swift */; };
+		CD69E0451DE740F80029B168 /* AssignmentCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD69E0441DE740F80029B168 /* AssignmentCollectionReusableView.swift */; };
 		CD7FCDAB1DB629720070A6BB /* PDFPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */; };
 		CD7FCDAF1DBDEFE30070A6BB /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */; };
 		CD7FCDB11DBEFF1B0070A6BB /* CircularTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */; };
@@ -52,6 +54,14 @@
 		E01B05921DDB653800FF539F /* MysqlConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B05911DDB653800FF539F /* MysqlConnector.swift */; };
 		E01B05991DDB796400FF539F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B05981DDB796400FF539F /* User.swift */; };
 		E01B059D1DDB7B7100FF539F /* Convertor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01B059C1DDB7B7100FF539F /* Convertor.swift */; };
+		E02856AB1DE57F0000D85AA8 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E02856A91DE57F0000D85AA8 /* libsqlite3.0.tbd */; };
+		E02856AC1DE57F0000D85AA8 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E02856AA1DE57F0000D85AA8 /* libsqlite3.tbd */; };
+		E02856AE1DE5DBA700D85AA8 /* ConnectionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02856AD1DE5DBA700D85AA8 /* ConnectionError.swift */; };
+		E02856B01DE61FC000D85AA8 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02856AF1DE61FC000D85AA8 /* Scheduler.swift */; };
+		E02856B21DE6E2AF00D85AA8 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02856B11DE6E2AF00D85AA8 /* Utilities.swift */; };
+		E080B8011DE466BE00BEF251 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = E080B8001DE466BE00BEF251 /* Line.swift */; };
+		E080B8031DE466CF00BEF251 /* ErasedLinePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E080B8021DE466CF00BEF251 /* ErasedLinePath.swift */; };
+		E080B8051DE46E9D00BEF251 /* DrawObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E080B8041DE46E9D00BEF251 /* DrawObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +108,8 @@
 		CD69E03C1DE6065D0029B168 /* CourseTableViewHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseTableViewHeaderView.xib; sourceTree = "<group>"; };
 		CD69E03E1DE606770029B168 /* CourseTableViewHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseTableViewHeaderView.swift; sourceTree = "<group>"; };
 		CD69E0401DE60B210029B168 /* CourseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CourseTableViewCell.swift; sourceTree = "<group>"; };
+		CD69E0421DE73A500029B168 /* AssignmentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentCollectionViewCell.swift; sourceTree = "<group>"; };
+		CD69E0441DE740F80029B168 /* AssignmentCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentCollectionReusableView.swift; sourceTree = "<group>"; };
 		CD7FCDAA1DB629720070A6BB /* PDFPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFPageViewController.swift; sourceTree = "<group>"; };
 		CD7FCDAE1DBDEFE30070A6BB /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
 		CD7FCDB01DBEFF1B0070A6BB /* CircularTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularTransition.swift; sourceTree = "<group>"; };
@@ -111,6 +123,14 @@
 		E01B05911DDB653800FF539F /* MysqlConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MysqlConnector.swift; sourceTree = "<group>"; };
 		E01B05981DDB796400FF539F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E01B059C1DDB7B7100FF539F /* Convertor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Convertor.swift; sourceTree = "<group>"; };
+		E02856A91DE57F0000D85AA8 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		E02856AA1DE57F0000D85AA8 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		E02856AD1DE5DBA700D85AA8 /* ConnectionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionError.swift; sourceTree = "<group>"; };
+		E02856AF1DE61FC000D85AA8 /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
+		E02856B11DE6E2AF00D85AA8 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		E080B8001DE466BE00BEF251 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		E080B8021DE466CF00BEF251 /* ErasedLinePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErasedLinePath.swift; sourceTree = "<group>"; };
+		E080B8041DE46E9D00BEF251 /* DrawObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +138,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E02856AB1DE57F0000D85AA8 /* libsqlite3.0.tbd in Frameworks */,
+				E02856AC1DE57F0000D85AA8 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +202,8 @@
 				CD69E03A1DE5D5690029B168 /* AssignmentRecordTableViewHeaderView.swift */,
 				CD69E03E1DE606770029B168 /* CourseTableViewHeaderView.swift */,
 				CD69E0401DE60B210029B168 /* CourseTableViewCell.swift */,
+				CD69E0421DE73A500029B168 /* AssignmentCollectionViewCell.swift */,
+				CD69E0441DE740F80029B168 /* AssignmentCollectionReusableView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -211,12 +235,13 @@
 				E014CBCB1DDBFD4800A97E80 /* Connector */,
 				CDBC22551DAE2D490025D33E /* roundUIButton.swift */,
 				CDBC22571DAE2EC60025D33E /* bottomBorderUITextField.swift */,
-				E014CBC91DDBF72A00A97E80 /* Connector.swift */,
 				CD2425261DDB059D006D5F17 /* CircularTransition */,
 				E01B059C1DDB7B7100FF539F /* Convertor.swift */,
 				E014CBC71DDBF6E500A97E80 /* AppAPI.swift */,
 				E014CBCE1DDBFF5A00A97E80 /* SwiftyJSON.swift */,
 				CD69E0231DE31D380029B168 /* Theme.swift */,
+				E02856AF1DE61FC000D85AA8 /* Scheduler.swift */,
+				E02856B11DE6E2AF00D85AA8 /* Utilities.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -270,6 +295,7 @@
 				CD37DEF61DA3C697009B69FC /* fyp */,
 				CD37DF0B1DA3C698009B69FC /* fypTests */,
 				CD37DEF51DA3C697009B69FC /* Products */,
+				E02856A81DE57EFF00D85AA8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -312,6 +338,9 @@
 			isa = PBXGroup;
 			children = (
 				CD69E0181DDCC24D0029B168 /* LinePath.swift */,
+				E080B8001DE466BE00BEF251 /* Line.swift */,
+				E080B8021DE466CF00BEF251 /* ErasedLinePath.swift */,
+				E080B8041DE46E9D00BEF251 /* DrawObject.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -329,8 +358,10 @@
 		E014CBCB1DDBFD4800A97E80 /* Connector */ = {
 			isa = PBXGroup;
 			children = (
+				E014CBC91DDBF72A00A97E80 /* Connector.swift */,
 				E01B05911DDB653800FF539F /* MysqlConnector.swift */,
 				E014CBCC1DDBFD6000A97E80 /* DummyConnector.swift */,
+				E02856AD1DE5DBA700D85AA8 /* ConnectionError.swift */,
 			);
 			name = Connector;
 			sourceTree = "<group>";
@@ -341,6 +372,15 @@
 				E01B05981DDB796400FF539F /* User.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		E02856A81DE57EFF00D85AA8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E02856A91DE57F0000D85AA8 /* libsqlite3.0.tbd */,
+				E02856AA1DE57F0000D85AA8 /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -456,10 +496,13 @@
 				CD7FCDB71DBF1FEA0070A6BB /* navigationDelegate.swift in Sources */,
 				CD2425151DD0A7E3006D5F17 /* CommentView.swift in Sources */,
 				CDBC22581DAE2EC60025D33E /* bottomBorderUITextField.swift in Sources */,
+				E080B8031DE466CF00BEF251 /* ErasedLinePath.swift in Sources */,
+				CD69E0451DE740F80029B168 /* AssignmentCollectionReusableView.swift in Sources */,
 				E01B05921DDB653800FF539F /* MysqlConnector.swift in Sources */,
 				CD69E02E1DE58CBD0029B168 /* AssignmentViewController.swift in Sources */,
 				CD4907461DA4B40400AE445D /* AssignmentRecord.swift in Sources */,
 				CD69E0191DDCC24D0029B168 /* LinePath.swift in Sources */,
+				E02856B01DE61FC000D85AA8 /* Scheduler.swift in Sources */,
 				CD49074B1DA4BB7300AE445D /* AssignmentRecordTableViewCell.swift in Sources */,
 				CD69E0411DE60B210029B168 /* CourseTableViewCell.swift in Sources */,
 				E01B059D1DDB7B7100FF539F /* Convertor.swift in Sources */,
@@ -470,6 +513,10 @@
 				CD7FCDAB1DB629720070A6BB /* PDFPageViewController.swift in Sources */,
 				CD7FCDAF1DBDEFE30070A6BB /* PDFViewController.swift in Sources */,
 				E014CBCD1DDBFD6000A97E80 /* DummyConnector.swift in Sources */,
+				E080B8051DE46E9D00BEF251 /* DrawObject.swift in Sources */,
+				CD69E0431DE73A500029B168 /* AssignmentCollectionViewCell.swift in Sources */,
+				E080B8011DE466BE00BEF251 /* Line.swift in Sources */,
+				E02856AE1DE5DBA700D85AA8 /* ConnectionError.swift in Sources */,
 				CD7FCDB11DBEFF1B0070A6BB /* CircularTransition.swift in Sources */,
 				CD69E0281DE477420029B168 /* CourseCollectionViewCell.swift in Sources */,
 				CD4907531DA4CE4300AE445D /* AssignmentRecordCanvas.swift in Sources */,
@@ -478,6 +525,7 @@
 				CD69E0361DE5D0C90029B168 /* AssignmentRecordViewController.swift in Sources */,
 				CD69E0301DE590940029B168 /* AssignmentTableViewCell.swift in Sources */,
 				CD69E03F1DE606770029B168 /* CourseTableViewHeaderView.swift in Sources */,
+				E02856B21DE6E2AF00D85AA8 /* Utilities.swift in Sources */,
 				CD37DF1A1DA3CC80009B69FC /* Course.swift in Sources */,
 				CD69E02C1DE4791B0029B168 /* CourseCollectionReusableView.swift in Sources */,
 				E014CBC81DDBF6E500A97E80 /* AppAPI.swift in Sources */,

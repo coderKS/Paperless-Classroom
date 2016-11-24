@@ -13,23 +13,27 @@ class Course: NSObject {
   var name: String
   var image: UIImage?
   var term: String
-  var year: String
+  var startYear: String
+  var endYear: String
   var code: String
   var enrollmentNumber: Int
+  var instructor: String
   
-  init?(id: String, name: String, image: UIImage?, term: String, year: String, code: String, enrollmentNumber: Int){
+  init?(id: String, name: String, image: UIImage?, term: String, startYear: String, endYear: String, code: String, enrollmentNumber: Int, instructor: String){
     self.id = id
     self.name = name
     self.image = image
     self.term = term
-    self.year = year
+    self.startYear = startYear
+    self.endYear = endYear
     self.code = code
     self.enrollmentNumber = enrollmentNumber
-    
+    self.instructor = instructor
     super.init()
     
-    if id.isEmpty || name.isEmpty || term.isEmpty || year.isEmpty || code.isEmpty {
+    if id.isEmpty || name.isEmpty || term.isEmpty || startYear.isEmpty || endYear.isEmpty || code.isEmpty || instructor.isEmpty {
       return nil
     }
   }
+  
 }

@@ -51,6 +51,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     navigationController?.navigationBar.tintColor = .white
     navigationItem.setHidesBackButton(true, animated: true)
     
+    self.view.bringSubview(toFront: secondaryMenu)
+    self.assignmentCollectionView.isHidden = true
+    self.assignmentTableView.isHidden = false
+    
     //animate
     animateTable()
   }
@@ -92,6 +96,30 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     }
     
   }
+  
+  func animateCollection() {
+    assignmentCollectionView.reloadData()
+    assignmentCollectionView.layoutIfNeeded()
+    let cells = assignmentCollectionView.visibleCells
+    let tableHeight: CGFloat = assignmentCollectionView.bounds.size.height
+    print(cells)
+    for i in cells {
+      let cell: UICollectionViewCell = i as UICollectionViewCell
+      cell.transform = CGAffineTransform(translationX: 0, y: tableHeight)
+    }
+    
+    var index = 0
+    
+    for a in cells {
+      let cell: UICollectionViewCell = a as UICollectionViewCell
+      UIView.animate(withDuration: 1.5, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveLinear, animations: {
+        cell.transform = CGAffineTransform(translationX: 0, y: 0);
+      }, completion: nil)
+      
+      index += 1
+    }
+  }
+
   
   func initSecondaryMenu() {
     self.secondaryMenu.backgroundColor = Theme.navigationBarTintColor
@@ -152,9 +180,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     let assignment = assignments[indexPath.row]
     cell.name.text = assignment.name
     cell.assignmentImage.image = UIImage(named: "folder")//assignment.image
-    cell.subTitle.text = "DUE " + Convertor.dateToString(date: assignment.dueDate)
+    cell.subTitle.text = "DUE " + Convertor.dateToMonthDay(date: assignment.dueDate)!
     cell.submittedNumber.text = String(assignment.submittedNum) + " / " + "20"//assignment.totalNum
     cell.submittedProgress.setProgress(Float(assignment.submittedNum) / Float(20), animated: true)
+    cell.lastSubmissionDateTime.text = Convertor.dateToMonthDayHourMin(date: assignment.lastModified)
     return cell
   }
   
@@ -194,7 +223,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AssignmentCollectionViewCell", for: indexPath) as! CourseCollectionViewCell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AssignmentCollectionViewCell", for: indexPath) as! AssignmentCollectionViewCell
     let course = assignments[indexPath.row]
     cell.name.text = course.name
     return cell
@@ -206,14 +235,19 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     
-    var view = CourseCollectionReusableView()
+    var view = AssignmentCollectionReusableView()
     
     if(kind == UICollectionElementKindSectionHeader){
-      view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "AssignmentCollectionViewHeader", for: indexPath) as! CourseCollectionReusableView
-      view.header.text = "You Love me"
+      view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "AssignmentCollectionReusableView", for: indexPath) as! AssignmentCollectionReusableView
+      view.header.text = "Name"
     }
     
     return view
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let sender = assignmentCollectionView.cellForItem(at: indexPath)
+    performSegue(withIdentifier: "ShowAssignmentRecord", sender: sender)
   }
   
   /************************************ Collection View Related ***********************************/
@@ -252,7 +286,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     self.assignmentCollectionView.isHidden = false
     DispatchQueue.main.async(){
       //code
-      self.assignmentCollectionView.reloadData()
+      self.animateCollection()
     }
 
   }
@@ -273,6 +307,12 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
         let indexPath = assignmentTableView.indexPath(for: selectedAssignmentTableViewCell)!
         let selectedAssignment = assignments[indexPath.row]
         assignmentRecordViewController.assignment = selectedAssignment
+        assignmentRecordViewController.course = self.course
+      } else  if let selectedAssignmentCollectionViewCell = sender as? AssignmentCollectionViewCell {
+        let indexPath = assignmentCollectionView.indexPath(for: selectedAssignmentCollectionViewCell)!
+        let selectedAssignment = assignments[indexPath.row]
+        assignmentRecordViewController.assignment = selectedAssignment
+        assignmentRecordViewController.course = self.course
       }
     }
   }

@@ -87,10 +87,14 @@ class CourseViewController: UIViewController,
       
     }
     api!.getCourseList(userId: self.userId){
-      (courses) in
+      (courses, error) in
+      if (error != nil){
+        //handle error here
+        return
+      }
       self.coursesSections = ["This Semester", "2015 - 2016 Term 2"]
       for _ in 1...self.coursesSections.count {
-        self.courses.append(courses)
+        self.courses.append(courses!)
       }
       DispatchQueue.main.async(){
         //code

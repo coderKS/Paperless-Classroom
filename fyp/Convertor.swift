@@ -11,10 +11,47 @@ import UIKit
 import Foundation
 class Convertor {
   
+  /**
+   * Input: "2016-11-15 23:59:59"
+   * Output: Nov 15
+   */
+  static func dateToMonthDay(date: Date) -> String?{
+    
+    let calendar = Calendar.current
+    let month = calendar.component(.month, from: date)
+    let day = calendar.component(.day, from: date)
+    let dateFormatter = DateFormatter()
+    let months = dateFormatter.shortMonthSymbols
+    let result = (months?[month-1])!.uppercased() + " " + String(day)
+    return result
+  }
+  
+  /**
+   * Input: "2016-11-15 23:59:59"
+   * Output: Nov 15 23:59
+   */
+  static func dateToMonthDayHourMin(date: Date) -> String?{
+    let calendar = Calendar.current
+    let month = calendar.component(.month, from: date)
+    let day = calendar.component(.day, from: date)
+    let hour = calendar.component(.hour, from: date)
+    let min = calendar.component(.minute, from: date)
+    let dateFormatter = DateFormatter()
+    let months = dateFormatter.shortMonthSymbols
+    let result = (months?[month-1])!.uppercased() + " " + String(day) + " " + String(format: "%02d", hour) + ":" + String(format: "%02d", min)
+    return result
+  }
+  
   static func stringToDate(dateString: String) -> Date? {
+    var ds = dateString
+    if ds.characters.contains(".") {
+      ds.remove(at: ds.index(before: ds.endIndex))
+      ds.remove(at: ds.index(before: ds.endIndex))
+    }
+    
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-    if let date = formatter.date(from: dateString){
+    if let date = formatter.date(from: ds){
       return date
     }
     print ("Fail to convert dateString to date")
@@ -27,16 +64,16 @@ class Convertor {
     return formatter.string(from: date)
   }
   
-  static func stringToRGB(rgbString: String) -> [Int] {
-      do {
-        let regex = try NSRegularExpression(pattern: "[0-9]+")
-        let nsString = rgbString as NSString
-        let results = regex.matches(in: rgbString, range: NSRange(location: 0, length: nsString.length))
-        return results.map { Int(nsString.substring(with: $0.range))!}
-      } catch let error {
-        print("invalid regex: \(error.localizedDescription)")
-        return []
-      }
+  static func stringToRGB(rgbString: String) -> [Float] {
+    do {
+      let regex = try NSRegularExpression(pattern: "(0\\.)?[0-9]+")
+      let nsString = rgbString as NSString
+      let results = regex.matches(in: rgbString, range: NSRange(location: 0, length: nsString.length))
+      return results.map { Float(nsString.substring(with: $0.range))!}
+    } catch let error {
+      print("invalid regex: \(error.localizedDescription)")
+      return []
+    }
   }
   
   static func jsonToCourseList(json: JSON) -> [Course] {
@@ -46,12 +83,13 @@ class Convertor {
       let name = subJson["name"].string!
       let imageStr = subJson["image"].string!
       let term = subJson["term"].string!
-      let year = subJson["startYear"].string!
+      let startYear = subJson["startYear"].string!
+      let endYear = subJson["endYear"].string!
       let code = subJson["code"].string!
       let enrollmentNumber = subJson["enrollmentNumber"].string!
-      
+      let instructor = subJson["instructor"].string!
       // print
-      print ("id=\(id),name=\(name),imageStr=\(imageStr),term=\(term),year=\(year),code=\(code),enrolNum=\(enrollmentNumber)")
+      print ("id=\(id),name=\(name),imageStr=\(imageStr),term=\(term),startYear=\(startYear),endYear=\(endYear),code=\(code),enrolNum=\(enrollmentNumber),instructor=\(instructor)")
       
       var image: UIImage
       if imageStr == "" {
@@ -59,7 +97,7 @@ class Convertor {
       } else {
         image = UIImage(named: imageStr)!
       }
-      courses += [Course(id: id, name: name, image: image, term: term, year: year, code: code, enrollmentNumber: Int(enrollmentNumber)!)!]
+      courses += [Course(id: id, name: name, image: image, term: term, startYear: startYear, endYear: endYear, code: code, enrollmentNumber: Int(enrollmentNumber)!, instructor: instructor)!]
       
     }
     return courses
@@ -76,4 +114,155 @@ class Convertor {
     
     return assignmentRecords
   }
+  
+  static func jsonToDrawObjectList(json: JSON) -> [DrawObject] {
+    var drawObjects = [DrawObject]()
+    for (_,subJson):(String, JSON) in json["shapes"] {
+      if let className = subJson["className"].string {
+        switch className {
+        case "Line":
+          if let line = Convertor.jsonToLine(json: subJson){
+            drawObjects += [line]
+          }
+          break
+        case "LinePath":
+          if let linePath = Convertor.jsonToLinePath(json: subJson){
+            drawObjects += [linePath]
+          }
+          break
+        case "ErasedLinePath":
+          if let erasedLinePath = Convertor.jsonToErasedLinePath(json: subJson){
+            drawObjects += [erasedLinePath]
+          }
+          break
+        default:
+          continue
+        }
+      }
+    }
+    print ("jsonToDrawObjectList# returned drawObjects size=\(drawObjects.count)")
+    return drawObjects
+  }
+  
+  static func jsonToLine(json: JSON) -> Line? {
+    if let x1 = json["data"]["x1"].double,
+      let y1 = json["data"]["y1"].double,
+      let x2 = json["data"]["x2"].double,
+      let y2 = json["data"]["y2"].double,
+      let colorString = json["data"]["color"].string,
+      let lineWidth = json["data"]["strokeWidth"].float,
+      let refId = json["id"].string{
+      
+      print ("refId=\(refId)")
+      let startPoint = CGPoint(x: x1, y:y1)
+      let endPoint = CGPoint(x: x2, y: y2)
+      let colorArray = Convertor.stringToRGB(rgbString: colorString)
+      let color: UIColor
+      switch(colorArray.count){
+      case 3:
+        print ("red=\(colorArray[0]), green=\(colorArray[1]), blue=\(colorArray[2])")
+        color = UIColor.init(red: CGFloat(colorArray[0]/255), green: CGFloat(colorArray[1]/255), blue: CGFloat(colorArray[2] / 255), alpha: 1)
+        break
+      case 4:
+        print ("red=\(colorArray[0]), green=\(colorArray[1]), blue=\(colorArray[2]), alpha=\(colorArray[3])")
+        color = UIColor.init(red: CGFloat(colorArray[0]/255), green: CGFloat(colorArray[1]/255), blue: CGFloat(colorArray[2] / 255), alpha: CGFloat(colorArray[3]))
+        break
+      default:
+        // it should be either 3 or 4, error handling here
+        return nil
+      }
+      
+      let category = "pen"
+      
+      let line = Line(startPoint: startPoint, endPoint: endPoint, color: color, lineWidth: CGFloat(lineWidth), category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0, refId: refId)
+      
+      return line
+    }
+    
+    return nil
+  }
+  
+  static func jsonToLinePath(json: JSON) -> LinePath? {
+    if let colorString = json["data"]["pointColor"].string,
+      let lineWidth = json["data"]["pointSize"].float,
+      let pointCoordinatePairs = json["data"]["pointCoordinatePairs"].array,
+      let refId = json["id"].string{
+      var category = "pen"
+      print ("refId=\(refId)")
+      let colorArray = Convertor.stringToRGB(rgbString: colorString)
+      let color: UIColor
+      switch(colorArray.count){
+      case 3:
+        print ("red=\(colorArray[0]), green=\(colorArray[1]), blue=\(colorArray[2])")
+        color = UIColor.init(red: CGFloat(colorArray[0]/255), green: CGFloat(colorArray[1]/255), blue: CGFloat(colorArray[2] / 255), alpha: 1)
+        category = "pen"
+        break
+      case 4:
+        print ("red=\(colorArray[0]), green=\(colorArray[1]), blue=\(colorArray[2]), alpha=\(colorArray[3])")
+        color = UIColor.init(red: CGFloat(colorArray[0]/255), green: CGFloat(colorArray[1]/255), blue: CGFloat(colorArray[2] / 255), alpha: CGFloat(colorArray[3]))
+        if colorArray[3] < 1.0 {
+          category = "highlight"
+        }
+        break
+      default:
+        // it should be either 3 or 4, error handling here
+        return nil
+      }
+      
+      
+      
+      var positions = [CGPoint]()
+      for i in 0...pointCoordinatePairs.count - 1 {
+        positions += [CGPoint(x: pointCoordinatePairs[i][0].double!, y: pointCoordinatePairs[i][1].double!)]
+      }
+      
+      let linePath = LinePath(positions: positions, color: color, lineWidth: CGFloat(lineWidth), category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0, refId: refId)
+      
+      return linePath
+    }
+    
+    return nil
+  }
+  
+  static func jsonToErasedLinePath(json: JSON) -> ErasedLinePath? {
+    if let lineWidth = json["data"]["pointSize"].float,
+      let pointCoordinatePairs = json["data"]["pointCoordinatePairs"].array,
+      let refId = json["id"].string{
+      let category = "eraser"
+      
+      var positions = [CGPoint]()
+      print ("refId=\(refId)")
+      for i in 0...pointCoordinatePairs.count - 1 {
+        positions += [CGPoint(x: pointCoordinatePairs[i][0].double!, y: pointCoordinatePairs[i][1].double!)]
+      }
+      
+      let erasedLinePath = ErasedLinePath(positions: positions, lineWidth: CGFloat(lineWidth), category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0, refId: refId)
+      
+      return erasedLinePath
+    }
+    
+    return nil
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
