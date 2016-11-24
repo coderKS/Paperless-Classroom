@@ -46,7 +46,7 @@ class Convertor {
       let name = subJson["name"].string!
       let imageStr = subJson["image"].string!
       let term = subJson["term"].string!
-      let year = subJson["year"].string!
+      let year = subJson["startYear"].string!
       let code = subJson["code"].string!
       let enrollmentNumber = subJson["enrollmentNumber"].string!
       
