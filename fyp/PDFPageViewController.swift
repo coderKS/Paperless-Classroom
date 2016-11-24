@@ -86,6 +86,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   var json2PageCurrentMapping = [Int:Int]()
   /* Draw */
   var pageDrawObjects = [Int:[DrawObject]]()
+  var pageIsDrawn = [Int:Bool]()
   
   /* Possible Modes */
   /*
@@ -106,6 +107,8 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
   let api = AppAPI()
   
   override func viewDidLoad() {
+    
+    
     super.viewDidLoad()
     
     // Do any additional setup after loading the view.
@@ -224,16 +227,22 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
 //      let index = jsonAnnotationPages.index(of: pageCurrent)
 //      jsonAnnotationPages.remove(at: index!)
 //    }
+    
     print ("changePage#start: page=\(pageCurrent)")
+    if(self.pageIsDrawn[pageCurrent]!){
+      print("changePage# page \(pageCurrent) is already drawn")
+      return;
+    }
+    
     // Try to read data from local variable
     print ("pageDrawObjects size=\(self.pageDrawObjects[pageCurrent]?.count) in page=\(pageCurrent)")
     if let drawObjects = self.pageDrawObjects[pageCurrent] {
-      self.drawObjectsToPane(drawObjects: drawObjects)
+      self.drawObjectsToPane(drawObjects: drawObjects, pageId: pageCurrent)
       return
     }
     
     // Try to get data from server
-    self.api.getAnnotation(pageId: String(pageCurrent)){
+    self.api.getAnnotation(fileId: "1", pageId: String(pageCurrent)){
       (drawObjects, error) in
       if error != nil {
         /* Handle error here */
@@ -246,14 +255,14 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
         return
       }
       
-      self.drawObjectsToPane(drawObjects: drawObjects!)
+      self.drawObjectsToPane(drawObjects: drawObjects!, pageId: self.pageCurrent)
       print ("changePage#size of drawObject=\(drawObjects?.count)")
       self.pageDrawObjects[self.pageCurrent]? += drawObjects!
     }
     
   }
   
-  func drawObjectsToPane(drawObjects: [DrawObject]){
+  func drawObjectsToPane(drawObjects: [DrawObject], pageId: Int){
     if drawObjects.count == 0 {
       return
     }
@@ -308,6 +317,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
         break
       }
     }
+    self.pageIsDrawn[pageId] = true
   }
   
   func prevPage(_ sender: UISwipeGestureRecognizer) {
@@ -357,6 +367,9 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     PDFDocument = CGPDFDocument(url as CFURL)
     
     pageCount = PDFDocument?.numberOfPages
+    //DRAW records from database
+    loadAnnotationJSON(pageCount!)
+    
     //Init page View Controller after loading the pdf
     for _ in 1...pageCount! {
       PDFViewControllers += [PDFViewController()]
@@ -365,18 +378,24 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       changePage(firstViewController, .forward)
     }
     
-    //DRAW records from database
-    loadAnnotationJSON(pageCount!)
+    
+    
+    
   }
 
   func loadAnnotationJSON(_ pageCount: Int) {
+    print("loadAnnotationJSON# start, pageCount=\(pageCount)")
     // Init object
     for i in 0...pageCount - 1 {
       self.pageDrawObjects[i] = [DrawObject]()
     }
     
+    for i in 0...pageCount - 1 {
+      self.pageIsDrawn[i] = false;
+    }
+    
     for i in 1...pageCount {
-      self.api.getAnnotation(pageId: String(i)){
+      self.api.getAnnotation(fileId: "1", pageId: String(i)){
         (drawObjects, error) in
         print("loadAnnotationJSON# received dataobject size=\(drawObjects?.count) in page=\(i)")
         if error != nil {

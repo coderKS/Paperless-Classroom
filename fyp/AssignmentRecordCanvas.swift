@@ -239,6 +239,7 @@ class AssignmentRecordCanvas: UIImageView {
       context?.setStrokeColor(red: CGFloat(GL_RED), green: CGFloat(GL_GREEN), blue: CGFloat(GL_BLUE), alpha: CGFloat(0.0))
     } else if penMode == "highlight" {
       color?.setStroke()
+      context?.setBlendMode(.copy)
       context?.setLineWidth(size)
       context?.setLineCap(.square)
     }

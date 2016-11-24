@@ -154,7 +154,7 @@ class AppAPI {
     
   }
   
-  func getAnnotation(pageId: String, completion: @escaping ([DrawObject]?, ConnectionError?)->()) {
+  func getAnnotation(fileId: String, pageId: String, completion: @escaping ([DrawObject]?, ConnectionError?)->()) {
     
     let urlWithParam: String
     
@@ -178,9 +178,9 @@ class AppAPI {
       // 2. get the responseString
       (data, error) in
       print ("data = \(data)")
-      if data == nil {
+      if data == nil || error != nil{
         // if cannot get data from server, try to read it in local file
-        let drawObjects = self.readLocalAnnotation(pageId: pageId)
+        let drawObjects = self.readLocalAnnotation(fileId: fileId, pageId: pageId)
         if drawObjects == nil {
           completion(nil, error)
         } else {
@@ -191,6 +191,11 @@ class AppAPI {
       // if able to get data from server,
       // parse the responseString to JSON
       let json = JSON(data: data!)
+      let dataString = String(data: data!, encoding: String.Encoding.utf8)
+      let result = self.writeLocalAnnotation(fileId: fileId, pageId: pageId, content: dataString!)
+      if !result {
+        print ("Fail to write back annotation into loca file")
+      }
       // convert the JSON into an array of Course Object
       let drawObjects = Convertor.jsonToDrawObjectList(json: json)
       print ("AppAPI# return drawObjects size=\(drawObjects.count) in page=[\(pageId)]")
@@ -228,9 +233,25 @@ class AppAPI {
     return self.writeFile(fileName: fileName, content: date)
   }
   
-  func readLocalAnnotation(pageId: String) -> [DrawObject]?{
+  func readLocalAnnotation(fileId: String, pageId: String) -> [DrawObject]?{
     print ("getLocalAnnotation#start")
+    let fileName = self.fileNamePrefix + "-file-" + fileId + "-page-" + pageId
+    if let content = self.readFile(fileName: fileName) {
+      // if content not nil
+      // convert the JSON into an array of Course Object
+      let data = content.data(using: .utf8)
+      let json = JSON(data: data!)
+      // convert the JSON into an array of Course Object
+      let drawObjects = Convertor.jsonToDrawObjectList(json: json)
+      print ("readLocalAnnotation# return drawObjects size=\(drawObjects.count) in page=[\(pageId)]")
+      return drawObjects
+    }
     return nil
+  }
+  
+  func writeLocalAnnotation(fileId: String, pageId: String, content: String) -> Bool{
+    let fileName = self.fileNamePrefix + "-file-" + fileId + "-page-" + pageId
+    return self.writeFile(fileName: fileName, content: content)
   }
   
   func readLocalCourseList(userId: String) -> [Course]? {
