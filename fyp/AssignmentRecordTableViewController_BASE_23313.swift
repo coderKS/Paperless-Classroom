@@ -1,5 +1,5 @@
 //
-//  AssignmentTableViewController.swift
+//  AssignmentRecordTableViewController.swift
 //  fyp
 //
 //  Created by Ka Hong Ngai on 5/10/2016.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class AssignmentTableViewController: UITableViewController {
+class AssignmentRecordTableViewController: UITableViewController {
   
-  var course: Course?
-  var assignments = [Assignment]()
+  var assignment: Assignment?
+  var assignmentRecords = [AssignmentRecord]()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -21,17 +21,16 @@ class AssignmentTableViewController: UITableViewController {
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    loadAssignments()
-    self.navigationItem.title = course?.name
+    loadAssignmentRecords()
+    self.navigationItem.title = assignment?.name
   }
   
-  func loadAssignments(){
+  func loadAssignmentRecords(){
     let defaultImg = UIImage(named: "folder")
-    let assignment1 = Assignment(id: "0", name: "Assignment 1", image: defaultImg, submittedNum: 18, lastModified: Date(), status: AssignmentStatus.OPENED_FOR_SUBMISSION, dueDate: Convertor.stringToDate(dateString: "2016-11-15 23:59:59")!)!
-    let assignment2 = Assignment(id: "0", name: "Assignment 2", image: defaultImg, submittedNum: 18, lastModified: Date(), status: AssignmentStatus.OPENED_FOR_SUBMISSION, dueDate: Convertor.stringToDate(dateString: "2016-11-15 23:59:59")!)!
-    let assignment3 = Assignment(id: "0", name: "Assignment 3", image: defaultImg, submittedNum: 18, lastModified: Date(), status: AssignmentStatus.OPENED_FOR_SUBMISSION, dueDate: Convertor.stringToDate(dateString: "2016-11-15 23:59:59")!)!
-    let assignment4 = Assignment(id: "0", name: "Assignment 4", image: defaultImg, submittedNum: 18, lastModified: Date(), status: AssignmentStatus.OPENED_FOR_SUBMISSION, dueDate: Convertor.stringToDate(dateString: "2016-11-15 23:59:59")!)!
-    assignments += [assignment1, assignment2, assignment3, assignment4]
+    let asgRecord1 = AssignmentRecord(id: "0", submissionStatus: 1, submissionDateTime: Convertor.stringToDate(dateString: "2016-10-15 23:59:59")!, studentID: "1155047854", studentName: "Wong Kam Shing", gradingStatus: AssignmentRecordStatus.IN_GRADING, image: defaultImg, score: 100, grade: "A", assignmentURL: "abc.pdf", lastModified: Convertor.stringToDate(dateString: "2016-10-16 14:08:12")!)!
+    let asgRecord2 = AssignmentRecord(id: "1", submissionStatus: 1, submissionDateTime: Convertor.stringToDate(dateString: "2016-10-15 23:59:59")!, studentID: "1155012345", studentName: "Wong Kam Shing", gradingStatus: AssignmentRecordStatus.IN_GRADING, image: defaultImg, score: 90, grade: "A-", assignmentURL: "abc.pdf", lastModified: Convertor.stringToDate(dateString: "2016-10-16 14:08:12")!)!
+    let asgRecord3 = AssignmentRecord(id: "2", submissionStatus: 1, submissionDateTime: Convertor.stringToDate(dateString: "2016-10-15 23:59:59")!, studentID: "1234567890", studentName: "Wong Kam Shing", gradingStatus: AssignmentRecordStatus.IN_GRADING, image: defaultImg, score: 80, grade: "B+", assignmentURL: "abc.pdf", lastModified: Convertor.stringToDate(dateString: "2016-10-16 14:08:12")!)!
+    assignmentRecords += [asgRecord1, asgRecord2, asgRecord3]
   }
   
   override func didReceiveMemoryWarning() {
@@ -48,20 +47,24 @@ class AssignmentTableViewController: UITableViewController {
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     // #warning Incomplete implementation, return the number of rows
-    return assignments.count
+    return assignmentRecords.count
   }
   
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cellIdentifier = "AssignmentTableViewCell"
-    let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! AssignmentTableViewCell
+    let cellIdentifier = "AssignmentRecordTableViewCell"
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! AssignmentRecordTableViewCell
     
     // Configure the cell...
-    let assignment = assignments[indexPath.row]
-    cell.assignmentName.text = assignment.name
-    cell.assignmentImage.image = assignment.image
+    let asgRecord = assignmentRecords[indexPath.row]
+    cell.studentID.text = asgRecord.studentID
+    cell.assignmentRecordImage.image = asgRecord.assignmentRecordImage
+    cell.score.text = asgRecord.score?.description
+    cell.submissionDateTime.text = Convertor.dateToString(date: asgRecord.submissionDateTime!)
+    
     return cell
   }
+  
   
   /*
    // Override to support conditional editing of the table view.
@@ -101,16 +104,17 @@ class AssignmentTableViewController: UITableViewController {
   
    // MARK: - Navigation
    
-  // In a storyboard-based application, you will often want to do a little preparation before navigation
+   // In a storyboard-based application, you will often want to do a little preparation before navigation
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     // Get the new view controller using segue.destinationViewController.
     // Pass the selected object to the new view controller.
-    if segue.identifier == "ShowAssignmentRecord" {
-      let assignmentRecordTableViewController = segue.destination as! AssignmentRecordTableViewController
-      if let selectedAssignmentTableViewCell = sender as? AssignmentTableViewCell {
-        let indexPath = tableView.indexPath(for: selectedAssignmentTableViewCell)!
-        let selectedAssignment = assignments[indexPath.row]
-        assignmentRecordTableViewController.assignment = selectedAssignment
+    if segue.identifier == "ShowAssignmentURL" {
+      
+      let assignmentRecordViewController = segue.destination as! PDFPageViewController
+      if let selectedAssignmentRecordTableViewCell = sender as? AssignmentRecordTableViewCell {
+        let indexPath = tableView.indexPath(for: selectedAssignmentRecordTableViewCell)!
+        let asgRecord = assignmentRecords[indexPath.row]
+        assignmentRecordViewController.assignmentRecord = asgRecord
       }
     }
   }

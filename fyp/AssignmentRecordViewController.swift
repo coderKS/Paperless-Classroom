@@ -2,208 +2,237 @@
 //  AssignmentRecordViewController.swift
 //  fyp
 //
-//  Created by Ka Hong Ngai on 5/10/2016.
+//  Created by Ka Hong Ngai on 23/11/2016.
 //  Copyright © 2016 IK1603. All rights reserved.
 //
 
 import UIKit
 
-class AssignmentRecordViewController: UIViewController, UIWebViewDelegate {
+class AssignmentRecordViewController: UIViewController,
+  //For Table View
+UITableViewDelegate, UITableViewDataSource {
   
-  /*** Properties ***/
+  var course: Course?
+  var assignment: Assignment?
+  var assignmentRecords = [AssignmentRecord]()
   
-  //Target document with assignment details
-  var assignmentRecord: AssignmentRecord?
   
-  //Subviews
-  var assignmentRecordCanvas = [AssignmentRecordCanvas]()
-  var webView: UIWebView?
-  var penSizeSlider: UISlider?
+  @IBOutlet weak var homeBtn: UIButton!
   
-  //Current page
-  var selectedPage = 0
-  var pageCount: Int?
+  @IBOutlet weak var assignmentRecordBtn: UIButton!
+  @IBOutlet weak var assignmentBtn: UIButton!
   
+  
+  @IBOutlet weak var indicatorA: UIImageView!
+  
+  @IBOutlet weak var indicatorB: UIImageView!
+  
+  @IBOutlet weak var assignmentRecordTableView: UITableView!
+  
+  @IBOutlet weak var secondaryMenuView: UIView!
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    
+    let nib = UINib(nibName: "AssignmentRecordTableViewHeaderView", bundle: nil)
+    self.assignmentRecordTableView.register(nib, forHeaderFooterViewReuseIdentifier: "AssignmentRecordTableViewHeaderView")
     // Do any additional setup after loading the view.
-    //loadAssignmentRecordURL()
-    //self.navigationItem.title = assignmentRecord?.studentID
-    loadCanvas()
-    //Hide the tabbar menu
-    //self.tabBarController?.tabBar.isHidden = true
+    
+    initSecondaryMenu()
+    
+    loadAssignmentRecords()
+    
+    self.view.backgroundColor = Theme.navigationBackgroundColor
+    self.assignmentRecordTableView.backgroundColor = Theme.navigationBackgroundColor
+    
+    navigationItem.setHidesBackButton(true, animated: true)
+    
+    animateTable()
   }
-  
-  /*** End Properties ***/
-  
-  
-  /*** Init ***/
-  
-  func loadAssignmentRecordURL() {
-    //Load PDF into the Webview
-    webView = UIWebView(frame: CGRect(x: 100, y: 150, width: 800, height: 1000))
-    let fileExtension = "pdf"
-    let localFilePath = Bundle.main.url(forResource: "test_2", withExtension: fileExtension)
-    let request = NSURLRequest(url: localFilePath!)
-    webView?.isUserInteractionEnabled = false
-    webView?.delegate = self
-    webView?.scrollView.isPagingEnabled = true
-    webView?.paginationMode = .leftToRight
-    webView?.paginationBreakingMode = .page
-    webView?.scalesPageToFit = true
-    webView?.loadRequest(request as URLRequest)
-    self.view.addSubview(webView!)
-  }
-  
-  func loadCanvas() {
-    //Load a UIImageView
-    assignmentRecordCanvas += [AssignmentRecordCanvas(frame: CGRect(x: 100, y: 150, width: 800, height: 1000))]
-    print("V")
-    assignmentRecordCanvas[0].isUserInteractionEnabled = true
-    self.view.addSubview(assignmentRecordCanvas[0])
-    print("A")
-    //Add size slider to change pen size
-    //loadSizeSlider()
-  }
-  
-  func loadSizeSlider() {
-    
-    //Slider Text
-    let penSizeSliderLabel = UILabel(frame: CGRect(x: 10, y: 650, width: 90, height: 20))
-    penSizeSliderLabel.text = "Pen Size"
-    
-    //Slider
-    penSizeSlider = UISlider(frame: CGRect(x: 10, y: 660, width: 90, height: 30))
-    
-    penSizeSlider?.maximumValue = 5
-    penSizeSlider?.minimumValue = 0.5
-    penSizeSlider?.isContinuous = true
-    
-    //Default value
-    penSizeSlider?.value = 2
-    
-    //Handler
-    penSizeSlider?.addTarget(self, action: #selector(AssignmentRecordViewController.penSizeSliderValueDidChange), for: .valueChanged)
-    
-    //Add to main view
-    self.view.addSubview(penSizeSliderLabel)
-    self.view.addSubview(penSizeSlider!)
-  }
-  
-  /*** End Init ***/
-  
-  
-  /*** Delegate ***/
   
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
   }
   
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(animated)
-    //Make the bottom tabBar appear again
-    self.tabBarController?.tabBar.isHidden = false
+  func loadAssignmentRecords(){
+    let defaultImg = UIImage(named: "folder")
+    let asgRecord1 = AssignmentRecord(id: "0", submissionStatus: 1, submissionDateTime: Convertor.stringToDate(dateString: "2016-10-15 23:59:59")!, studentID: "1155047854", studentName: "Wong Kam Shing", gradingStatus: AssignmentRecordStatus.IN_GRADING, image: defaultImg, score: 100, grade: "A", assignmentURL: "abc.pdf", lastModified: Convertor.stringToDate(dateString: "2016-10-16 14:08:12")!)!
+    let asgRecord2 = AssignmentRecord(id: "1", submissionStatus: 1, submissionDateTime: Convertor.stringToDate(dateString: "2016-10-15 23:59:59")!, studentID: "1155012345", studentName: "Wong Kam Shing", gradingStatus: AssignmentRecordStatus.IN_GRADING, image: defaultImg, score: 90, grade: "A-", assignmentURL: "abc.pdf", lastModified: Convertor.stringToDate(dateString: "2016-10-16 14:08:12")!)!
+    let asgRecord3 = AssignmentRecord(id: "2", submissionStatus: 1, submissionDateTime: Convertor.stringToDate(dateString: "2016-10-15 23:59:59")!, studentID: "1234567890", studentName: "Wong Kam Shing", gradingStatus: AssignmentRecordStatus.IN_GRADING, image: defaultImg, score: 80, grade: "B+", assignmentURL: "abc.pdf", lastModified: Convertor.stringToDate(dateString: "2016-10-16 14:08:12")!)!
+    assignmentRecords += [asgRecord1, asgRecord2, asgRecord3]
   }
   
-  func webViewDidFinishLoad(_ webView: UIWebView) {
-    let totalHeight = webView.scrollView.contentSize.height
+  func animateTable() {
+    assignmentRecordTableView.reloadData()
+    let cells = assignmentRecordTableView.visibleCells
+    let tableHeight: CGFloat = assignmentRecordTableView.bounds.size.height
     
-    let pageHeight = webView.scrollView.frame.size.height
-    
-    pageCount = Int(floor(Double(totalHeight) / Double(pageHeight)))
-    
-    //Add list of image view into this view to be the canvas
-    loadCanvas()
-  }
-
-  /*** End Delegate ***/
-  
-  /*** Button Action ***/
-  
-  //Set to pen mode
-  @IBAction func penButton(_ sender: AnyObject) {
-    assignmentRecordCanvas[selectedPage].setMyPenMode("pen")
-  }
-  
-  //Set to rubber mode
-  @IBAction func EraserButton(_ sender: AnyObject) {
-    assignmentRecordCanvas[selectedPage].setMyPenMode("rubber")
-  }
-  
-  @IBAction func HighlightButton(_ sender: AnyObject) {
-    assignmentRecordCanvas[selectedPage].setMyPenMode("highlight")
-  }
-  
-  //Undo draw/erase...
-  @IBAction func undoButton(_ sender: AnyObject) {
-    
-  }
-  
-  //Clear the canvas
-  @IBAction func clearButton(_ sender: AnyObject) {
-    assignmentRecordCanvas[selectedPage].image = nil
-  }
-  
-  //Navigate to previous page
-  @IBAction func previousPageButton(_ sender: AnyObject) {
-    let penMode: String
-    if selectedPage > 0 {
-      //Swap the Canvas
-      assignmentRecordCanvas[selectedPage].removeFromSuperview()
-      penMode = assignmentRecordCanvas[selectedPage].penMode
-      selectedPage -= 1
-      scrollPage(selectedPage, penMode)
+    for i in cells {
+      let cell: UITableViewCell = i as UITableViewCell
+      cell.transform = CGAffineTransform(translationX: 0, y: tableHeight)
     }
-  }
-  
-  //Navigate to next page
-  @IBAction func nextPageButton(_ sender: AnyObject) {
-    let penMode: String
-    if selectedPage < pageCount! - 1 {
-      //Swap the Canvas
-      assignmentRecordCanvas[selectedPage].removeFromSuperview()
-      penMode = assignmentRecordCanvas[selectedPage].penMode
-      selectedPage += 1
-      scrollPage(selectedPage, penMode)
+    
+    var index = 0
+    
+    for a in cells {
+      let cell: UITableViewCell = a as UITableViewCell
+      UIView.animate(withDuration: 1.5, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveLinear, animations: {
+        cell.transform = CGAffineTransform(translationX: 0, y: 0);
+      }, completion: nil)
+      
+      index += 1
     }
+    
   }
+  
+  func initSecondaryMenu() {
+    self.secondaryMenuView.backgroundColor = Theme.navigationBarTintColor
+    
+    var img = UIImage(named: "home")?.withRenderingMode(.alwaysTemplate)
+    homeBtn.setImage(img, for: .normal)
+    homeBtn.setTitle("Home", for: .normal)
+    homeBtn.tintColor = Theme.navigationBarTextColor
+    
+    img = UIImage(named: "folder")
+    var resizedImg = imageWithImage(image: img!, scaledToSize: CGSize(width: 30, height: 30)).withRenderingMode(.alwaysTemplate)
+    assignmentBtn.setImage(resizedImg, for: .normal)
+    assignmentBtn.setTitle(course?.code ?? "Course", for: .normal)
+    assignmentBtn.tintColor = Theme.navigationBarTextColor
+    
+    img = UIImage(named: "calendar")
+    resizedImg = imageWithImage(image: img!, scaledToSize: CGSize(width: 30, height: 30)).withRenderingMode(.alwaysTemplate)
+    assignmentRecordBtn.setImage(resizedImg, for: .normal)
+    assignmentRecordBtn.setTitle(assignment?.name ?? "Assignment", for: .normal)
+    assignmentRecordBtn.tintColor = Theme.navigationBarTextColor
+    
+    indicatorA.image = (indicatorA.image?.withRenderingMode(.alwaysTemplate))!
+    indicatorA.tintColor = Theme.navigationBarTextColor
+    
+    indicatorB.image = (indicatorB.image?.withRenderingMode(.alwaysTemplate))!
+    indicatorB.tintColor = Theme.navigationBarTextColor
+  }
+  
+  func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
+    UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
+    image.draw(in: CGRect(origin: CGPoint.zero, size: CGSize(width: newSize.width, height: newSize.height)))
+    let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+    UIGraphicsEndImageContext()
+    return newImage
+  }
+  
+  /************************************* Table View Related **********************************/
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    return 70.0
+  }
+  
+  func numberOfSections(in tableView: UITableView) -> Int {
+    // #warning Incomplete implementation, return the number of sections
+    return 1
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // #warning Incomplete implementation, return the number of rows
+    return assignmentRecords.count
+  }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 120
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cellIdentifier = "AssignmentRecordTableViewCell"
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! AssignmentRecordTableViewCell
+    // Configure the cell...
+    let assignmentRecord = assignmentRecords[indexPath.row]
+    cell.name.text = assignmentRecord.studentName
+    cell.assignmentRecordImage.image = UIImage(named: "calendar")//assignment.image
+    cell.studentID.text = assignmentRecord.studentID
+    cell.submissionDateTime.text = Convertor.dateToMonthDayHourMin(date: assignmentRecord.submissionDateTime!)
+    cell.grade.text = assignmentRecord.grade //With point
+    cell.status.text = "-"//assignmentRecord.gradingStatus
+    cell.lastModifiedDateTime.text = Convertor.dateToMonthDayHourMin(date: assignmentRecord.lastModified)
+    return cell
+  }
+  
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let header = assignmentRecordTableView.dequeueReusableHeaderFooterView(withIdentifier: "AssignmentRecordTableViewHeaderView") as! AssignmentRecordTableViewHeaderView
+    
+    var font = UIFont(name: "Helvetica Neue", size: CGFloat(40.0))
+    let color = UIColor.darkGray
+    
+    header.name.font = font
+    header.name?.textColor = color
+    header.name.text = "Name"
+    
+    font = UIFont(name: "Helvetica Neue", size: CGFloat(18.0))
+    header.refID?.font = font
+    header.refID?.textColor = color
+    header.refID.text = "Ref ID"
+    
+    header.submissionDateTime.font = font
+    header.submissionDateTime.textColor = color
+    header.submissionDateTime.text = "Submission Time"
+    
+    header.grade.font = font
+    header.grade.textColor = color
+    header.grade.text = "Grade"
+    
+    header.status.font = font
+    header.status.textColor = color
+    header.status.text = "Status"
+    
+    header.lastModifiedDateTime.font = font
+    header.lastModifiedDateTime.textColor = color
+    header.lastModifiedDateTime.text = "Last Updated"
+    
+    return header
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let sender = assignmentRecordTableView.cellForRow(at: indexPath)
+    performSegue(withIdentifier: "ShowAssignmentRecordURL", sender: sender)
+  }
+  
+  /************************************ Table View Related ***********************************/
+  
+  
+  /************************************ Button CallBack **************************************/
+  func optionBtnTapped(_ sender: UIBarButtonItem){
+    
+  }
+  
+  func searchBtnTapped(_ sender: UIBarButtonItem){
+    
+  }
+  
+  func homeBtnTapped(_ sender: UIBarButtonItem){
+    
+  }
+  
+  @IBAction func assignmentRecordHomeBtnTapped(_ sender: Any) {
+    performSegue(withIdentifier: "backToCourse", sender: nil)
+  }
+  
+  @IBAction func assignmentRecordAssignmentBtnTapped(_ sender: Any) {
+    performSegue(withIdentifier: "backToAssignment", sender: nil)
+  }
+  
+  
+  // MARK: - Navigation
+  
+  // In a storyboard-based application, you will often want to do a little preparation before navigation
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
+    if segue.identifier == "backToAssignment" {
+      let assignmentViewController = segue.destination as! AssignmentViewController
+      assignmentViewController.course = self.course
+    } else if segue.identifier == "backToCourse" {
+      
+    }
 
-  /*** End Button Action ***/
-  
-  /*** Callback / Handler ***/
-  
-  func penSizeSliderValueDidChange(sender: UISlider!) {
-    assignmentRecordCanvas[selectedPage].penSize = CGFloat(sender.value)
   }
   
-  func scrollPage(_ selectedPage: Int, _ penMode: String) {
-    let pageHeight = webView?.scrollView.frame.size.height
-    let y = Double(selectedPage) * Double(pageHeight!)
-    
-    //Scroll the PDF
-    self.webView?.scrollView.setContentOffset(CGPoint(x:0, y:y), animated: true)
-    
-    //Insert correct subview
-    assignmentRecordCanvas[selectedPage].isUserInteractionEnabled = true
-    self.view.addSubview(assignmentRecordCanvas[selectedPage])
-    
-    //subview properties inherit slider value
-    assignmentRecordCanvas[selectedPage].penSize = CGFloat((penSizeSlider?.value)!)
-    assignmentRecordCanvas[selectedPage].penMode = penMode
-  }
-  
-  /*** End Callback / Handler ***/
-  
-  /*
-   // MARK: - Navigation
-   
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-   // Get the new view controller using segue.destinationViewController.
-   // Pass the selected object to the new view controller.
-   }
-   */
   
 }

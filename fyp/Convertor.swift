@@ -16,12 +16,13 @@ class Convertor {
    * Output: Nov 15
    */
   static func dateToMonthDay(date: Date) -> String?{
+    
     let calendar = Calendar.current
     let month = calendar.component(.month, from: date)
     let day = calendar.component(.day, from: date)
     let dateFormatter = DateFormatter()
     let months = dateFormatter.shortMonthSymbols
-    let result = (months?[month-1])! + " " + String(day)
+    let result = (months?[month-1])!.uppercased() + " " + String(day)
     return result
   }
   
@@ -29,7 +30,7 @@ class Convertor {
    * Input: "2016-11-15 23:59:59"
    * Output: Nov 15 23:59
    */
-  func dateToMonthDayHourMin(date: Date) -> String?{
+  static func dateToMonthDayHourMin(date: Date) -> String?{
     let calendar = Calendar.current
     let month = calendar.component(.month, from: date)
     let day = calendar.component(.day, from: date)
@@ -37,7 +38,7 @@ class Convertor {
     let min = calendar.component(.minute, from: date)
     let dateFormatter = DateFormatter()
     let months = dateFormatter.shortMonthSymbols
-    let result = (months?[month-1])! + " " + String(day) + " " + String(hour) + ":" + String(min)
+    let result = (months?[month-1])!.uppercased() + " " + String(day) + " " + String(format: "%02d", hour) + ":" + String(format: "%02d", min)
     return result
   }
   
