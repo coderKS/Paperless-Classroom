@@ -114,7 +114,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     // Do any additional setup after loading the view.
     
     //gestures
-    let prevSwipe: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(PDFPageViewController.prevPage(_:)))
+    /*let prevSwipe: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(PDFPageViewController.prevPage(_:)))
     prevSwipe.direction = UISwipeGestureRecognizerDirection.up
     prevSwipe.numberOfTouchesRequired = 2
     prevSwipe.delaysTouchesBegan = false
@@ -124,7 +124,7 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     nextSwipe.direction = UISwipeGestureRecognizerDirection.down
     nextSwipe.numberOfTouchesRequired = 2
     nextSwipe.delaysTouchesBegan = false
-    self.view.addGestureRecognizer(nextSwipe)
+    self.view.addGestureRecognizer(nextSwipe)*/
     
     let leftEdgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(showPagesOverview))
     leftEdgePan.minimumNumberOfTouches = 2
@@ -320,10 +320,8 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     self.pageIsDrawn[pageId] = true
   }
   
-  func prevPage(_ sender: UISwipeGestureRecognizer) {
-    if sender.state == .ended{
-    sender.require(toFail: PDFViewControllers[pageCurrent].twoPan!)
-    
+  func prevPage() {
+
     pageCurrent = pageCurrent - 1
     
     if pageCurrent < 0 {
@@ -333,12 +331,9 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     let currentController = PDFViewControllers[pageCurrent]
       
     changePage(currentController, .forward)
-    }
   }
   
-  func nextPage(_ sender: UISwipeGestureRecognizer) {
-    if sender.state == .ended{
-    sender.require(toFail: PDFViewControllers[pageCurrent].twoPan!)
+  func nextPage() {
     
     pageCurrent = pageCurrent + 1
     
@@ -349,7 +344,6 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     let currentController = PDFViewControllers[pageCurrent]
     
     changePage(currentController, .reverse)
-    }
   }
   
   override func didReceiveMemoryWarning() {

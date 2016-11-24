@@ -156,7 +156,8 @@ class CourseViewController: UIViewController,
     
     img = UIImage(named: "collection")?.withRenderingMode(.alwaysTemplate)
     collectionViewBtn.setImage(img, for: .normal)
-    collectionViewBtn.tintColor = Theme.navigationBarTextColor
+    
+    collectionViewBtn.tintColor = UIColor.darkGray//Theme.navigationBarTextColor
     
     img = UIImage(named: "home")?.withRenderingMode(.alwaysTemplate)
     homeBtn.setImage(img, for: .normal)
@@ -284,6 +285,10 @@ class CourseViewController: UIViewController,
   
   @IBAction func listViewBtnTapped(_ sender: UIButton) {
     //Change to listView
+    collectionViewBtn.tintColor = UIColor.darkGray
+    
+    listViewBtn.tintColor = UIColor.white
+    
     self.courseCollectionView.isHidden = true
     self.courseTableView.isHidden = false
     DispatchQueue.main.async(){
@@ -294,6 +299,10 @@ class CourseViewController: UIViewController,
   
   @IBAction func collectionViewBtnTapped(_ sender: Any) {
     //Change to collectionView
+    collectionViewBtn.tintColor = UIColor.white
+    
+    listViewBtn.tintColor = UIColor.darkGray
+    
     self.courseTableView.isHidden = true
     self.courseCollectionView.isHidden = false
     DispatchQueue.main.async(){

@@ -130,7 +130,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     img = UIImage(named: "collection")?.withRenderingMode(.alwaysTemplate)
     collectionViewBtn.setImage(img, for: .normal)
-    collectionViewBtn.tintColor = Theme.navigationBarTextColor
+    collectionViewBtn.tintColor = UIColor.darkGray//Theme.navigationBarTextColor
     
     img = UIImage(named: "home")?.withRenderingMode(.alwaysTemplate)
     homeBtn.setImage(img, for: .normal)
@@ -272,6 +272,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
   
   @IBAction func listViewBtnTapped(_ sender: Any) {
     //Change to listView
+    collectionViewBtn.tintColor = UIColor.darkGray
+    
+    listViewBtn.tintColor = UIColor.white
+    
     self.assignmentCollectionView.isHidden = true
     self.assignmentTableView.isHidden = false
     DispatchQueue.main.async(){
@@ -282,6 +286,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
   
   @IBAction func collectionViewBtnTapped(_ sender: Any) {
     //Change to collectionView
+    collectionViewBtn.tintColor = UIColor.white
+    
+    listViewBtn.tintColor = UIColor.darkGray
+    
     self.assignmentTableView.isHidden = true
     self.assignmentCollectionView.isHidden = false
     DispatchQueue.main.async(){
