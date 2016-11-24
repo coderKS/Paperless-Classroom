@@ -21,7 +21,7 @@ class ErasedLinePath: DrawObject {
   var assignmentID: Int
   
   init?(positions: [CGPoint], lineWidth: CGFloat, category: String, pageID: Int,
-        userID: Int, assignmentRecordID: Int, assignmentID: Int){
+        userID: Int, assignmentRecordID: Int, assignmentID: Int, refId: String){
     self.positions = positions
     self.lineWidth = lineWidth
     self.category = category
@@ -32,7 +32,7 @@ class ErasedLinePath: DrawObject {
     self.assignmentID = assignmentID
     self.assignmentRecordID = assignmentRecordID
     
-    super.init(type: "ErasedLinePath")
+    super.init(type: DrawObjectType.ErasedLinePath, refId: refId)
   }
 
 }

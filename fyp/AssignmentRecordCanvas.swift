@@ -22,7 +22,7 @@ class AssignmentRecordCanvas: UIImageView {
   
   var temp: UIImage?
   var parentController: PDFPageViewController?
-  var saved = [[Float]]()
+  var saved = [CGPoint]()
   
   /* Draw Method */
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -111,7 +111,7 @@ class AssignmentRecordCanvas: UIImageView {
     let previous = touch.previousLocation(in: self)
     let current = touch.location(in: self)
     
-    saved.append([Float(current.x), Float(current.y)])
+    saved.append(CGPoint(x: Double(current.x),y: Double(current.y)))
     
     if penMode == "pen" {
       //Set pen color

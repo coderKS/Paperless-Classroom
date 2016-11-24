@@ -22,7 +22,7 @@ class LinePath: DrawObject {
   var assignmentID: Int
   
   init?(positions: [CGPoint], color:UIColor, lineWidth: CGFloat, category: String, pageID: Int,
-        userID: Int, assignmentRecordID: Int, assignmentID: Int){
+        userID: Int, assignmentRecordID: Int, assignmentID: Int, refId: String){
     self.positions = positions
     self.color = color
     self.lineWidth = lineWidth
@@ -34,7 +34,7 @@ class LinePath: DrawObject {
     self.assignmentID = assignmentID
     self.assignmentRecordID = assignmentRecordID
     
-    super.init(type: "LinePath")
+    super.init(type: DrawObjectType.LinePath, refId: refId)
   }
   
   static func toJSON(_ linePath: LinePath) -> JSON {

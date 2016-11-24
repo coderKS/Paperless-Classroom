@@ -43,19 +43,19 @@ class CourseTableViewController: UITableViewController {
   }
   
   func loadCourse(){
-    if let api = AppAPI() {
-      api.getCourseList(userId: self.userId){
-        (courses) in
-        self.courses = courses
-        self.tableView.reloadData()
+    let api = AppAPI()
+    api.getCourseList(userId: self.userId){
+      (courses, error) in
+      if error != nil {
+        /* Handle error here */
+        print ("Network error detected!")
       }
+      if (courses == nil){
+        return
+      }
+      self.courses = courses!
+      self.tableView.reloadData()
     }
-
-//    let course1 = Course(name: "CSCI2100", image: defaultImg)!
-//    let course2 = Course(name: "CSCI2720", image: defaultImg)!
-//    let course3 = Course(name: "ELTU3003", image: defaultImg)!
-//    let course4 = Course(name: "CPTH2100", image: defaultImg)!
-//    courses += [course1, course2, course3, course4]
   }
   
   override func didReceiveMemoryWarning() {

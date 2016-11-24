@@ -17,8 +17,9 @@ class Course: NSObject {
   var endYear: String
   var code: String
   var enrollmentNumber: Int
+  var instructor: String
   
-  init?(id: String, name: String, image: UIImage?, term: String, startYear: String, endYear: String, code: String, enrollmentNumber: Int){
+  init?(id: String, name: String, image: UIImage?, term: String, startYear: String, endYear: String, code: String, enrollmentNumber: Int, instructor: String){
     self.id = id
     self.name = name
     self.image = image
@@ -27,10 +28,10 @@ class Course: NSObject {
     self.endYear = endYear
     self.code = code
     self.enrollmentNumber = enrollmentNumber
-    
+    self.instructor = instructor
     super.init()
     
-    if id.isEmpty || name.isEmpty || term.isEmpty || startYear.isEmpty || endYear.isEmpty || code.isEmpty {
+    if id.isEmpty || name.isEmpty || term.isEmpty || startYear.isEmpty || endYear.isEmpty || code.isEmpty || instructor.isEmpty {
       return nil
     }
   }

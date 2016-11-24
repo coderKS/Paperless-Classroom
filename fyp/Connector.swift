@@ -8,6 +8,11 @@
 
 import Foundation
 
+public enum ConnectorType {
+  case Veriguide
+  case Localhost
+}
+
 protocol Connector {
   // MARK: Properties
   var baseUrl: String {get}
@@ -15,10 +20,10 @@ protocol Connector {
   
   // An async function that return the response by given url, parameters
   // @return: responseString
-  func sendPostRequest(urlString: String, postString: String?, completion: @escaping (Data?) -> ())
+  func sendPostRequest(urlString: String, postString: String?, completion: @escaping (Data?, ConnectionError?) -> ())
   
   // An async function that return the response by given url
   // @return: responseString
-  func sendGetRequest(urlString: String, completion: @escaping (Data?) -> ())
+  func sendGetRequest(urlString: String, completion: @escaping (Data?, ConnectionError?) -> ())
   
 }

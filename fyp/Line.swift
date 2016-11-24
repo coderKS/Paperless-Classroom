@@ -24,7 +24,7 @@ class Line: DrawObject {
   var assignmentID: Int
   
   init?(startPoint: CGPoint, endPoint: CGPoint, color:UIColor, lineWidth: CGFloat, category: String, pageID: Int,
-        userID: Int, assignmentRecordID: Int, assignmentID: Int){
+        userID: Int, assignmentRecordID: Int, assignmentID: Int, refId: String){
     self.startPoint = startPoint
     self.endPoint = endPoint
     
@@ -38,7 +38,7 @@ class Line: DrawObject {
     self.assignmentID = assignmentID
     self.assignmentRecordID = assignmentRecordID
     
-    super.init(type: "Line")
+    super.init(type: DrawObjectType.Line, refId: refId)
 
   }
 }
