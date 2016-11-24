@@ -64,6 +64,7 @@ class Convertor {
     return formatter.string(from: date)
   }
   
+  
   static func stringToRGB(rgbString: String) -> [Float] {
     do {
       let regex = try NSRegularExpression(pattern: "(0\\.)?[0-9]+")
@@ -74,6 +75,13 @@ class Convertor {
       print("invalid regex: \(error.localizedDescription)")
       return []
     }
+  }
+  
+  static func pageDrawObjectsToJson(pageDrawObjects: [Int:[DrawObject]]){
+    let dataString = "{\"data\": []}"
+    let data = dataString.data(using: .utf8)
+    var json = JSON(data: data!)
+    
   }
   
   static func jsonToCourseList(json: JSON) -> [Course] {
