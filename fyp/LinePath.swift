@@ -10,6 +10,7 @@ import UIKit
 
 class LinePath: DrawObject {
   var positions: [CGPoint]
+  var smoothPositions: [CGPoint]
   var color: UIColor
   var lineWidth: CGFloat
   var category: String
@@ -21,9 +22,10 @@ class LinePath: DrawObject {
   var assignmentRecordID: Int
   var assignmentID: Int
   
-  init?(positions: [CGPoint], color:UIColor, lineWidth: CGFloat, category: String, pageID: Int,
+  init?(positions: [CGPoint], smoothPositions: [CGPoint], color:UIColor, lineWidth: CGFloat, category: String, pageID: Int,
         userID: Int, assignmentRecordID: Int, assignmentID: Int, refId: String){
     self.positions = positions
+    self.smoothPositions = smoothPositions
     self.color = color
     self.lineWidth = lineWidth
     self.category = category

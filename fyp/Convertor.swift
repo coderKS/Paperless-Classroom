@@ -77,11 +77,180 @@ class Convertor {
     }
   }
   
-  static func pageDrawObjectsToJson(pageDrawObjects: [Int:[DrawObject]]){
-    let dataString = "{\"data\": []}"
-    let data = dataString.data(using: .utf8)
-    var json = JSON(data: data!)
+  static func RGBToString(color: UIColor) -> String {
+    let alpha = color.alpha()!
+    let red = color.red()!
+    let green = color.green()!
+    let blue = color.blue()!
     
+    let result = "rgba(" + String(red) + "," + String(green) + "," + String(blue) + "," + String(alpha) + ")"
+    print ("RGBToString# result=\(result)")
+    return result
+  }
+  private static func drawObjectsToDataJson(drawObjects: [DrawObject], pageId: String) -> JSON?{
+    if drawObjects.count == 0 {
+      return nil
+    }
+    
+    var json: JSON = ["page": 0, "data": []]
+    json["page"] = JSON(pageId)
+    var dataJSON = [JSON]()
+    
+    for i in 0...drawObjects.count - 1 {
+      dataJSON.append(self.drawObjectToDataJson(drawObject: drawObjects[i], pageId: pageId))
+    }
+    
+    json["data"] = JSON(dataJSON)
+    //print ("drawObjectsToDataJson# json=\(json)")
+    return json
+  }
+  
+  static func drawObjectsToLocalDataJson(pageDrawObjects: [DrawObject]) -> JSON? {
+    if(pageDrawObjects.count == 0){
+      return nil
+    }
+    
+    var json: JSON = ["shapes": []]
+    var jsonArray = [JSON]()
+    for i in 0...pageDrawObjects.count - 1 {
+      jsonArray.append(self.drawObjectToLocalDataJson(drawObject: pageDrawObjects[i]))
+    }
+    
+    json["shapes"] = JSON(jsonArray)
+    //print ("drawObjectToLocalDataJson# json=\(json)")
+    return json
+  }
+  
+  private static func drawObjectToLocalDataJson(drawObject: DrawObject) -> JSON {
+    var json: JSON = ["className": "", "data": [], "id": ""]
+    
+    let dataJSON = self.drawObjectToJson(drawObject: drawObject)
+    var className: String
+    switch(drawObject.type){
+    case DrawObjectType.Line:
+      className = "Line"
+    case DrawObjectType.LinePath:
+      className = "LinePath"
+    case DrawObjectType.ErasedLinePath:
+      className = "ErasedLinePath"
+    }
+    
+    json["className"] = JSON(className)
+    json["data"] = JSON(dataJSON)
+    json["id"] = JSON(drawObject.refId)
+    //print ("drawObjectToLocalDataJson# json=\(json)")
+    return json
+  }
+  
+  private static func drawObjectToDataJson(drawObject: DrawObject, pageId: String) -> JSON {
+    var json: JSON = ["pageId": 0, "className": "", "data": "", "refId": ""]
+    
+    let dataJSON = self.drawObjectToJson(drawObject: drawObject)
+    let dataString = dataJSON.rawString(String.Encoding.utf8, options: JSONSerialization.WritingOptions(rawValue: 0))!
+    var className: String
+    switch(drawObject.type){
+    case DrawObjectType.Line:
+      className = "Line"
+    case DrawObjectType.LinePath:
+      className = "LinePath"
+    case DrawObjectType.ErasedLinePath:
+      className = "ErasedLinePath"
+    }
+    json["pageId"] = JSON(pageId)
+    json["className"] = JSON(className)
+    json["data"] = JSON(dataString)
+    json["refId"] = JSON(drawObject.refId)
+    //print ("drawObjectToDataJson# json=\(json)")
+    return json
+  }
+  
+  private static func drawObjectToJson(drawObject: DrawObject) -> JSON {
+    let json: JSON
+    switch(drawObject.type){
+    case DrawObjectType.Line:
+      json = self.LineToJson(line: drawObject as! Line)
+    case DrawObjectType.LinePath:
+      json = self.LinePathToJson(linePath: drawObject as! LinePath)
+    case DrawObjectType.ErasedLinePath:
+      json = self.EraserLinePathToJson(eraserLinePath: drawObject as! ErasedLinePath)
+    }
+    //print ("drawObjectToJson# json=\(json)")
+    return json
+  }
+  
+  private static func LineToJson(line: Line) -> JSON {
+    //{\"x1\":291.5,\"y1\":133,\"x2\":664.5,\"y2\":284,\"strokeWidth\":20,\"color\":\"rgba(255,0,0,1)\",\"capStyle\":\"round\",\"dash\":null,\"endCapShapes\":[null,null]}
+    var json: JSON =  ["x1": 0, "y1": 0, "x2": 0, "y2": 0, "strokeWidth": 0, "color": "", "capStyle": "round", "dash": "null", "endCapShapes": ["null","null"]]
+    json["x1"] = JSON(line.startPoint.x)
+    json["y1"] = JSON(line.startPoint.y)
+    json["x2"] = JSON(line.endPoint.x)
+    json["y2"] = JSON(line.endPoint.y)
+    json["color"] = JSON(self.RGBToString(color: line.color))
+    
+    return json
+  }
+  
+  private static func LinePathToJson(linePath: LinePath) -> JSON {
+    var json: JSON =  ["order": 3, "tailSize": 3, "smooth": true, "pointCoordinatePairs": [], "smoothedPointCoordinatePairs": [], "pointSize": 0, "pointColor": ""]
+    
+    var positions = [[Float]]()
+    for i in 0...linePath.positions.count - 1 {
+      positions.append([Float(linePath.positions[i].x), Float(linePath.positions[i].y)])
+    }
+    let positionsJSON = JSON(positions)
+    
+    var smoothPositions = [[Float]]()
+    for i in 0...linePath.smoothPositions.count - 1 {
+      smoothPositions.append([Float(linePath.smoothPositions[i].x), Float(linePath.smoothPositions[i].y)])
+    }
+    let smoothPositionsJSON = JSON(smoothPositions)
+    
+    json["pointSize"] = JSON(linePath.lineWidth)
+    json["pointColor"] = JSON(self.RGBToString(color: linePath.color))
+    json["pointCoordinatePairs"] = positionsJSON
+    json["smoothedPointCoordinatePairs"] = smoothPositionsJSON
+    
+    return json
+  }
+  
+  private static func EraserLinePathToJson(eraserLinePath: ErasedLinePath) -> JSON {
+    var json: JSON =  ["order": 3, "tailSize": 3, "smooth": true, "pointCoordinatePairs": [], "smoothedPointCoordinatePairs": [], "pointSize": 0, "pointColor": ""]
+    
+    var positions = [[Float]]()
+    for i in 0...eraserLinePath.positions.count - 1 {
+      positions.append([Float(eraserLinePath.positions[i].x), Float(eraserLinePath.positions[i].y)])
+    }
+    let positionsJSON = JSON(positions)
+    
+    var smoothPositions = [[Float]]()
+    for i in 0...eraserLinePath.smoothPositions.count - 1 {
+      smoothPositions.append([Float(eraserLinePath.smoothPositions[i].x), Float(eraserLinePath.smoothPositions[i].y)])
+    }
+    let smoothPositionsJSON = JSON(smoothPositions)
+    
+    json["pointSize"] = JSON(eraserLinePath.lineWidth)
+    json["pointColor"] = "#000"
+    json["pointCoordinatePairs"] = positionsJSON
+    json["smoothedPointCoordinatePairs"] = smoothPositionsJSON
+    
+    return json
+  }
+  
+  static func pageDrawObjectsToJson(pageDrawObjects: [Int:[DrawObject]]) -> JSON? {
+    if  pageDrawObjects.count == 0 {
+      return nil
+    }
+    var jsonArr = [JSON]()
+    for i in 0...pageDrawObjects.count - 1 {
+      if pageDrawObjects[i]?.count == 0 {
+        continue
+      }
+      jsonArr.append(self.drawObjectsToDataJson(drawObjects: pageDrawObjects[i]!, pageId: String(i+1))!)
+    }
+    
+    let json = JSON(jsonArr)
+    //print ("pageDrawObjectsToJson# json=\(json)")
+    return json
   }
   
   static func jsonToCourseList(json: JSON) -> [Course] {
@@ -194,7 +363,9 @@ class Convertor {
     if let colorString = json["data"]["pointColor"].string,
       let lineWidth = json["data"]["pointSize"].float,
       let pointCoordinatePairs = json["data"]["pointCoordinatePairs"].array,
+      let smoothPointCoordinateParis = json["data"]["smoothedPointCoordinatePairs"].array,
       let refId = json["id"].string{
+      
       var category = "pen"
       print ("refId=\(refId)")
       let colorArray = Convertor.stringToRGB(rgbString: colorString)
@@ -217,14 +388,17 @@ class Convertor {
         return nil
       }
       
-      
-      
       var positions = [CGPoint]()
       for i in 0...pointCoordinatePairs.count - 1 {
         positions += [CGPoint(x: pointCoordinatePairs[i][0].double!, y: pointCoordinatePairs[i][1].double!)]
       }
       
-      let linePath = LinePath(positions: positions, color: color, lineWidth: CGFloat(lineWidth), category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0, refId: refId)
+      var smoothPositions = [CGPoint]()
+      for i in 0...smoothPointCoordinateParis.count - 1 {
+        smoothPositions += [CGPoint(x: smoothPointCoordinateParis[i][0].double!, y: smoothPointCoordinateParis[i][1].double!)]
+      }
+      
+      let linePath = LinePath(positions: positions, smoothPositions: smoothPositions, color: color, lineWidth: CGFloat(lineWidth), category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0, refId: refId)
       
       return linePath
     }
@@ -235,6 +409,7 @@ class Convertor {
   static func jsonToErasedLinePath(json: JSON) -> ErasedLinePath? {
     if let lineWidth = json["data"]["pointSize"].float,
       let pointCoordinatePairs = json["data"]["pointCoordinatePairs"].array,
+      let smoothPointCoordinateParis = json["data"]["smoothedPointCoordinatePairs"].array,
       let refId = json["id"].string{
       let category = "eraser"
       
@@ -244,7 +419,12 @@ class Convertor {
         positions += [CGPoint(x: pointCoordinatePairs[i][0].double!, y: pointCoordinatePairs[i][1].double!)]
       }
       
-      let erasedLinePath = ErasedLinePath(positions: positions, lineWidth: CGFloat(lineWidth), category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0, refId: refId)
+      var smoothPositions = [CGPoint]()
+      for i in 0...smoothPointCoordinateParis.count - 1 {
+        smoothPositions += [CGPoint(x: smoothPointCoordinateParis[i][0].double!, y: smoothPointCoordinateParis[i][1].double!)]
+      }
+      
+      let erasedLinePath = ErasedLinePath(positions: positions, smoothPositions: smoothPositions, lineWidth: CGFloat(lineWidth), category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0, refId: refId)
       
       return erasedLinePath
     }
