@@ -112,12 +112,12 @@ class AppAPI {
       print ("data = \(data)")
       if data == nil {
         // get local course list data
-        let courses = self.readLocalCourseList(userId: userId)
+        /*let courses = self.readLocalCourseList(userId: userId)
         if courses == nil {
           completion(nil, error)
         } else {
           completion(courses, nil)
-        }
+        }*/
         return
       }
       
