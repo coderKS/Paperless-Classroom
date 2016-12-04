@@ -227,10 +227,10 @@ class AppAPI {
       // if able to get data from server,
       // parse the responseString to JSON
       let json = JSON(data: data!)
-      let result = self.writeLocalAnnotation(fileId: fileId, pageId: pageId, content: dataString!)
-      if !result {
-        print ("Fail to write back annotation into loca file")
-      }
+    //  let result = self.writeLocalAnnotation(fileId: fileId, pageId: pageId, content: dataString!)
+//      if !result {
+//        print ("Fail to write back annotation into loca file")
+//      }
       // convert the JSON into an array of Course Object
       let drawObjects = Convertor.jsonToDrawObjectList(json: json)
       print ("AppAPI# return drawObjects size=\(drawObjects.count) in page=[\(pageId)]")

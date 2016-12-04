@@ -23,7 +23,7 @@ class Scheduler {
   func addAnnotation(fileId: String, lastModifiedTime: Date, pageDrawObjects: [Int: [DrawObject]]){
     let elapsed_1 = Date().timeIntervalSince(lastUpdatedTime)
     let elapsed_2 = lastModifiedTime.timeIntervalSince(lastUpdatedTime)
-    if Float(elapsed_1) >= updateTimePeriod && Float(elapsed_2) > 0.0{
+    if Float(elapsed_1) >= updateTimePeriod && Float(elapsed_2) > 0.0 {
       print ("addAnnotation# ready to add annotation...")
       self.api.addAnnotation(fileId: fileId, pageDrawObjects: pageDrawObjects, version: "1", gradeId: "1"){
         (success, error) in
@@ -34,7 +34,7 @@ class Scheduler {
           return
         } else {
           print ("sche addAnnotation# success to add annotation")
-          self.lastModifiedTime = Date()
+          self.lastUpdatedTime = Date()
         }
       }
       self.api.writeLocalAnnotations(fileId: fileId, pageDrawObjects: pageDrawObjects)

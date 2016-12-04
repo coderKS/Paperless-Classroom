@@ -244,12 +244,33 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     // Try to read data from local variable
     print ("changePage#pageDrawObjects size=\(self.pageDrawObjects[pageCurrent]?.count) in pageCurrent=\(pageCurrent)")
     if let drawObjects = self.pageDrawObjects[pageCurrent] {
+      if drawObjects.count == 0 {
+        // Try to get data from server
+        self.api.getAnnotation(fileId: Constants.fileId, pageId: String(pageCurrent+1)){
+          (drawObjects, error) in
+          if error != nil {
+            /* Handle error here */
+            return
+          }
+          if drawObjects == nil {
+            return
+          }
+          if drawObjects?.count == 0 {
+            return
+          }
+          
+          self.drawObjectsToPane(drawObjects: drawObjects!, pageId: self.pageCurrent)
+          print ("changePage#size of drawObject=\(drawObjects?.count)")
+          self.pageDrawObjects[self.pageCurrent]? += drawObjects!
+        }
+        return
+      }
       self.drawObjectsToPane(drawObjects: drawObjects, pageId: pageCurrent)
       return
     }
     
     // Try to get data from server
-    self.api.getAnnotation(fileId: Constants.fileId, pageId: String(pageCurrent)){
+    self.api.getAnnotation(fileId: Constants.fileId, pageId: String(pageCurrent+1)){
       (drawObjects, error) in
       if error != nil {
         /* Handle error here */
@@ -266,6 +287,8 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       print ("changePage#size of drawObject=\(drawObjects?.count)")
       self.pageDrawObjects[self.pageCurrent]? += drawObjects!
     }
+    return
+
     
   }
   
@@ -273,15 +296,23 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
     if drawObjects.count == 0 {
       return
     }
+    print ("drawObjectsToPane size=\(drawObjects.count)")
+    var current: CGPoint
+    var previous: CGPoint
+    var category: String
+    var pointColor: UIColor
+    var pointSize: CGFloat
+    var positions: [CGPoint]
+    PDFViewControllers[pageCurrent].canvas?.drawStart()
     for i in 0...(drawObjects.count) - 1 {
       switch(drawObjects[i].type){
       case DrawObjectType.Line:
         if let obj = drawObjects[i] as? Line {
-          let previous = obj.startPoint
-          let current = obj.endPoint
-          let category = obj.category
-          let pointColor = obj.color
-          let pointSize = obj.lineWidth
+          previous = obj.startPoint
+          current = obj.endPoint
+          category = obj.category
+          pointColor = obj.color
+          pointSize = obj.lineWidth
           
           self.PDFViewControllers[self.pageCurrent].canvas?.drawFromJSON(previous, current, category, pointColor, pointSize)
         }
@@ -289,24 +320,26 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
         
       case DrawObjectType.LinePath:
         if let obj = drawObjects[i] as? LinePath {
-          let positions = obj.positions
-          let category = obj.category
-          let pointColor = obj.color
-          let pointSize = obj.lineWidth
+          positions = obj.positions
+          category = obj.category
+          pointColor = obj.color
+          pointSize = obj.lineWidth
           
           if positions.count == 0 {
             return
           }
           
           if positions.count == 1{
-            let current = CGPoint(x: positions[0].x, y: positions[0].y)
-            self.PDFViewControllers[self.pageCurrent].canvas?.drawFromJSON(current, current, category, pointColor, pointSize)
+            current = CGPoint(x: positions[0].x, y: positions[0].y)
+//            self.PDFViewControllers[self.pageCurrent].canvas?.drawFromJSON(current, current, category, pointColor, pointSize)
           } else {
+            print ("drawObjectsToPane#positions count=\(positions.count)")
             for j in 1...positions.count - 1 {
-              let previous = CGPoint(x: positions[j-1].x, y: positions[j-1].y)
-              let current = CGPoint(x: positions[j].x, y: positions[j].y)
+              previous = CGPoint(x: positions[j-1].x, y: positions[j-1].y)
+              current = CGPoint(x: positions[j].x, y: positions[j].y)
               self.PDFViewControllers[self.pageCurrent].canvas?.drawFromJSON(previous, current, category, pointColor, pointSize)
             }
+            print ("drawObjectsToPane# end drawing positions")
           }
           
         }
@@ -314,29 +347,32 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
         
       case DrawObjectType.ErasedLinePath:
         if let obj = drawObjects[i] as? ErasedLinePath {
-          let positions = obj.positions
-          let category = obj.category
-          let pointSize = obj.lineWidth
+          positions = obj.positions
+          category = obj.category
+          pointSize = obj.lineWidth
           
           if positions.count == 0 {
             return
           }
           
           if positions.count == 1 {
-            let current = CGPoint(x: positions[0].x, y: positions[0].y)
-            self.PDFViewControllers[self.pageCurrent].canvas?.drawFromJSON(current, current, category, nil, pointSize)
+            current = CGPoint(x: positions[0].x, y: positions[0].y)
+//            self.PDFViewControllers[self.pageCurrent].canvas?.drawFromJSON(current, current, category, nil, pointSize)
           } else {
+            print ("drawObjectsToPane#positions count=\(positions.count)")
             for j in 1...positions.count - 1 {
-              let previous = CGPoint(x: positions[j-1].x, y: positions[j-1].y)
-              let current = CGPoint(x: positions[j].x, y: positions[j].y)
+              previous = CGPoint(x: positions[j-1].x, y: positions[j-1].y)
+              current = CGPoint(x: positions[j].x, y: positions[j].y)
               self.PDFViewControllers[self.pageCurrent].canvas?.drawFromJSON(previous, current, category, nil, pointSize)
             }
+            print ("drawObjectsToPane# end drawing positions")
           }
           
         }
         break
       }
     }
+    PDFViewControllers[self.pageCurrent].canvas?.drawEnd()
     self.pageIsDrawn[pageId] = true
   }
   
@@ -416,32 +452,32 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       self.pageIsDrawn[i] = false;
     }
     
-    for i in 1...pageCount {
-      self.api.getAnnotation(fileId: Constants.fileId, pageId: String(i)){
-        (drawObjects, error) in
-        print("loadAnnotationJSON# received dataobject size=\(drawObjects?.count) in page=\(i)")
-        if error != nil {
-          /* Handle error here */
-          print("loadAnnotationJSON# network error ocurred")
-          return
-        }
-        if drawObjects == nil {
-          print("loadAnnotationJSON# drawobject is null")
-          return
-        }
-        
-        if drawObjects?.count == 0 {
-          print("loadAnnotationJSON# page=\(i) is empty")
-          return
-        }
-        
-        self.pageDrawObjects[i - 1]? += drawObjects!
-        if let firstViewController = self.PDFViewControllers.first {
-          self.changePage(firstViewController, .forward)
-        }
-      }
+//    for i in 1...pageCount {
+//      self.api.getAnnotation(fileId: Constants.fileId, pageId: String(i)){
+//        (drawObjects, error) in
+//        print("loadAnnotationJSON# received dataobject size=\(drawObjects?.count) in page=\(i)")
+//        if error != nil {
+//          /* Handle error here */
+//          print("loadAnnotationJSON# network error ocurred")
+//          return
+//        }
+//        if drawObjects == nil {
+//          print("loadAnnotationJSON# drawobject is null")
+//          return
+//        }
+//        
+//        if drawObjects?.count == 0 {
+//          print("loadAnnotationJSON# page=\(i) is empty")
+//          return
+//        }
+//        
+//        self.pageDrawObjects[i - 1]? += drawObjects!
+//        if let firstViewController = self.PDFViewControllers.first {
+//          self.changePage(firstViewController, .forward)
+//        }
+//      }
 
-    }
+//    }
     
     //MARK: TODO draw line in overview
   }
