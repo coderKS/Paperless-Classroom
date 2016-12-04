@@ -24,51 +24,58 @@ class AssignmentRecordCanvas: UIImageView {
   var parentController: PDFPageViewController?
   var saved = [CGPoint]()
   
+  var size:CGFloat?
+  var color:UIColor?
+  var aTouches = [UITouch]()
+  var context: CGContext?
+  var pageCurrent = 0
+  var touch: UITouch?
+  var coalesedTouches = [UITouch]()
+  var previous = CGPoint()
+  var current = CGPoint()
   /* Draw Method */
   override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-    guard let touch = touches.first else { return }
+    touch = touches.first!
+    if touch == nil { return }
     UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
-    let context = UIGraphicsGetCurrentContext()
+    context = UIGraphicsGetCurrentContext()
     image?.draw(in: bounds)
     
-    var touches = [UITouch]()
-    
-    if let coalesedTouches = event?.coalescedTouches(for: touch){
-      touches = coalesedTouches
+    aTouches = [UITouch]()
+    coalesedTouches = (event?.coalescedTouches(for: touch!))!
+    if coalesedTouches.count > 0{
+      aTouches = coalesedTouches
     } else {
-      touches.append(touch)
+      aTouches.append(touch!)
     }
     
     //Draw according to different mode in PDF page at pageCurrent
-    var size:CGFloat?
-    var color:UIColor?
-    let parent = parentController!
-    let penMode = parent.penMode
-    switch penMode {
+    
+    switch parentController!.penMode {
     case "pen":
-      size = parent.penSize
-      color = parent.penColor
+      size = parentController!.penSize
+      color = parentController!.penColor
       break
     case "pencil":
-      size = parent.pencilSize
-      color = parent.pencilTexture
+      size = parentController!.pencilSize
+      color = parentController!.pencilTexture
       break
     case "eraser":
-      size = parent.eraserSize
+      size = parentController!.eraserSize
       color = nil
       break
     case "highlight":
-      size = parent.highlightSize
-      color = parent.highlightColor
+      size = parentController!.highlightSize
+      color = parentController!.highlightColor
       break
     default:
-      size = parent.penSize
-      color = parent.penColor
+      size = parentController!.penSize
+      color = parentController!.penColor
       break
     }
     
-    for touch in touches {
-      drawStroke(context, touch: touch, penMode: penMode, color: color, size: size!)
+    for touch in aTouches {
+      drawStroke(context, touch: touch, penMode: parentController!.penMode, color: color, size: size!)
     }
     
     /*
@@ -87,43 +94,40 @@ class AssignmentRecordCanvas: UIImageView {
   
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     //image = drawingImage
-    
     //If pen mode is textBox
-    let parent = parentController!
-    let penMode = parent.penMode
-    var size:CGFloat?
-    var color:UIColor?
+//    var size:CGFloat?
+//    var color:UIColor?
     
-    let positions = self.saved
-    let smoothPositions = self.saved
-    let pageId = parent.pageCurrent
+//    let positions = self.saved
+//    let smoothPositions = self.saved
+    let pageId = parentController!.pageCurrent
     
     //Document Related Attributes
     let userID = 0
     let assignmentRecordID = 0
     let assignmentID = 0
     
-    switch penMode {
+    switch parentController!.penMode {
     case "pen":
-      size = parent.penSize
-      color = parent.penColor
+      size = parentController!.penSize
+      color = parentController!.penColor
       
       break
     case "pencil":
-      size = parent.pencilSize
-      color = parent.pencilTexture
+      size = parentController!.pencilSize
+      color = parentController!.pencilTexture
       break
     case "eraser":
-      size = parent.eraserSize
+      size = parentController!.eraserSize
       color = nil
       break
     case "highlight":
-      size = parent.highlightSize
-      color = parent.highlightColor
+      size = parentController!.highlightSize
+      color = parentController!.highlightColor
       break
     default:
-      size = parent.penSize
-      color = parent.penColor
+      size = parentController!.penSize
+      color = parentController!.penColor
       break
     }
     
@@ -133,18 +137,18 @@ class AssignmentRecordCanvas: UIImageView {
     //Save the last Image
     setTempImage(image)
     
-    let linePath = LinePath(positions: positions, smoothPositions: smoothPositions, color:color!, lineWidth: size!, category: "pen", pageID: pageId,
+    let linePath = LinePath(positions: self.saved, smoothPositions: self.saved, color:color!, lineWidth: size!, category: "pen", pageID: pageId,
                             userID: userID, assignmentRecordID: assignmentRecordID, assignmentID: assignmentID, refId: Utilities.getReferenceId())
-    parent.pageDrawObjects[pageId]?.append(linePath!)
-    print ("AssignmentRecordCanvas#touchesEnded- positions size=\(positions.count), pageId=\(pageId), size=\(size), pageDrawObjects[\(pageId)=\(parent.pageDrawObjects[pageId]?.count)]")
+    parentController!.pageDrawObjects[pageId]?.append(linePath!)
+    print ("AssignmentRecordCanvas#touchesEnded- positions size=\(self.saved.count), pageId=\(pageId), size=\(size), pageDrawObjects[\(pageId)=\(parentController!.pageDrawObjects[pageId]?.count)]")
     //Add this annotation to the server
     addAnnotation()
   }
 
   
   func drawStroke(_ context: CGContext?, touch: UITouch, penMode: String, color: UIColor?, size: CGFloat) {
-    let previous = touch.precisePreviousLocation(in: self) 
-    let current = touch.preciseLocation(in: self)
+    previous = touch.precisePreviousLocation(in: self)
+    current = touch.preciseLocation(in: self)
     
     saved.append(CGPoint(x: Double(current.x),y: Double(current.y)))
     
@@ -233,18 +237,18 @@ class AssignmentRecordCanvas: UIImageView {
   
   //Undo Function
   func undo(_ sender: UIImage) {
-    undoManager?.registerUndo(withTarget: self, selector: #selector(redo), object: image)
+    //undoManager?.registerUndo(withTarget: self, selector: #selector(redo), object: image)
     //drawingImage = sender
     setCurrentImage(sender)
     setTempImage(sender)
     //print("Undo")
-    let parent = parentController!
-    if((parent.pageDrawObjects[parent.pageCurrent]?.count)! > 0){
-      let firstDrawObjects = parent.pageDrawObjects[parent.pageCurrent]?[0]
-      parent.pageDrawObjects[parent.pageCurrent]?.removeFirst()
-      parent.redoDrawObjects[parent.pageCurrent]?.append(firstDrawObjects!)
+    //let parent = parentController!
+    if((parentController!.pageDrawObjects[parentController!.pageCurrent]?.count)! > 0){
+      let firstDrawObjects = parentController!.pageDrawObjects[parentController!.pageCurrent]?[0]
+      parentController!.pageDrawObjects[parentController!.pageCurrent]?.removeFirst()
+      parentController!.redoDrawObjects[parentController!.pageCurrent]?.append(firstDrawObjects!)
       
-      print ("pop pageDrawObjects[\(parent.pageCurrent)], size=\(parent.pageDrawObjects[parent.pageCurrent]?.count), redoDrawObjects=\(parent.redoDrawObjects[parent.pageCurrent]?.count)")
+      print ("pop pageDrawObjects[\(parentController!.pageCurrent)], size=\(parentController!.pageDrawObjects[parentController!.pageCurrent]?.count), redoDrawObjects=\(parentController!.redoDrawObjects[parentController!.pageCurrent]?.count)")
     }
   }
   
@@ -265,12 +269,21 @@ class AssignmentRecordCanvas: UIImageView {
       print ("push pageDrawObjects[\(parent.pageCurrent)], size=\(parent.pageDrawObjects[parent.pageCurrent]?.count), redoDrawObjects=\(parent.redoDrawObjects[parent.pageCurrent]?.count)")
     }
   }
+  func drawStart(){
+  UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
+  context = UIGraphicsGetCurrentContext()
+  image?.draw(in: bounds)
+  }
+  
+  func drawEnd(){
+    image = UIGraphicsGetImageFromCurrentImageContext()
+    
+    UIGraphicsEndImageContext()
+  }
   
   //For GetAnnotation
   func drawFromJSON(_ previous: CGPoint, _ current: CGPoint, _ penMode: String, _ color: UIColor?, _ size: CGFloat) {
-    UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
-    let context = UIGraphicsGetCurrentContext()
-    image?.draw(in: bounds)
+    
     
     if penMode == "pen" {
       //Set pen color
@@ -303,19 +316,16 @@ class AssignmentRecordCanvas: UIImageView {
     
     context?.strokePath()
     
-    image = UIGraphicsGetImageFromCurrentImageContext()
-    
-    UIGraphicsEndImageContext()
   }
   
   //For AddAnnotation
+//  var scheduler = self.parentController!.scheduler
+  
   func addAnnotation() {
-    let parent = parentController!
-    let pageCurrent = parent.pageCurrent
-    let scheduler = parent.scheduler
-    parent.pageLastModifiedTime[pageCurrent] = Date()
-    scheduler.addAnnotation(fileId: Constants.fileId, lastModifiedTime: Date(), pageDrawObjects: parent.pageDrawObjects)
+    pageCurrent = parentController!.pageCurrent
+    parentController!.pageLastModifiedTime[pageCurrent] = Date()
+    parentController!.scheduler.addAnnotation(fileId: Constants.fileId, lastModifiedTime: Date(), pageDrawObjects: parentController!.pageDrawObjects)
     //Empty the saved positions
-    saved.removeAll(keepingCapacity: false)
+    saved = [CGPoint]()
   }
 }

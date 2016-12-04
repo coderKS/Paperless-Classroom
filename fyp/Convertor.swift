@@ -168,7 +168,7 @@ class Convertor {
     let json: JSON
     switch(drawObject.type){
     case DrawObjectType.Line:
-      json = self.LineToJson(line: drawObject as! Line)
+      json = self.LineToJson(line: drawObject as! Line)!
     case DrawObjectType.LinePath:
       json = self.LinePathToJson(linePath: drawObject as! LinePath)
     case DrawObjectType.ErasedLinePath:
@@ -178,7 +178,7 @@ class Convertor {
     return json
   }
   
-  private static func LineToJson(line: Line) -> JSON {
+  private static func LineToJson(line: Line) -> JSON? {
     //{\"x1\":291.5,\"y1\":133,\"x2\":664.5,\"y2\":284,\"strokeWidth\":20,\"color\":\"rgba(255,0,0,1)\",\"capStyle\":\"round\",\"dash\":null,\"endCapShapes\":[null,null]}
     var json: JSON =  ["x1": 0, "y1": 0, "x2": 0, "y2": 0, "strokeWidth": 0, "color": "", "capStyle": "round", "dash": "null", "endCapShapes": ["null","null"]]
     json["x1"] = JSON(line.startPoint.x)
@@ -194,6 +194,9 @@ class Convertor {
     var json: JSON =  ["order": 3, "tailSize": 3, "smooth": true, "pointCoordinatePairs": [], "smoothedPointCoordinatePairs": [], "pointSize": 0, "pointColor": ""]
     
     var positions = [[Float]]()
+    if linePath.positions.count == 0 {
+      return nil
+    }
     for i in 0...linePath.positions.count - 1 {
       positions.append([Float(linePath.positions[i].x), Float(linePath.positions[i].y)])
     }
@@ -266,7 +269,7 @@ class Convertor {
       let enrollmentNumber = subJson["enrollmentNumber"].string!
       let instructor = subJson["instructor"].string!
       // print
-      print ("id=\(id),name=\(name),imageStr=\(imageStr),term=\(term),startYear=\(startYear),endYear=\(endYear),code=\(code),enrolNum=\(enrollmentNumber),instructor=\(instructor)")
+//      print ("id=\(id),name=\(name),imageStr=\(imageStr),term=\(term),startYear=\(startYear),endYear=\(endYear),code=\(code),enrolNum=\(enrollmentNumber),instructor=\(instructor)")
       
       var image: UIImage
       if imageStr == "" {
@@ -274,7 +277,10 @@ class Convertor {
       } else {
         image = UIImage(named: imageStr)!
       }
-      courses += [Course(id: id, name: name, image: image, term: term, startYear: startYear, endYear: endYear, code: code, enrollmentNumber: Int(enrollmentNumber)!, instructor: instructor)!]
+      courses += [Course(id: id, name: name, image: image, term: term,
+                         startYear: startYear, endYear: endYear, code: code,
+                         enrollmentNumber: Int(enrollmentNumber)!,
+                         instructor: instructor)!]
       
     }
     return courses
@@ -338,11 +344,16 @@ class Convertor {
       switch(colorArray.count){
       case 3:
         print ("red=\(colorArray[0]), green=\(colorArray[1]), blue=\(colorArray[2])")
-        color = UIColor.init(red: CGFloat(colorArray[0]/255), green: CGFloat(colorArray[1]/255), blue: CGFloat(colorArray[2] / 255), alpha: 1)
+        color = UIColor.init(red: CGFloat(colorArray[0]/255),
+                             green: CGFloat(colorArray[1]/255),
+                             blue: CGFloat(colorArray[2] / 255), alpha: 1)
         break
-      case 4:
+      case (4...5):
         print ("red=\(colorArray[0]), green=\(colorArray[1]), blue=\(colorArray[2]), alpha=\(colorArray[3])")
-        color = UIColor.init(red: CGFloat(colorArray[0]/255), green: CGFloat(colorArray[1]/255), blue: CGFloat(colorArray[2] / 255), alpha: CGFloat(colorArray[3]))
+        color = UIColor.init(red: CGFloat(colorArray[0]/255),
+                             green: CGFloat(colorArray[1]/255),
+                             blue: CGFloat(colorArray[2] / 255),
+                             alpha: CGFloat(colorArray[3]))
         break
       default:
         // it should be either 3 or 4, error handling here
@@ -351,7 +362,8 @@ class Convertor {
       
       let category = "pen"
       
-      let line = Line(startPoint: startPoint, endPoint: endPoint, color: color, lineWidth: CGFloat(lineWidth), category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0, refId: refId)
+      let line = Line(startPoint: startPoint, endPoint: endPoint, color: color, lineWidth: CGFloat(lineWidth),
+                      category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0, refId: refId)
       
       return line
     }
@@ -376,7 +388,7 @@ class Convertor {
         color = UIColor.init(red: CGFloat(colorArray[0]/255), green: CGFloat(colorArray[1]/255), blue: CGFloat(colorArray[2] / 255), alpha: 1)
         category = "pen"
         break
-      case 4:
+      case (4...5):
         print ("red=\(colorArray[0]), green=\(colorArray[1]), blue=\(colorArray[2]), alpha=\(colorArray[3])")
         color = UIColor.init(red: CGFloat(colorArray[0]/255), green: CGFloat(colorArray[1]/255), blue: CGFloat(colorArray[2] / 255), alpha: CGFloat(colorArray[3]))
         if colorArray[3] < 1.0 {
@@ -385,6 +397,7 @@ class Convertor {
         break
       default:
         // it should be either 3 or 4, error handling here
+        print ("jsonToLinePath# not 3 or 4")
         return nil
       }
       
@@ -400,6 +413,9 @@ class Convertor {
       
       let linePath = LinePath(positions: positions, smoothPositions: smoothPositions, color: color, lineWidth: CGFloat(lineWidth), category: category, pageID: 0, userID: 0, assignmentRecordID: 0, assignmentID: 0, refId: refId)
       
+      if linePath == nil {
+        print ("jsonToLinePath# Fail to init the object")
+      }
       return linePath
     }
     

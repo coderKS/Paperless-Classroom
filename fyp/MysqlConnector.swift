@@ -27,7 +27,7 @@ class MysqlConnector: Connector{
         // check for fundamental/networking error
         print("sendPostRequest# error=\(error)")
         completion(nil, ConnectionError.NetworkError)
-        return
+
       }
       
       if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
