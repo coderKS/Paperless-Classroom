@@ -220,6 +220,7 @@ class AssignmentRecordCanvas: UIImageView {
   }
   
   func setTempImage(_ new:UIImage?) {
+    self.temp = nil
     self.temp = new
   }
   
@@ -270,17 +271,19 @@ class AssignmentRecordCanvas: UIImageView {
     }
   }
   func drawStart(){
-  UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
-  context = UIGraphicsGetCurrentContext()
-  image?.draw(in: bounds)
+    UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
+    context = UIGraphicsGetCurrentContext()
+    image?.draw(in: bounds)
   }
   
   func drawEnd(){
-    image = UIGraphicsGetImageFromCurrentImageContext()
-    
+    DispatchQueue.main.sync { () -> Void in
+      self.image = self.webTemp
+      self.webTemp = nil
+    }
     UIGraphicsEndImageContext()
   }
-  
+  var webTemp: UIImage?
   //For GetAnnotation
   func drawFromJSON(_ previous: CGPoint, _ current: CGPoint, _ penMode: String, _ color: UIColor?, _ size: CGFloat) {
     
@@ -316,6 +319,8 @@ class AssignmentRecordCanvas: UIImageView {
     
     context?.strokePath()
     
+    
+    webTemp = UIGraphicsGetImageFromCurrentImageContext()
   }
   
   //For AddAnnotation

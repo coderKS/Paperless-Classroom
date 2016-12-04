@@ -15,8 +15,8 @@ class AppAPI {
   let fileNamePrefix = "paperless-classroom-"
   
   init(){
-    self.connectorType = ConnectorType.Localhost
-    self.connector = DummyConnector()
+    self.connectorType = ConnectorType.Veriguide
+    self.connector = MysqlConnector()
   }
   
   init?(connectorType: ConnectorType) {

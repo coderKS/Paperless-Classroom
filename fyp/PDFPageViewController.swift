@@ -372,7 +372,8 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
         break
       }
     }
-    PDFViewControllers[self.pageCurrent].canvas?.drawEnd()
+    PDFViewControllers[pageCurrent].canvas?.drawEnd()
+    PDFViewControllers[pageCurrent].canvas?.setNeedsDisplay()
     self.pageIsDrawn[pageId] = true
   }
   
@@ -452,32 +453,32 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
       self.pageIsDrawn[i] = false;
     }
     
-//    for i in 1...pageCount {
-//      self.api.getAnnotation(fileId: Constants.fileId, pageId: String(i)){
-//        (drawObjects, error) in
-//        print("loadAnnotationJSON# received dataobject size=\(drawObjects?.count) in page=\(i)")
-//        if error != nil {
-//          /* Handle error here */
-//          print("loadAnnotationJSON# network error ocurred")
-//          return
+//        for i in 1...pageCount {
+//          self.api.getAnnotation(fileId: Constants.fileId, pageId: String(i)){
+//            (drawObjects, error) in
+//            print("loadAnnotationJSON# received dataobject size=\(drawObjects?.count) in page=\(i)")
+//            if error != nil {
+//              /* Handle error here */
+//              print("loadAnnotationJSON# network error ocurred")
+//              return
+//            }
+//            if drawObjects == nil {
+//              print("loadAnnotationJSON# drawobject is null")
+//              return
+//            }
+//    
+//            if drawObjects?.count == 0 {
+//              print("loadAnnotationJSON# page=\(i) is empty")
+//              return
+//            }
+//    
+//            self.pageDrawObjects[i - 1]? += drawObjects!
+//            if let firstViewController = self.PDFViewControllers.first {
+//              self.changePage(firstViewController, .forward)
+//            }
+//          }
+//    
 //        }
-//        if drawObjects == nil {
-//          print("loadAnnotationJSON# drawobject is null")
-//          return
-//        }
-//        
-//        if drawObjects?.count == 0 {
-//          print("loadAnnotationJSON# page=\(i) is empty")
-//          return
-//        }
-//        
-//        self.pageDrawObjects[i - 1]? += drawObjects!
-//        if let firstViewController = self.PDFViewControllers.first {
-//          self.changePage(firstViewController, .forward)
-//        }
-//      }
-
-//    }
     
     //MARK: TODO draw line in overview
   }
