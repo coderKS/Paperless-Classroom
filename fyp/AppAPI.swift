@@ -15,8 +15,8 @@ class AppAPI {
   let fileNamePrefix = "paperless-classroom-"
   
   init(){
-    self.connectorType = ConnectorType.Veriguide
-    self.connector = MysqlConnector()
+    self.connectorType = ConnectorType.Localhost
+    self.connector = DummyConnector()
   }
   
   init?(connectorType: ConnectorType) {
@@ -208,10 +208,10 @@ class AppAPI {
     self.connector.sendGetRequest(urlString: urlWithParam) {
       // 2. get the responseString
       (data, error) in
-      let dataString = String(data: data!, encoding: String.Encoding.utf8)
+//      let dataString = String(data: data!, encoding: String.Encoding.utf8)
       print ("getAnnotation# data = \(data)")
       
-      if data == nil || error != nil || dataString == "error" {
+      if data == nil || error != nil {
         // if cannot get data from server, try to read it in local file
         let drawObjects = self.readLocalAnnotation(fileId: fileId, pageId: pageId)
         if drawObjects == nil {
@@ -221,7 +221,8 @@ class AppAPI {
         }
         return
       }
-    
+      let dataString = String(data: data!, encoding: String.Encoding.utf8)
+
       
       // if able to get data from server,
       // parse the responseString to JSON

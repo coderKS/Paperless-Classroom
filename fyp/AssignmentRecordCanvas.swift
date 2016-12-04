@@ -266,11 +266,45 @@ class AssignmentRecordCanvas: UIImageView {
     }
   }
   
+  var context: CGContext?
+  func drawStart() {
+    //Prepare to Draw
+    UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
+    //Get an object that allows your move around the canvas and perform drawing
+    context = UIGraphicsGetCurrentContext()
+    //Set the boundaries of the canvas
+    image?.draw(in: bounds)
+  }
+  
+  func loop() {
+    /* Perform some Drawing Tasks */
+    /* Omitted */
+    
+    //Update the screen
+    image = UIGraphicsGetImageFromCurrentImageContext()
+  }
+  
+  func drawEnd() {
+    //End Drawing
+    UIGraphicsEndImageContext()
+  }
+  
   //For GetAnnotation
   func drawFromJSON(_ previous: CGPoint, _ current: CGPoint, _ penMode: String, _ color: UIColor?, _ size: CGFloat) {
+    //Prepare to Draw
     UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
+    //Get an object that allows your move around the canvas and perform drawing
     let context = UIGraphicsGetCurrentContext()
+    //Set the boundaries of the canvas
     image?.draw(in: bounds)
+    
+    /* Perform some Drawing Tasks */
+    /* Omitted */
+    
+    //Update the screen
+    image = UIGraphicsGetImageFromCurrentImageContext()
+    //End Drawing
+    UIGraphicsEndImageContext()
     
     if penMode == "pen" {
       //Set pen color

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="j9n-E2-GK8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="15W-Oe-ISs">
     <device id="ipad12_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -926,8 +926,8 @@
         <image name="veriguide" width="250" height="250"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dsh-Us-DUH"/>
-        <segue reference="O0F-Pa-Zfx"/>
         <segue reference="hXy-gp-3Ce"/>
+        <segue reference="YKF-l7-d3F"/>
+        <segue reference="wff-gE-DiU"/>
     </inferredMetricsTieBreakers>
 </document>
