@@ -473,13 +473,9 @@ class PDFPageViewController: UIPageViewController, UICollectionViewDelegateFlowL
 //            }
 //    
 //            self.pageDrawObjects[i - 1]? += drawObjects!
-//            if let firstViewController = self.PDFViewControllers.first {
-//              self.changePage(firstViewController, .forward)
-//            }
 //          }
 //    
 //        }
-    
     //MARK: TODO draw line in overview
   }
   
